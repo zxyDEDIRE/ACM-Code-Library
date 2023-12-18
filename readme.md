@@ -1,70 +1,70 @@
 # 竞赛网站：
 
-[牛客竞赛OJ__信息学编程算法训练平台 (nowcoder.com)](https://ac.nowcoder.com/acm/contest/vip-index)
+## [牛客竞赛OJ__信息学编程算法训练平台 (nowcoder.com)](https://ac.nowcoder.com/acm/contest/vip-index)
 
-[AcWing](https://www.acwing.com/about/)
+## [AcWing](https://www.acwing.com/about/)
 
-[Codeforces](https://codeforces.com/)
+## [Codeforces](https://codeforces.com/)
 
-[首页 - 洛谷 | 计算机科学教育新生态 (luogu.com.cn)](https://www.luogu.com.cn/)
+## [首页 - 洛谷 | 计算机科学教育新生态 (luogu.com.cn)](https://www.luogu.com.cn/)
 
-[AtCoder](https://atcoder.jp/home)
+## [AtCoder](https://atcoder.jp/home)
 
-[[kuangbin]各种各样的题单(去重后)](https://vjudge.net/article/752)
+## [[kuangbin]各种各样的题单(去重后)](https://vjudge.net/article/752)
 
-[CSG-CPC Home Page (csgrandeur.cn)](https://cpc.csgrandeur.cn/)
+## [CSG-CPC Home Page (csgrandeur.cn)](https://cpc.csgrandeur.cn/)
 
-[模板训练 2023 Spring - Dashboard - Contest - QOJ.ac](https://qoj.ac/contest/1167)
+## [模板训练 2023 Spring - Dashboard - Contest - QOJ.ac](https://qoj.ac/contest/1167)
 
-[首页 - LibreOJ (loj.ac)](https://loj.ac/)
+## [首页 - LibreOJ (loj.ac)](https://loj.ac/)
 
-[Problem Set (hdu.edu.cn)](https://acm.hdu.edu.cn/listproblem.php?vol=1)
+## [Problem Set (hdu.edu.cn)](https://acm.hdu.edu.cn/listproblem.php?vol=1)
 
-### 有意思网站
+# 有意思网站
 
-#### [CFTracker](https://cftracker.netlify.app/contests):
+## [CFTracker](https://cftracker.netlify.app/contests):
 
 Codeforces题目统计网站
 
-#### [AtCoder Problems (kenkoooo.com)](https://kenkoooo.com/atcoder/#/table/buns_out)
+## [AtCoder Problems (kenkoooo.com)](https://kenkoooo.com/atcoder/#/table/buns_out)
 
 AtCoder题目统计网站
 
-#### [DeepL Translate: The world's most accurate translator](https://www.deepl.com/translator):
+## [DeepL Translate: The world's most accurate translator](https://www.deepl.com/translator):
 
 翻译题目最准的网站
 
-#### [OI Wiki - OI Wiki (oi-wiki.org)](https://oi-wiki.org/):
+## [OI Wiki - OI Wiki (oi-wiki.org)](https://oi-wiki.org/):
 
 **编程竞赛（competitive programming）** 知识整合站点
 
-#### [Desmos | 图形计算器](https://www.desmos.com/calculator?lang=zh-CN)：
+## [Desmos | 图形计算器](https://www.desmos.com/calculator?lang=zh-CN)：
 
 图形计算器
 
-#### [Graph Editor (csacademy.com)](https://csacademy.com/app/graph_editor/):
+## [Graph Editor (csacademy.com)](https://csacademy.com/app/graph_editor/):
 
 图论画图网站
 
-#### [The On-Line Encyclopedia of Integer Sequences® (OEIS®)](https://oeis.org/):
+## [The On-Line Encyclopedia of Integer Sequences® (OEIS®)](https://oeis.org/):
 
 随便输入一个序列，输出函数:
 
 如输入1，1，2，3，5，
 
-#### [Compress Your C++ Code! (gitee.io)](https://mivik.gitee.io/compress):
+## [Compress Your C++ Code! (gitee.io)](https://mivik.gitee.io/compress):
 
 C++代码压行机
 
-#### [SAM Drawer (yutong.site)](https://yutong.site/sam/):
+## [SAM Drawer (yutong.site)](https://yutong.site/sam/):
 
 SAM后缀自动机自动化图
 
-#### [Statistics - OJ Analyzer (ojhunt.com)](https://ojhunt.com/statistics):
+## [Statistics - OJ Analyzer (ojhunt.com)](https://ojhunt.com/statistics):
 
 统计做题数网站
 
-#### [董晓算法的个人空间-董晓算法个人主页-哔哩哔哩视频 (bilibili.com)](https://space.bilibili.com/517494241?spm_id_from=333.337.0.0):
+## [董晓算法的个人空间-董晓算法个人主页-哔哩哔哩视频 (bilibili.com)](https://space.bilibili.com/517494241?spm_id_from=333.337.0.0):
 
 算法学习最好视频
 
