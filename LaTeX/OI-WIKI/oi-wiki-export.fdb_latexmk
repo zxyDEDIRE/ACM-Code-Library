@@ -1,0 +1,9 @@
+# Fdb version 3
+["xdvipdfmx"] 0 "oi-wiki-export.xdv" "oi-wiki-export.pdf" "oi-wiki-export" 0
+  "oi-wiki-export.xdv" 0 -1 0 "xelatex"
+  (generated)
+  "oi-wiki-export.pdf"
+["xelatex"] 1697607622 "oi-wiki-export.tex" "oi-wiki-export.xdv" "oi-wiki-export" 1697607622
+  (generated)
+  "oi-wiki-export.log"
+  "oi-wiki-export.xdv"

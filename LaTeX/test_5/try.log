@@ -1,0 +1,1018 @@
+This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 23.4) (preloaded format=xelatex 2023.6.2)  14 AUG 2023 20:48
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**./try.tex
+(try.tex
+LaTeX2e <2022-11-01> patch level 1
+L3 programming layer <2023-03-30>
+(Z:\System_Environment\MiKTeX\tex/latex/ctex\ctexart.cls
+(Z:\System_Environment\MiKTeX\tex/latex/ctex/config\ctexbackend.cfg
+File: ctexbackend.cfg 2022/07/14 v2.5.10 Backend configuration file (CTEX)
+)
+(Z:\System_Environment\MiKTeX\tex/latex/l3kernel\expl3.sty
+Package: expl3 2023-03-30 L3 programming layer (loader) 
+
+(Z:\System_Environment\MiKTeX\tex/latex/l3backend\l3backend-xetex.def
+File: l3backend-xetex.def 2023-03-30 L3 backend support: XeTeX
+\g__graphics_track_int=\count181
+\l__pdf_internal_box=\box51
+\g__pdf_backend_object_int=\count182
+\g__pdf_backend_annotation_int=\count183
+\g__pdf_backend_link_int=\count184
+))
+Document Class: ctexart 2022/07/14 v2.5.10 Chinese adapter for class article (C
+TEX)
+(Z:\System_Environment\MiKTeX\tex/latex/ctex\ctexhook.sty
+Package: ctexhook 2022/07/14 v2.5.10 Document and package hooks (CTEX)
+)
+(Z:\System_Environment\MiKTeX\tex/latex/ctex\ctexpatch.sty
+Package: ctexpatch 2022/07/14 v2.5.10 Patching commands (CTEX)
+)
+(Z:\System_Environment\MiKTeX\tex/latex/base\fix-cm.sty
+Package: fix-cm 2020/11/24 v1.1t fixes to LaTeX
+
+(Z:\System_Environment\MiKTeX\tex/latex/base\ts1enc.def
+File: ts1enc.def 2001/06/05 v3.0e (jk/car/fm) Standard LaTeX file
+LaTeX Font Info:    Redeclaring font encoding TS1 on input line 47.
+))
+\l__ctex_tmp_int=\count185
+\l__ctex_tmp_box=\box52
+\l__ctex_tmp_dim=\dimen140
+\g__ctex_section_depth_int=\count186
+\g__ctex_font_size_int=\count187
+
+(Z:\System_Environment\MiKTeX\tex/latex/ctex/config\ctexopts.cfg
+File: ctexopts.cfg 2022/07/14 v2.5.10 Option configuration file (CTEX)
+)
+(Z:\System_Environment\MiKTeX\tex/latex/base\article.cls
+Document Class: article 2022/07/02 v1.4n Standard LaTeX document class
+(Z:\System_Environment\MiKTeX\tex/latex/base\size12.clo
+File: size12.clo 2022/07/02 v1.4n Standard LaTeX file (size option)
+)
+\c@part=\count188
+\c@section=\count189
+\c@subsection=\count190
+\c@subsubsection=\count191
+\c@paragraph=\count192
+\c@subparagraph=\count193
+\c@figure=\count194
+\c@table=\count195
+\abovecaptionskip=\skip48
+\belowcaptionskip=\skip49
+\bibindent=\dimen141
+)
+(Z:\System_Environment\MiKTeX\tex/latex/ctex/engine\ctex-engine-xetex.def
+File: ctex-engine-xetex.def 2022/07/14 v2.5.10 XeLaTeX adapter (CTEX)
+
+(Z:\System_Environment\MiKTeX\tex/xelatex/xecjk\xeCJK.sty
+Package: xeCJK 2022/08/05 v3.9.1 Typesetting CJK scripts with XeLaTeX
+
+(Z:\System_Environment\MiKTeX\tex/latex/l3packages/xtemplate\xtemplate.sty
+Package: xtemplate 2023-02-02 L3 Experimental prototype document functions
+\l__xtemplate_tmp_dim=\dimen142
+\l__xtemplate_tmp_int=\count196
+\l__xtemplate_tmp_muskip=\muskip16
+\l__xtemplate_tmp_skip=\skip50
+)
+\l__xeCJK_tmp_int=\count197
+\l__xeCJK_tmp_box=\box53
+\l__xeCJK_tmp_dim=\dimen143
+\l__xeCJK_tmp_skip=\skip51
+\g__xeCJK_space_factor_int=\count198
+\l__xeCJK_begin_int=\count199
+\l__xeCJK_end_int=\count266
+\c__xeCJK_CJK_class_int=\XeTeXcharclass1
+\c__xeCJK_FullLeft_class_int=\XeTeXcharclass2
+\c__xeCJK_FullRight_class_int=\XeTeXcharclass3
+\c__xeCJK_HalfLeft_class_int=\XeTeXcharclass4
+\c__xeCJK_HalfRight_class_int=\XeTeXcharclass5
+\c__xeCJK_NormalSpace_class_int=\XeTeXcharclass6
+\c__xeCJK_CM_class_int=\XeTeXcharclass7
+\c__xeCJK_HangulJamo_class_int=\XeTeXcharclass8
+\l__xeCJK_last_skip=\skip52
+\c__xeCJK_none_node=\count267
+\g__xeCJK_node_int=\count268
+\c__xeCJK_CJK_node_dim=\dimen144
+\c__xeCJK_CJK-space_node_dim=\dimen145
+\c__xeCJK_default_node_dim=\dimen146
+\c__xeCJK_CJK-widow_node_dim=\dimen147
+\c__xeCJK_normalspace_node_dim=\dimen148
+\c__xeCJK_default-space_node_skip=\skip53
+\l__xeCJK_ccglue_skip=\skip54
+\l__xeCJK_ecglue_skip=\skip55
+\l__xeCJK_punct_kern_skip=\skip56
+\l__xeCJK_indent_box=\box54
+\l__xeCJK_last_penalty_int=\count269
+\l__xeCJK_last_bound_dim=\dimen149
+\l__xeCJK_last_kern_dim=\dimen150
+\l__xeCJK_widow_penalty_int=\count270
+
+Package xtemplate Info: Declaring object type 'xeCJK/punctuation' taking 0
+(xtemplate)             argument(s) on line 2396.
+
+\l__xeCJK_fixed_punct_width_dim=\dimen151
+\l__xeCJK_mixed_punct_width_dim=\dimen152
+\l__xeCJK_middle_punct_width_dim=\dimen153
+\l__xeCJK_fixed_margin_width_dim=\dimen154
+\l__xeCJK_mixed_margin_width_dim=\dimen155
+\l__xeCJK_middle_margin_width_dim=\dimen156
+\l__xeCJK_bound_punct_width_dim=\dimen157
+\l__xeCJK_bound_margin_width_dim=\dimen158
+\l__xeCJK_margin_minimum_dim=\dimen159
+\l__xeCJK_kerning_total_width_dim=\dimen160
+\l__xeCJK_same_align_margin_dim=\dimen161
+\l__xeCJK_different_align_margin_dim=\dimen162
+\l__xeCJK_kerning_margin_width_dim=\dimen163
+\l__xeCJK_kerning_margin_minimum_dim=\dimen164
+\l__xeCJK_bound_dim=\dimen165
+\l__xeCJK_reverse_bound_dim=\dimen166
+\l__xeCJK_margin_dim=\dimen167
+\l__xeCJK_minimum_bound_dim=\dimen168
+\l__xeCJK_kerning_margin_dim=\dimen169
+\g__xeCJK_family_int=\count271
+\l__xeCJK_fam_int=\count272
+\g__xeCJK_fam_allocation_int=\count273
+\l__xeCJK_verb_case_int=\count274
+\l__xeCJK_verb_exspace_skip=\skip57
+
+(Z:\System_Environment\MiKTeX\tex/latex/fontspec\fontspec.sty
+(Z:\System_Environment\MiKTeX\tex/latex/l3packages/xparse\xparse.sty
+Package: xparse 2023-02-02 L3 Experimental document command parser
+)
+Package: fontspec 2022/01/15 v2.8a Font selection for XeLaTeX and LuaLaTeX
+
+(Z:\System_Environment\MiKTeX\tex/latex/fontspec\fontspec-xetex.sty
+Package: fontspec-xetex 2022/01/15 v2.8a Font selection for XeLaTeX and LuaLaTe
+X
+\l__fontspec_script_int=\count275
+\l__fontspec_language_int=\count276
+\l__fontspec_strnum_int=\count277
+\l__fontspec_tmp_int=\count278
+\l__fontspec_tmpa_int=\count279
+\l__fontspec_tmpb_int=\count280
+\l__fontspec_tmpc_int=\count281
+\l__fontspec_em_int=\count282
+\l__fontspec_emdef_int=\count283
+\l__fontspec_strong_int=\count284
+\l__fontspec_strongdef_int=\count285
+\l__fontspec_tmpa_dim=\dimen170
+\l__fontspec_tmpb_dim=\dimen171
+\l__fontspec_tmpc_dim=\dimen172
+
+(Z:\System_Environment\MiKTeX\tex/latex/base\fontenc.sty
+Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
+)
+(Z:\System_Environment\MiKTeX\tex/latex/fontspec\fontspec.cfg)))
+(Z:\System_Environment\MiKTeX\tex/xelatex/xecjk\xeCJK.cfg
+File: xeCJK.cfg 2022/08/05 v3.9.1 Configuration file for xeCJK package
+))
+\ccwd=\dimen173
+\l__ctex_ccglue_skip=\skip58
+)
+\l__ctex_ziju_dim=\dimen174
+
+(Z:\System_Environment\MiKTeX\tex/latex/zhnumber\zhnumber.sty
+Package: zhnumber 2022/07/14 v3.0 Typesetting numbers with Chinese glyphs
+\l__zhnum_scale_int=\count286
+\l__zhnum_tmp_int=\count287
+
+(Z:\System_Environment\MiKTeX\tex/latex/zhnumber\zhnumber-utf8.cfg
+File: zhnumber-utf8.cfg 2022/07/14 v3.0 Chinese numerals with UTF8 encoding
+))
+\l__ctex_heading_skip=\skip59
+
+(Z:\System_Environment\MiKTeX\tex/latex/ctex/scheme\ctex-scheme-chinese-article
+.def
+File: ctex-scheme-chinese-article.def 2022/07/14 v2.5.10 Chinese scheme for art
+icle (CTEX)
+ (Z:\System_Environment\MiKTeX\tex/latex/ctex/config\ctex-name-utf8.cfg
+File: ctex-name-utf8.cfg 2022/07/14 v2.5.10 Caption with encoding UTF-8 (CTEX)
+))
+(Z:\System_Environment\MiKTeX\tex/latex/ctex/fontset\ctex-fontset-windows.def
+File: ctex-fontset-windows.def 2022/07/14 v2.5.10 Windows fonts definition (CTE
+X)
+
+Package fontspec Info: Could not resolve font "KaiTi/B" (it probably doesn't
+(fontspec)             exist).
+
+
+Package fontspec Info: Could not resolve font "SimHei/I" (it probably doesn't
+(fontspec)             exist).
+
+
+Package fontspec Info: Could not resolve font "SimSun/BI" (it probably doesn't
+(fontspec)             exist).
+
+
+Package fontspec Info: Font family 'SimSun(0)' created for font 'SimSun' with
+(fontspec)             options
+(fontspec)             [Script={CJK},BoldFont={SimHei},ItalicFont={KaiTi}].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <->"SimSun/OT:script=hani;language=dflt;"
+(fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
+(fontspec)             - 'bold' (b/n) with NFSS spec.:
+(fontspec)             <->"SimHei/OT:script=hani;language=dflt;"
+(fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
+(fontspec)             - 'italic' (m/it) with NFSS spec.:
+(fontspec)             <->"KaiTi/OT:script=hani;language=dflt;"
+(fontspec)             - 'italic small caps'  (m/scit) with NFSS spec.: 
+
+)) (Z:\System_Environment\MiKTeX\tex/latex/ctex/config\ctex.cfg
+File: ctex.cfg 2022/07/14 v2.5.10 Configuration file (CTEX)
+)
+(Z:\System_Environment\MiKTeX\tex/latex/base\inputenc.sty
+Package: inputenc 2021/02/14 v1.3d Input encoding file
+\inpenc@prehook=\toks16
+\inpenc@posthook=\toks17
+
+
+Package inputenc Warning: inputenc package ignored with utf8 based engines.
+
+)
+
+Package ctexhook Warning: Package `ctex' can not be loaded with `ctexart'.
+
+LaTeX Info: Package 'ctex.sty' has been disabled.
+            Load request ignored on input line 5.
+(Z:\System_Environment\MiKTeX\tex/latex/listings\listings.sty
+(Z:\System_Environment\MiKTeX\tex/latex/graphics\keyval.sty
+Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
+\KV@toks@=\toks18
+)
+\lst@mode=\count288
+\lst@gtempboxa=\box55
+\lst@token=\toks19
+\lst@length=\count289
+\lst@currlwidth=\dimen175
+\lst@column=\count290
+\lst@pos=\count291
+\lst@lostspace=\dimen176
+\lst@width=\dimen177
+\lst@newlines=\count292
+\lst@lineno=\count293
+\lst@maxwidth=\dimen178
+
+(Z:\System_Environment\MiKTeX\tex/latex/listings\lstmisc.sty
+File: lstmisc.sty 2023/02/27 1.9 (Carsten Heinz)
+\c@lstnumber=\count294
+\lst@skipnumbers=\count295
+\lst@framebox=\box56
+)
+(Z:\System_Environment\MiKTeX\tex/latex/listings\listings.cfg
+File: listings.cfg 2023/02/27 1.9 listings configuration
+))
+Package: listings 2023/02/27 1.9 (Carsten Heinz)
+
+(Z:\System_Environment\MiKTeX\tex/xelatex/xecjk\xeCJK-listings.sty
+Package: xeCJK-listings 2022/08/05 v3.9.1 xeCJK patch file for listings
+\l__xeCJK_listings_max_char_int=\count296
+\l__xeCJK_listings_flag_int=\count297
+)
+(Z:\System_Environment\MiKTeX\tex/latex/geometry\geometry.sty
+Package: geometry 2020/01/02 v5.9 Page Geometry
+
+(Z:\System_Environment\MiKTeX\tex/generic/iftex\ifvtex.sty
+Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
+
+(Z:\System_Environment\MiKTeX\tex/generic/iftex\iftex.sty
+Package: iftex 2022/02/03 v1.0f TeX engine tests
+))
+\Gm@cnth=\count298
+\Gm@cntv=\count299
+\c@Gm@tempcnt=\count300
+\Gm@bindingoffset=\dimen179
+\Gm@wd@mp=\dimen180
+\Gm@odd@mp=\dimen181
+\Gm@even@mp=\dimen182
+\Gm@layoutwidth=\dimen183
+\Gm@layoutheight=\dimen184
+\Gm@layouthoffset=\dimen185
+\Gm@layoutvoffset=\dimen186
+\Gm@dimlist=\toks20
+
+(Z:\System_Environment\MiKTeX\tex/latex/geometry\geometry.cfg))
+(Z:\System_Environment\MiKTeX\tex/latex/xcolor\xcolor.sty
+Package: xcolor 2022/06/12 v2.14 LaTeX color extensions (UK)
+
+(Z:\System_Environment\MiKTeX\tex/latex/graphics-cfg\color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package xcolor Info: Driver file: xetex.def on input line 227.
+
+(Z:\System_Environment\MiKTeX\tex/latex/graphics-def\xetex.def
+File: xetex.def 2022/09/22 v5.0n Graphics/color driver for xetex
+)
+(Z:\System_Environment\MiKTeX\tex/latex/graphics\mathcolor.ltx)
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1353.
+Package xcolor Info: Model `RGB' extended on input line 1369.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1371.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1372.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1373.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1374.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1375.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1376.
+)
+(Z:\System_Environment\MiKTeX\tex/latex/graphics\graphicx.sty
+Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
+
+(Z:\System_Environment\MiKTeX\tex/latex/graphics\graphics.sty
+Package: graphics 2022/03/10 v1.4e Standard LaTeX Graphics (DPC,SPQR)
+
+(Z:\System_Environment\MiKTeX\tex/latex/graphics\trig.sty
+Package: trig 2021/08/11 v1.11 sin cos tan (DPC)
+)
+(Z:\System_Environment\MiKTeX\tex/latex/graphics-cfg\graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: xetex.def on input line 107.
+)
+\Gin@req@height=\dimen187
+\Gin@req@width=\dimen188
+)
+(Z:\System_Environment\MiKTeX\tex/latex/float\float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count301
+\float@exts=\toks21
+\float@box=\box57
+\@float@everytoks=\toks22
+\@floatcapt=\box58
+)
+
+Package fontspec Info: Could not resolve font "Monaco/BI" (it probably doesn't
+(fontspec)             exist).
+
+
+Package fontspec Info: Could not resolve font "Monaco/B" (it probably doesn't
+(fontspec)             exist).
+
+
+Package fontspec Info: Could not resolve font "Monaco/I" (it probably doesn't
+(fontspec)             exist).
+
+
+Package fontspec Info: Font family 'Monaco(0)' created for font 'Monaco' with
+(fontspec)             options [Ligatures=TeX].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <->"Monaco/OT:language=dflt;mapping=tex-text;"
+(fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
+
+ (try.aux)
+\openout1 = `try.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
+
+Package fontspec Info: Adjusting the maths setup (use [no-math] to avoid
+(fontspec)             this).
+
+\symlegacymaths=\mathgroup4
+LaTeX Font Info:    Overwriting symbol font `legacymaths' in version `bold'
+(Font)                  OT1/cmr/m/n --> OT1/cmr/bx/n on input line 47.
+LaTeX Font Info:    Redeclaring math accent \acute on input line 47.
+LaTeX Font Info:    Redeclaring math accent \grave on input line 47.
+LaTeX Font Info:    Redeclaring math accent \ddot on input line 47.
+LaTeX Font Info:    Redeclaring math accent \tilde on input line 47.
+LaTeX Font Info:    Redeclaring math accent \bar on input line 47.
+LaTeX Font Info:    Redeclaring math accent \breve on input line 47.
+LaTeX Font Info:    Redeclaring math accent \check on input line 47.
+LaTeX Font Info:    Redeclaring math accent \hat on input line 47.
+LaTeX Font Info:    Redeclaring math accent \dot on input line 47.
+LaTeX Font Info:    Redeclaring math accent \mathring on input line 47.
+LaTeX Font Info:    Redeclaring math symbol \colon on input line 47.
+LaTeX Font Info:    Redeclaring math symbol \Gamma on input line 47.
+LaTeX Font Info:    Redeclaring math symbol \Delta on input line 47.
+LaTeX Font Info:    Redeclaring math symbol \Theta on input line 47.
+LaTeX Font Info:    Redeclaring math symbol \Lambda on input line 47.
+LaTeX Font Info:    Redeclaring math symbol \Xi on input line 47.
+LaTeX Font Info:    Redeclaring math symbol \Pi on input line 47.
+LaTeX Font Info:    Redeclaring math symbol \Sigma on input line 47.
+LaTeX Font Info:    Redeclaring math symbol \Upsilon on input line 47.
+LaTeX Font Info:    Redeclaring math symbol \Phi on input line 47.
+LaTeX Font Info:    Redeclaring math symbol \Psi on input line 47.
+LaTeX Font Info:    Redeclaring math symbol \Omega on input line 47.
+LaTeX Font Info:    Redeclaring math symbol \mathdollar on input line 47.
+LaTeX Font Info:    Redeclaring symbol font `operators' on input line 47.
+LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
+(Font)              `operators' in the math version `normal' on input line 47.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
+(Font)                  OT1/cmr/m/n --> TU/Monaco(0)/m/n on input line 47.
+LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
+(Font)              `operators' in the math version `bold' on input line 47.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  OT1/cmr/bx/n --> TU/Monaco(0)/m/n on input line 47.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
+(Font)                  TU/Monaco(0)/m/n --> TU/Monaco(0)/m/n on input line 47.
+
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
+(Font)                  OT1/cmr/m/it --> TU/Monaco(0)/m/it on input line 47.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
+(Font)                  OT1/cmr/bx/n --> TU/Monaco(0)/b/n on input line 47.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
+(Font)                  OT1/cmss/m/n --> TU/Monaco(0)/m/n on input line 47.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
+(Font)                  OT1/cmtt/m/n --> TU/lmtt/m/n on input line 47.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  TU/Monaco(0)/m/n --> TU/Monaco(0)/b/n on input line 47.
+
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
+(Font)                  OT1/cmr/bx/it --> TU/Monaco(0)/b/it on input line 47.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
+(Font)                  OT1/cmss/bx/n --> TU/Monaco(0)/b/n on input line 47.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
+(Font)                  OT1/cmtt/m/n --> TU/lmtt/b/n on input line 47.
+\c@lstlisting=\count302
+
+*geometry* driver: auto-detecting
+*geometry* detected driver: xetex
+*geometry* verbose mode - [ preamble ] result:
+* driver: xetex
+* paper: a4paper
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: 
+* h-part:(L,W,R)=(71.13188pt, 469.47049pt, 56.9055pt)
+* v-part:(T,H,B)=(72.2698pt, 700.50723pt, 72.2698pt)
+* \paperwidth=597.50787pt
+* \paperheight=845.04684pt
+* \textwidth=469.47049pt
+* \textheight=700.50723pt
+* \oddsidemargin=-1.1381pt
+* \evensidemargin=-1.1381pt
+* \topmargin=-37.00018pt
+* \headheight=12.0pt
+* \headsep=25.0pt
+* \topskip=12.0pt
+* \footskip=30.0pt
+* \marginparwidth=35.0pt
+* \marginparsep=10.0pt
+* \columnsep=10.0pt
+* \skip\footins=10.8pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <14.4> on input line 51.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 51.
+File: 1.png Graphic file (type bmp)
+<1.png>
+
+Overfull \hbox (9.42943pt too wide) in paragraph at lines 54--55
+ [][] 
+ []
+
+[1
+
+]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/b/n' undefined
+(Font)              using `TU/Monaco(0)/m/n' instead on input line 59.
+
+(try.toc
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 2.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 2.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 2.
+
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 36.
+
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/it' undefined
+(Font)              using `TU/Monaco(0)/m/n' instead on input line 36.
+
+[2]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 70.
+
+[3])
+\tf@toc=\write3
+\openout3 = `try.toc'.
+
+ (Z:\System_Environment\MiKTeX\tex/latex/listings\lstlang1.sty
+File: lstlang1.sty 2023/02/27 1.9 listings language file
+)
+(Z:\System_Environment\MiKTeX\tex/latex/listings\lstlang1.sty
+File: lstlang1.sty 2023/02/27 1.9 listings language file
+)
+(Z:\System_Environment\MiKTeX\tex/latex/listings\lstmisc.sty
+File: lstmisc.sty 2023/02/27 1.9 (Carsten Heinz)
+) [4]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 93.
+
+[5]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 107.
+
+[6]
+Missing character: There is no Π in font Monaco/OT:language=dflt;mapping=tex-te
+xt;!
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 150.
+
+[7]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 188.
+
+[8]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 222.
+
+[9]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 259.
+
+[10]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 268.
+
+[11]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 303.
+
+[12]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 344.
+
+[13]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 381.
+
+[14]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 393.
+
+[15]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 431.
+
+[16]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 462.
+
+[17]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 498.
+
+[18]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 537.
+
+[19]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 575.
+
+[20]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 612.
+
+[21]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 624.
+
+[22]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 661.
+
+[23]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 700.
+
+[24]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 737.
+
+[25]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 758.
+
+[26]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 788.
+
+[27]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 827.
+
+[28]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 841.
+
+[29]
+Missing character: There is no ​ in font Monaco/OT:language=dflt;mapping=tex-te
+xt;!
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 875.
+
+[30]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 914.
+
+[31]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 951.
+
+[32]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 955.
+
+[33]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 994.
+
+[34]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 998.
+
+[35]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 1035.
+
+[36]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 1072.
+
+[37]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 1084.
+
+[38]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 1123.
+
+[39]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 1142.
+
+[40]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 1176.
+
+[41]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 1215.
+
+[42]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 1251.
+
+[43]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 1271.
+
+[44]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 1310.
+
+[45]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 1343.
+
+[46]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 1382.
+
+[47]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 1415.
+
+[48]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 1454.
+
+[49]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 1490.
+
+[50]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 1508.
+
+[51]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 1547.
+
+[52]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 1567.
+
+[53]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 1602.
+
+[54]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 1624.
+
+[55]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 1663.
+
+[56]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 1700.
+
+[57]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 1726.
+
+[58]
+Missing character: There is no ∈ in font Monaco/OT:language=dflt;mapping=tex-te
+xt;!
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 1761.
+
+[59]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 1795.
+
+[60]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 1811.
+
+[61]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 1847.
+
+[62]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 1872.
+
+[63]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 1914.
+
+[64]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 1943.
+
+[65]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 1980.
+
+[66]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 2017.
+
+[67]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 2054.
+
+[68]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 2091.
+
+[69]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 2113.
+
+[70]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 2151.
+
+[71]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 2188.
+
+[72]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 2205.
+
+[73]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 2242.
+
+[74]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 2277.
+
+[75]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 2306.
+
+[76]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 2345.
+
+[77]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 2382.
+
+[78]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 2418.
+
+[79]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 2457.
+
+[80]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 2494.
+
+[81]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 2526.
+
+[82]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 2572.
+
+[83]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 2607.
+
+[84]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 2646.
+
+[85]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 2684.
+
+[86]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 2728.
+
+[87]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 2744.
+
+[88]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 2790.
+
+[89]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 2832.
+
+[90]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 2864.
+
+[91]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 2892.
+
+[92]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 2922.
+
+[93]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 2945.
+
+[94]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 2969.
+
+[95]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 2990.
+
+[96]
+
+LaTeX Font Warning: Font shape `TU/Monaco(0)/m/sl' undefined
+(Font)              using `TU/Monaco(0)/m/it' instead on input line 3007.
+
+[97] (try.aux)
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+ ) 
+Here is how much of TeX's memory you used:
+ 10967 strings out of 411463
+ 272809 string characters out of 5821256
+ 2156290 words of memory out of 5000000
+ 31090 multiletter control sequences out of 15000+600000
+ 518019 words of font info for 81 fonts, out of 8000000 for 9000
+ 1348 hyphenation exceptions out of 8191
+ 89i,6n,97p,401b,1536s stack positions out of 10000i,1000n,20000p,200000b,200000s
+
+Output written on try.pdf (97 pages).

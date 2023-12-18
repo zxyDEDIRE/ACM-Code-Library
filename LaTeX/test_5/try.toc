@@ -1,0 +1,81 @@
+\contentsline {section}{\numberline {1}STL}{5}{}%
+\contentsline {subsection}{\numberline {1.1}快读快写}{5}{}%
+\contentsline {subsection}{\numberline {1.2}自定义开O2 开栈}{6}{}%
+\contentsline {subsection}{\numberline {1.3}set}{7}{}%
+\contentsline {subsection}{\numberline {1.4}string}{7}{}%
+\contentsline {subsection}{\numberline {1.5}python math库}{7}{}%
+\contentsline {subsection}{\numberline {1.6}rand()、测速 }{8}{}%
+\contentsline {subsection}{\numberline {1.7}struct}{8}{}%
+\contentsline {subsection}{\numberline {1.8}vector }{8}{}%
+\contentsline {subsection}{\numberline {1.9}STL函数}{10}{}%
+\contentsline {subsection}{\numberline {1.10}差分矩阵 }{12}{}%
+\contentsline {subsection}{\numberline {1.11}前缀和矩阵 }{13}{}%
+\contentsline {subsection}{\numberline {1.12} 分治，最大字段和 }{13}{}%
+\contentsline {section}{\numberline {2}字符串}{16}{}%
+\contentsline {subsection}{\numberline {2.1}kmp}{16}{}%
+\contentsline {subsection}{\numberline {2.2}exKMP }{18}{}%
+\contentsline {subsection}{\numberline {2.3}Manacher}{19}{}%
+\contentsline {subsection}{\numberline {2.4}字符串哈希}{20}{}%
+\contentsline {subsection}{\numberline {2.5}最小表示法}{23}{}%
+\contentsline {subsection}{\numberline {2.6}AC自动机}{24}{}%
+\contentsline {section}{\numberline {3}图论}{27}{}%
+\contentsline {subsection}{\numberline {3.1}差分约束}{27}{}%
+\contentsline {subsection}{\numberline {3.2}Floyd}{27}{}%
+\contentsline {subsection}{\numberline {3.3}2-SET}{28}{}%
+\contentsline {subsection}{\numberline {3.4}倍增优化建图}{30}{}%
+\contentsline {subsection}{\numberline {3.5}prim}{31}{}%
+\contentsline {subsection}{\numberline {3.6}匈牙利}{34}{}%
+\contentsline {subsection}{\numberline {3.7}KM}{36}{}%
+\contentsline {subsection}{\numberline {3.8}点双}{39}{}%
+\contentsline {subsection}{\numberline {3.9}边双}{41}{}%
+\contentsline {subsection}{\numberline {3.10}仙人掌图求环路径长度}{42}{}%
+\contentsline {subsection}{\numberline {3.11}DINIC}{45}{}%
+\contentsline {subsection}{\numberline {3.12}MCMF}{47}{}%
+\contentsline {subsection}{\numberline {3.13}朱流算法(Edmonds)}{49}{}%
+\contentsline {subsection}{\numberline {3.14}最小生成树Boruvka}{52}{}%
+\contentsline {subsection}{\numberline {3.15}基尔霍夫矩阵}{54}{}%
+\contentsline {subsection}{\numberline {3.16}全源最短路}{56}{}%
+\contentsline {subsection}{\numberline {3.17}全局最小割}{59}{}%
+\contentsline {section}{\numberline {4}数据结构}{62}{}%
+\contentsline {subsection}{\numberline {4.1}MultiplyLCA}{62}{}%
+\contentsline {subsection}{\numberline {4.2}ST}{63}{}%
+\contentsline {subsection}{\numberline {4.3}GrayCode}{64}{}%
+\contentsline {subsection}{\numberline {4.4}归并排序}{65}{}%
+\contentsline {subsection}{\numberline {4.5}树链剖分}{66}{}%
+\contentsline {subsection}{\numberline {4.6}扫描线线段树}{71}{}%
+\contentsline {subsection}{\numberline {4.7}莫队}{74}{}%
+\contentsline {subsection}{\numberline {4.8}点分治1}{77}{}%
+\contentsline {subsection}{\numberline {4.9}点分治2}{80}{}%
+\contentsline {section}{\numberline {5}数论}{83}{}%
+\contentsline {subsection}{\numberline {5.1}ExGcd}{83}{}%
+\contentsline {subsection}{\numberline {5.2}快速幂}{83}{}%
+\contentsline {subsection}{\numberline {5.3}整除分块}{83}{}%
+\contentsline {subsection}{\numberline {5.4}欧拉函数}{84}{}%
+\contentsline {subsection}{\numberline {5.5}等比数列求和}{85}{}%
+\contentsline {subsection}{\numberline {5.6}素数}{85}{}%
+\contentsline {subsection}{\numberline {5.7}排列组合其一}{86}{}%
+\contentsline {subsection}{\numberline {5.8}排列组合其二}{87}{}%
+\contentsline {subsection}{\numberline {5.9}排列组合其三}{88}{}%
+\contentsline {subsection}{\numberline {5.10}单调队列维护DP}{89}{}%
+\contentsline {section}{\numberline {6}计算几何}{90}{}%
+\contentsline {subsection}{\numberline {6.1}绕点旋转后坐标}{90}{}%
+\contentsline {subsection}{\numberline {6.2}正方形已知两点求另外两点}{90}{}%
+\contentsline {subsection}{\numberline {6.3}三角形}{90}{}%
+\contentsline {section}{\numberline {7}网络流建图}{93}{}%
+\contentsline {subsection}{\numberline {7.1}最小路径覆盖}{93}{}%
+\contentsline {subsubsection}{\numberline {7.1.1}最小不相交路径覆盖}{93}{}%
+\contentsline {subsubsection}{\numberline {7.1.2}最小可相交路径覆盖}{93}{}%
+\contentsline {subsubsection}{\numberline {7.1.3}最多不相交路径}{93}{}%
+\contentsline {subsection}{\numberline {7.2}最小割}{93}{}%
+\contentsline {subsubsection}{\numberline {7.2.1}最大权闭合子图}{93}{}%
+\contentsline {subsection}{\numberline {7.3}最小割}{94}{}%
+\contentsline {subsection}{\numberline {7.4}最大密度子图}{94}{}%
+\contentsline {subsection}{\numberline {7.5}二元关系最小割模型}{95}{}%
+\contentsline {subsection}{\numberline {7.6}二分图带权匹配}{95}{}%
+\contentsline {subsection}{\numberline {7.7}最大权不相交路径}{95}{}%
+\contentsline {subsection}{\numberline {7.8}不等式差分模型(网络流解线性规划)}{95}{}%
+\contentsline {subsection}{\numberline {7.9}有上下界的网络流}{96}{}%
+\contentsline {subsubsection}{\numberline {7.9.1}无源汇有上下界可行流}{96}{}%
+\contentsline {subsubsection}{\numberline {7.9.2}有源汇有上下界可行流}{96}{}%
+\contentsline {subsubsection}{\numberline {7.9.3}有源汇有上下界最大流和最小流}{96}{}%
+\contentsline {subsubsection}{\numberline {7.9.4}有源汇有上下界最小费用流}{97}{}%

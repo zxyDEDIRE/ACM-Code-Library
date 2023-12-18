@@ -1,0 +1,3586 @@
+%!TEX program = xelatex
+\documentclass[12pt, a4paper, oneside]{ctexart}
+\usepackage[utf8]{inputenc}
+\usepackage{ctex} %导入中文包
+\usepackage{listings}
+\usepackage{fontspec}
+\usepackage{geometry} %设置页边距的包
+\usepackage{listings}
+\usepackage{xcolor} 
+
+\usepackage{graphicx}
+\usepackage{float}
+
+
+\title{\fontsize{70}{30}\selectfont  ACM 算法模板} 
+\author{无敌爆哥} 
+\date{\today} 
+
+\geometry{left=2.5cm,right=2cm,top=2.54cm,bottom=2.54cm} %设置书籍的页边距
+\definecolor{mygray}{rgb}{0.97,0.97,0.97}%定制颜色
+
+\setsansfont{Monaco} 
+\setmainfont{Monaco}
+
+
+%对于lstset排版
+\lstset{
+tabsize=4,
+	breaklines, 					% 自动将长的代码行换行排版
+	backgroundcolor = \color{white},     			 % 背景色：淡黄
+	numbers=left, 									% 行号在左侧显示
+	numberstyle= \small, 								% 行号字体
+	keywordstyle= \color{ red!70},						 % 关键字颜色
+	commentstyle= \color{red!50!green!50!blue!50}, 		% 注释颜色
+	rulesepcolor= \color{ red!20!green!20!blue!20} ,
+	frame=single,                               % 设置代码框形式
+	escapeinside=``,									 % 英文分号中可写入中文
+	xleftmargin=2em,xrightmargin=2em, aboveskip=1em,
+	framexleftmargin=2em
+} 
+
+
+\begin{document} 
+
+\maketitle
+\thispagestyle{empty}
+\centering
+\includegraphics[scale=0.55]{pic.jpg}
+
+
+\newpage
+\tableofcontents 
+\thispagestyle{empty}
+\lstset{language=C++}
+
+\newpage 
+\section{数学} 
+\subsection{康托展开} 
+可以O(nlogn)复杂度求一个排列对于排列中的排名
+\begin{lstlisting}
+const int N=1e6+10,mod=998244353;
+long long fac[N];
+int tr[N];
+int n;
+int a[N];
+int lowbit(int x)
+{
+	return x&-x;
+ } 
+void add(int x)
+{
+	for(int i=x;i<=n;i+=lowbit(i)) tr[i]+=1;
+}
+int qr(int x)
+{
+	int res=0;
+	for(int i=x;i;i-=lowbit(i)) res+=tr[i];
+	return res;
+}
+long long cantor(){
+	fac[0]=1;
+	for(int i=1;i<=n;i++) {
+		fac[i]=fac[i-1]*i%mod;
+	}
+	long long ans=0;
+	for(int i=1;i<=n;i++){
+		ans=(ans+(a[i]-1-qr(a[i]))*fac[n-i]%mod)%mod;
+		add(a[i]);
+	}
+	return (ans+1)%mod;
+}
+\end{lstlisting}
+
+\newpage 
+\subsection{逆康托展开} 
+已经知道排名得到原排列，逆向推出原序列
+\begin{lstlisting}
+vector<int> incantor(int x,int n) {
+    x--;// 得到以0开始的排名
+    vector<int> res(n);// 保存数列答案
+    int cnt;
+    bool st[10];// 标记数组
+    memset(st,0,sizeof st);
+    for(int i = 0;i < n; ++i) {
+        cnt = x/fact[n - i - 1];// 比a[i]小且没有出现过的数的个数
+        x %= fact[n - i - 1];// 更新 x
+        for(int j = 1;j <= n; ++j) {// 找到a[i]，从1开始向后找
+            if(st[j]) continue;// 如果被标记过，就跳过
+            if(!cnt) {// 如果cnt == 0说明当前数是a[i]
+                st[j] = 1;//标记
+                res[i] = j;// 第i位是j
+                break;
+            }
+            cnt --;// 如果当前不是0，就继续往后找
+        }
+    }
+    return res;// 返回答案
+}
+\end{lstlisting}
+
+\newpage 
+\subsection{线性逆元} 
+\begin{lstlisting}
+in[0]=in[1]=1;
+for(int i=2;i<=n;i++){
+    in[i]=1ll*(mod-mod/i)*in[mod%i]%mod;
+}
+\end{lstlisting}
+
+\newpage 
+\subsection{线性筛求因子数量} 
+\begin{lstlisting}
+int fac[N],q[N],top;
+bool vis[N];
+int cnt[N];
+void init(int n=1e6)
+{
+	vis[1]=true;
+	fac[1]=1;
+	for(int i=2;i<=n;i++)
+	{
+		if(vis[i]==false)
+		{
+			q[top++]=i;
+			fac[i]=2;
+			cnt[i]=1;
+		}
+		for(int j=0;1ll*q[j]*i<=n;j++)
+		{
+			int nu=i*q[j];
+			vis[nu]=true;
+			if(i%q[j]==0)
+			{
+				fac[nu]=fac[i]/(cnt[i]+1)*(cnt[i]+2);
+				cnt[nu]=cnt[i]+1;
+				break;
+			}
+			fac[nu]=fac[i]*fac[q[j]];
+			cnt[nu]=1;
+		}
+	}
+}
+\end{lstlisting}
+
+\newpage 
+\subsection{二进制GCD} 
+快！
+\begin{lstlisting}
+int gcd(int a, int b) {
+    int az = __builtin_ctz(a);
+    int bz = __builtin_ctz(b);
+    int z = min(az, bz);
+    b >>= bz;
+    while (a) {
+        a >>= az;
+        int diff = a - b;
+        az = __builtin_ctz(diff);
+        b = min(a, b), a = abs(diff);
+    }
+    return b << z;
+}
+\end{lstlisting}
+
+\newpage 
+\subsection{快速gcd} 
+预处理值域，常数访问gcd (T取${\sqrt{max}}$)
+\begin{lstlisting}
+const int M=1e6+10,T=1e3+10;//值域 
+bool vis[M];
+int q[M],cnt;
+int fac[M][3];
+int gc[T][T];
+int gcd(int a,int b)
+{
+	return b?gcd(b,a%b):a;
+}
+void init(int n=M-10)
+{
+	vis[1]=true;
+	vis[0]=true;
+	fac[1][0]=fac[1][1]=fac[1][2]=1;
+	for(int i=2;i<=n;i++)
+	{
+		if(!vis[i])
+		{
+			q[cnt++]=i;
+			fac[i][0]=fac[i][1]=1;
+			fac[i][2]=i;
+		}
+		for(int j=0;1ll*q[j]*i<=n;j++)
+		{
+			int nu=q[j]*i;
+			vis[nu]=true;
+			fac[nu][0]=fac[i][0]*q[j];
+			fac[nu][1]=fac[i][1];
+			fac[nu][2]=fac[i][2];
+			if(fac[nu][0]>fac[nu][1]) swap(fac[nu][0],fac[nu][1]);
+			if(fac[nu][1]>fac[nu][2]) swap(fac[nu][1],fac[nu][2]);
+			if(i%q[j]==0) break;
+		}
+	}
+	for(int i=0;i<=T-10;i++)
+	{
+		for(int j=0;j<=T-10;j++)
+		{
+			if(!i&&!j) continue;
+			gc[i][j]=gcd(i,j);
+		}
+	}
+}
+int qgcd(int x,int y)
+{
+	int res=1;
+	for(int i=0,t=1;i<3;i++)
+	{
+		if(fac[x][i]>T-10)
+		{
+			if(y%fac[x][i]) t=1;
+			else t=fac[x][i];
+		}
+		else t=gc[fac[x][i]][y%fac[x][i]];
+		res=res*t;y/=t;
+	}
+	return res;
+}
+\end{lstlisting}
+
+\newpage 
+\subsection{求矩阵行列式值} 
+原理是通过高斯消元将行列式下三角清0，那么答案就是主对角线的累乘，这里由于模值不一定是质数，不能保障每一个元素都在P取模情况下有逆元，所以采用了特别妙的方法，通过主元行与其他行进来辗转相除来进行清0过程。原理是行列式中一行减去另外一行的乘积，行列式答案不变。
+\begin{lstlisting}
+int mod=998244353;
+const int N=610;
+long long mp[N][N];
+int n;
+long long gauss()//求矩阵行列式的值
+{
+	long long res=1;
+	for(int i=0;i<n;i++)
+	{
+		for(int j=i+1;j<n;j++)
+		{
+			while(mp[i][i])
+			{
+				long long div=mp[j][i]/mp[i][i];
+				for(int k=i;k<n&&div;k++) {
+					mp[j][k]=((mp[j][k]-div*mp[i][k])%mod+mod)%mod;
+				}
+				for(int k=i;k<n;k++) swap(mp[i][k],mp[j][k]);res=-res;
+			}
+			for(int k=i;k<n;k++) swap(mp[i][k],mp[j][k]);res=-res;
+		}
+	}
+	res=(res+mod)%mod;
+	for(int i=0;i<n;i++) res=res*mp[i][i]%mod;
+	return res;
+}
+\end{lstlisting}
+
+\newpage 
+\subsection{线性基} 
+\begin{lstlisting}
+struct Vec{
+    vector<long long>d,g;
+    int n;
+    int le;
+    Vec(){};
+    Vec(int _n){n=_n;d.resize(n+1);g.resize(n+1);}
+    bool insert(long long x){
+        for(int i=n;i>=0;i--){
+            if((x>>i)&1){
+                if(d[i]==0){
+                    d[i]=x;
+                    return true;
+                }else{
+                    x^=d[i];
+                }
+            }
+        }
+        return false;
+    }
+    void re(){
+        for(int i=0;i<=n;i++){
+            for(int j=i-1;j>=0;j--){
+                if((d[i]>>j)&1){
+                    d[i]^=d[j];
+                }
+            }
+        }
+        le=0;
+        for(int i=0;i<=n;i++){
+            if(d[i]){
+                g[le++]=d[i];
+            }
+        }
+    }
+    long long qrk(long long x){
+        if(x>(1ll<<le)) return -1;   
+        x--;
+        long long res=0;
+        for(int i=0;i<le;i++){
+            if((x>>i)&1){
+                res^=g[i];
+            }
+        }
+        return res;
+    }
+};
+\end{lstlisting}
+
+\newpage 
+\subsection{拓展中国剩余定理（EXCRT)} 
+CRT 求的问题是有一个数余上不同的模值M之后，求余数R值
+通过公式分析可以推出 最终的模值为 M=LCM(m1,m2,m3..) ,R=LCM*k+q.m1+r1
+有时候如果可以用中国剩余定理搞的题目，需要质数分别当模数，如果wa了试一下不用5什么的
+\begin{lstlisting}
+long long gcd(long long a,long long b)
+{
+	return b?gcd(b,a%b):a;
+}
+long long exgcd(long long a,long long b,long long &x,long long &y)
+{
+	if(b==0)
+	{
+		x=1;
+		y=0;
+		return a;
+	}
+	long long x1,y1,d;
+	d=exgcd(b,a%b,x1,y1);
+	x=y1;
+	y=x1-a/b*y1;
+	return d;
+}
+long long lcm(long long a,long long b)
+{
+	return a/gcd(a,b)*b;
+}
+long long m[20],r[20];
+int tp;
+long long CRT()
+{
+	for(int i=1;i<tp;i++)
+	{
+		long long d,x,y;
+		d=exgcd(m[i-1],m[i],x,y);
+        if((r[i]-r[i-1])%d) return -1;
+		x=x*(r[i]-r[i-1])/d;
+		x=(x%(m[i]/d)+m[i]/d)%(m[i]/d);
+		r[i]=m[i-1]*x+r[i-1];
+		m[i]=lcm(m[i-1],m[i]);
+		r[i]=(r[i]%m[i]+m[i])%m[i];
+	}
+	return r[tp-1]%m[tp-1];
+}
+\end{lstlisting}
+解 at[i]*x\%m[i]=r[i]//带有系数的excrt
+\begin{lstlisting}
+long long CRT()
+{
+	tp=n;
+	long long ans=0,M=1,A,B,C,x,y;
+	for(int i=1;i<=tp;i++)
+	{
+		A=(__int128)at[i]*M%m[i];
+		B=m[i];
+		C=(r[i]-at[i]*ans%m[i]+m[i])%m[i];
+		long long d=exgcd(A,B,x,y);
+		if(C%d) return -1;
+		x=(x%B+B)%B;
+		ans+=(__int128)(C/d)*x%(B/d)*M%(M*=B/d);
+		ans%=M;
+	}
+	return ans;
+}
+\end{lstlisting}
+
+\newpage 
+\subsection{BSGS} 
+${a^x=b(mod p)}$
+\begin{lstlisting}
+long long gcd(long long a,long long b)
+{
+	return b?gcd(b,a%b):a;
+}
+long long BSGS(long long a,long long b,long long p)
+{
+	a%=p,b%=p;
+	if(b==1||p==1){
+		return 0;
+	}
+	int k=0;
+	long long A=1;
+	while(1)
+	{
+		long long d=gcd(a,p);
+		if(b%d!=0) {
+			return -1;
+		}
+		if(d==1) break;
+		k++;b/=d;p/=d;A=A*(a/d)%p;b%=p;
+		if(A==b) {
+			return k;
+		}
+	}
+	long long m=ceil(sqrt(p));
+	map<long long,int>mp;
+	long long t=b;
+	for(int i=0;i<m;i++)
+	{
+		mp[t]=i;
+		t=t*a%p;
+	}
+	t=1;
+	for(int i=1;i<=m;i++)
+	{
+		t=t*a%p;
+	}
+	long long tt=A;
+	for(int i=1;i<=m;i++)
+	{
+		tt=tt*t%p;
+		if(mp.count(tt)&&i*m-mp[tt]>=0)
+		{
+			return i*m-mp[tt]+k;
+		}
+		
+	}
+	return -1;
+}
+\end{lstlisting}
+
+\newpage 
+\subsection{卢卡斯求组合数} 
+满足mod为质数
+\begin{lstlisting}
+long long lucas(long long n,long long m)
+{
+	if(m==0) return 1;
+	return lucas(n/mod,m/mod)*C(n%mod,m%mod)%mod;
+}
+\end{lstlisting}
+
+\newpage 
+\subsection{错排} 
+n个不相同盒子和n个不相同球，对应球不能放到下标相同盒子中
+\begin{lstlisting}
+f[0]=1;
+f[1]=0;
+f[2]=1;
+f[i]=(f[i-1]+f[i-2])*(i-1);
+\end{lstlisting}
+
+\newpage 
+\subsection{高精度} 
+\begin{lstlisting}
+struct BigInt{
+    int w=6;
+    int tw=1e6;
+    vector<int>v;
+    int len=0;
+    BigInt(){len=0;}
+    BigInt(int _len){len=_len;v.resize(len);}
+    BigInt operator +(const BigInt &w)const{
+        BigInt res;
+        res.v=v;
+        res.len=len;
+        long long tp=0;
+        for(int i=0;i<(int)v.size();i++){
+            if(i<(int)w.v.size()){
+                tp+=w.v[i];
+            }
+            tp+=v[i];
+            res.v[i]=(tp%tw);
+            tp/=tw;
+        }
+        while(tp) res.v.push_back(tp%tw),tp/=tw,res.len++;
+        return res;
+    }
+    BigInt operator +(const int &x)const{
+        int tp=x;
+        BigInt res;
+        res.v=v;
+        res.len=len;
+        for(int i=0;i<(int)v.size();i++){
+            tp+=v[i];
+            res.v[i]=(tp%tw);
+            tp/=tw;
+            if(tp==0) break;
+        }
+        while(tp) res.v.push_back(tp%tw),tp/=tw,res.len++;
+        return res;
+    }
+    //sub只有a>=b
+    BigInt operator -(const BigInt &w)const{
+        BigInt res;
+        res.v=v;
+        res.len=len;
+        for(int i=0;i<len;i++){
+            if(i<(int)w.len){
+                res.v[i]-=w.v[i];
+            }
+            if(res.v[i]<0) res.v[i]+=tw,res.v[i+1]--;
+        }
+        while(res.len>1&&res.v.back()==0){
+            res.v.pop_back();
+            res.len--;
+        }
+        return res;
+    }
+    BigInt operator - (const int b)const{
+        BigInt res;
+        res.v=v;
+        res.len=len;
+        res.v[0]-=b;
+        for(int i=0;i<(int)v.size();i++){
+            while(res.v[i]<0) res.v[i]+=tw,res.v[i]--;
+        }
+        while(res.len>1&&res.v.back()==0){
+            res.v.pop_back();res.len--;
+        }
+        return res;
+    }
+    BigInt operator *(const BigInt & w)const{
+        BigInt res(len+w.len+2);
+        for(int i=0;i<len;i++){
+            for(int j=0;j<w.len;j++){
+                long long tp=1ll*v[i]*w.v[j];
+                res.v[i+j+1]+=tp/tw;
+                res.v[i+j]+=tp%tw;
+                res.v[i+j+1]+=res.v[i+j]/tw;
+                res.v[i+j]%=tw;
+            }
+        }
+        while(res.len>1&&res.v.back()==0){
+            res.v.pop_back();res.len--;
+        }
+        return res;
+    }
+    BigInt operator *(const int  w)const{
+        BigInt res;
+        res.v=v;
+        res.len=len;
+        long long tp=0;
+        for(int i=0;i<len;i++){
+            tp+=1ll*w*res.v[i];
+            res.v[i]=tp%tw;
+            tp/=tw;
+        }
+        while(tp){
+            res.v.push_back(tp%tw);res.len++;
+            tp/=tw;
+        }
+        return res;
+    }
+    BigInt operator /(const int w)const{
+        BigInt res;
+        res.v=v;
+        res.len=len;
+        long long tp=0;
+        for(int i=len-1;i>=0;i--){
+            tp=tp*tw+v[i];
+            res.v[i]=tp/w;
+            tp%=w;
+        }
+        while(res.len>1&&res.v.back()==0){
+            res.v.pop_back();res.len--;
+        }
+        return res;
+    }
+    int operator %(const int w)const{
+        long long res=0;
+        for(int i=len-1;i>=0;i--){
+            res=res*tw+v[i];
+            res%=w;
+        }    
+        return res;
+    }
+    void read(string &a){
+        for(int i=(int)a.size();i-1>=0;i-=w){
+            int res=0;
+            for(int j=max(0,i-w);j<=i-1;j++){
+                res=res*10+(a[j]-'0');
+            }
+            v.push_back(res);len++;
+        }
+    }
+    /*
+    1 a>b
+    -1 a<b
+    0 a=b
+    */
+    int equal(const BigInt &w){
+        if(len>w.len) return 1;
+        else if(len<w.len) return -1;
+        for(int i=len-1;i>=0;i--){
+            if(v[i]>w.v[i]) return 1;
+            else if(v[i]<w.v[i]) return -1;
+        }
+        return 0;
+    }
+    void pr(){
+        if(len==1){
+            cout<<v[0];
+        }
+        else{
+            int f=0;
+            for(int i=len-1;i>=0;i--){
+                int x=v[i];
+                int tww=tw;
+                for(int j=0;j<w;j++){
+                    tww/=10;
+                    int y=x/tww;
+                    if(y) f=1;
+                    if(f) cout<<y;
+                    x%=tww;
+                }
+            }
+        }
+        cout<<'\n';
+    }
+};
+\end{lstlisting}
+
+\newpage 
+\subsection{高精度GCD} 
+\begin{lstlisting}
+BigInt gcd(BigInt a,BigInt b){
+    int tp=0;
+    while(1){
+        int t=a.equal(b);
+        if(t==-1) swap(a,b);
+        if(t==0||b.len==1&&b.v[0]==0) break;
+        if(!(a.v[0]&1)&&!(b.v[0]&1)){
+            tp++;
+            a=a/2;
+            b=b/2;
+        }
+        else if(!(a.v[0]&1)){
+            a=a/2;
+        }
+        else if(!(b.v[0]&1)){
+            b=b/2;
+        }else{
+            a=a-b;
+        }
+    }
+    while(tp--){
+        a=a*2;
+    }
+    return a;
+}
+\end{lstlisting}
+
+\newpage 
+\subsection{拉格朗日插值} 
+${f(x)=\sum_{i=1}^ny_i\prod_{j=1}^n\frac{x-x_j}{x_i-x_j}(x_i \neq x_j)}$
+\begin{lstlisting}
+const int N=2e5+10,mod=998244353;
+long long ksm(long long a,long long b){
+    long long res=1;
+    a%=mod;
+    while(b){
+        if(b&1) res=res*a%mod;
+        a=a*a%mod;
+        b>>=1;
+    }
+    return res;
+}
+struct pp{
+    long long x,y;
+}p[N];
+int n;
+long long lagrange(long long k){
+    long long ans=0;
+    for(int i=1;i<=n;i++){
+        long long res=1;
+        long long res1=1;
+        for(int j=1;j<=n;j++){
+            if(i==j) continue;
+            res=res*(p[i].x-p[j].x+mod)%mod;
+            res1=res1*(k-p[j].x+mod)%mod;
+        }
+        ans=(ans+p[i].y*res1%mod*ksm(res,mod-2)%mod)%mod;
+    }
+    return ans;
+}
+\end{lstlisting}
+
+\newpage 
+\subsection{FFT(快速傅里叶变换)} 
+\subsubsection{单位根}
+用来实现DFT的一个重要元素
+
+前提：${n=2^k}$ （${k}$为非负整数）
+
+形式：${{w_n^k}={cos(\frac{2\pi k}{n})}+{i*sin(\frac{2\pi k}{n})}}$
+
+周期性：${w_n^{n+k}=w_n^k}$
+
+对称性：${w_n^{k+{\frac{n}{2}}}=-w_n^k}$
+
+折半性：${w_n^{2k}=w_{\frac{n}{2}}^k}$
+
+在DFT中的体现是：
+
+${A(x)={\sum_{i=0}^{n-1}}}a_ix^i$
+
+${A_1(x)=a_0+a_2x^2 ...a_{n-2}x^{n-2}}$
+
+${A_2(x)=a_1x^1+a_3x^3...a_{n-1}x^{n-1}}$
+
+${A(x)=A_1(x^2)+xA_2(x^2)}$
+
+设${w_n^k}$ $({k}<{\frac{n}{2}})$
+
+${A(w_n^k)=A_1(w_n^{2k})+{w_n^k}A_2(w_n^{2k})=A_1(w_{\frac{n}{2}}^k)+w_n^kA_2(w_{\frac{n}{2}}^k)}$
+
+${A(w_n^k)=A_1(w_n^{2k+n})+{w_n^{k+{\frac{n}{2}}}}A_2(w_n^{2k+n})=A_1(w_{\frac{n}{2}}^k)-w_n^kA_2(w_{\frac{n}{2}}^k)}$
+\subsubsection{代码实现}
+系数表示法—>点值表示法—>系数表示法\par
+采用单位根，运用负数表达，系数需要小数表达可以选择fft
+\begin{lstlisting}
+#define double long double
+const double PI=acos(-1);
+struct complex_{
+    double a,b;
+    complex_(){a=0;b=0;}
+    complex_(double _a,double _b){a=_a;b=_b;}
+    complex_ operator +(const complex_ &w)const{
+        return complex_(a+w.a,b+w.b);
+    }
+    complex_ operator -(const complex_ &w)const{
+        return complex_(a-w.a,b-w.b);
+    }
+    complex_ operator *(const complex_ &w)const{
+        return complex_(a*w.a-b*w.b,a*w.b+b*w.a);
+    }
+    complex_ operator /(const double w){
+        return complex_(a/w,b/w);
+    }
+};
+namespace FFT{
+    using poly=vector<long long>;
+    using poly1=vector<complex_>;
+    int limit,top;
+    const int N=3e6+10;
+    int r[N];
+    void init(int n,int m){
+        limit=1;top=0;
+        while(limit<=n+m) limit<<=1,top++;
+        for(int i=0;i<limit;i++){
+            r[i]=(r[i>>1]>>1)|((i&1)<<(top-1));
+        }
+    }
+    void fft(poly1 &v,int type){
+        int len=v.size();
+        for(int i=0;i<len;i++){
+            if(i<r[i]) swap(v[i],v[r[i]]);
+        }
+        for(int mid=1;mid<len;mid<<=1){
+            complex_ wn(cos(PI/mid),type*sin(PI/mid));
+            for(int R=mid<<1,j=0;j<len;j+=R){
+                complex_ w(1,0);
+                for(int k=0;k<mid;k++,w=w*wn){
+                    complex_ x=v[j+k],y=w*v[j+k+mid];
+                    v[j+k]=x+y;
+                    v[j+k+mid]=x-y;
+                }
+            }
+        }
+        if(type==-1){
+            for(int i=0;i<len;i++){
+                v[i]=v[i]/(double)len;
+            }
+        }
+    }
+     poly Mul(poly A,poly B,int len=0){
+         int n=A.size(),m=B.size();
+        if(len){
+            if(n>len){
+                A.resize(len),n=len;
+            }
+            if(m>len) B.resize(len),m=len;
+        }
+        if(n<=30||m<=30){
+            poly res(n+m-1,0);
+            for(int i=0;i<n;i++){
+                for(int j=0;j<m;j++){
+                    res[i+j]=(res[i+j]+A[i]*B[j]);
+                }
+            }
+            if(len){
+                res.resize(len);
+            }
+            return res;
+        }
+        init(n,m);
+        poly1 a(limit),b(limit);
+        A.resize(limit);B.resize(limit);
+        for(int i=0;i<limit;i++){
+            a[i].a=a[i].b=0;
+            b[i].a=b[i].b=0;
+            if(i<n) a[i].a=A[i];
+            if(i<m) b[i].a=B[i];
+        }
+        fft(a,1);fft(b,1);
+        for(int i=0;i<limit;i++){
+            a[i]=a[i]*b[i];
+        }
+        fft(a,-1);
+        if(len==0){
+            A.resize(n+m-1);
+        }
+        else{
+            A.resize(len);
+        }
+        for(int i=0;i<(int)A.size();i++){
+            A[i]=(long long)(a[i].a+0.5);
+        }
+        return A;
+     }
+    //反转多项式系数
+    void Reverse(poly &a){
+        reverse(a.begin(),a.end());
+    }
+}
+using namespace FFT;
+\end{lstlisting}
+
+\newpage 
+\subsection{原根} 
+若${gcd(a,m)==1}$同时${a^x\equiv1(mod m)}$的最小阶为$\phi(m)$则表示a是m的原根\par
+求解通常是暴力算，已经被证明原根渐近$m^\frac{1}{4}$ 所以时间还是比较可观\par
+且只有 2,4,${p^a}$ ,${2p^a}$（p为奇质数）才有原根
+\begin{lstlisting}
+vector<int>root(int n){
+    vector<int>res;
+    if(!check(n)){ //判断是否有原根条件 2 4 p^a 2p^a
+        ;
+    }else{
+        int t=getol(n);//获得欧拉函数
+        vector<int>pr=getpr(t);//获得质因子
+        int fas=0;
+        for(int g=1;;g++){
+            int f=0;
+            if(__gcd(g,n)!=1) continue;
+            //因为阶是n的欧拉函数，所以因子都不能满足
+            for(int v:pr){ 
+                if(ksm(g,t/v,n)==1){
+                    f=1;break;
+                }
+            }
+            if(f==0){
+                fas=g;break;//最小原根
+            }
+        }
+        vector<int>res;
+        int num=fas;
+        //所有原根
+        for(int i=1;i<=t;i++){
+            if(__gcd(i,t)==1){
+                res.push_back(num);
+            }
+            num=num*fas%n;
+        }
+        sort(res.begin(),res.end());
+    }
+    return res;
+}
+\end{lstlisting}
+
+\newpage 
+\subsection{NTT（快速数论变换）} 
+采用原根来表达，都为整数运算，可以相对fft减少精度的影响。
+\begin{lstlisting}
+/*
+65537
+998244353
+1004535809
+4179340454199820289
+因为ntt受限制模数需要p=r*2^l+1 （其中l需要比给定运算的多项式的log(len)要大）
+所有以上是常见的 且g=3 如果遇到一个其余模数，可以先预处理看是否符合ntt要求在选择ntt求解
+*/
+\end{lstlisting}
+\begin{lstlisting}
+const int N=3e6+10;
+int r[N];
+int limit,L;
+void init(int n){
+    for(int i=0;i<n;i++){
+        r[i]=(r[i>>1]>>1)|((i&1)<<(L-1));
+    }
+}
+struct NTT{
+    int len;
+    int g=3,gi=332748118;
+    long long mod=998244353;
+    vector<long long>v;
+    NTT(){g=3;gi=332748118;mod=998244353;}
+    NTT(int _len){len=_len;v.resize(len);g=3;gi=332748118;mod=998244353;}
+    void init(int _len){len=_len;v.resize(len);g=3;gi=332748118;mod=998244353;}
+    void ntt(int type){
+        for(int i=0;i<len;i++){
+            if(i<r[i]) swap(v[i],v[r[i]]);
+        }
+        for(int mid=1;mid<len;mid<<=1){
+            long long wn=ksm(type==1?g:gi,(mod-1)/(mid<<1),mod);
+            for(int j=0,R=mid<<1;j<limit;j+=R){
+                long long w=1;
+                for(int k=0;k<mid;k++,w=(w*wn)%mod){
+                    long long x=v[j+k],y=v[j+mid+k]*w%mod;
+                    v[j+k]=(x+y)%mod;
+                    v[j+k+mid]=(x-y+mod)%mod;
+                }
+            }
+        }
+    }
+    void mul(const NTT &w){
+        for(int i=0;i<len;i++){
+            v[i]=(v[i]*w.v[i])%mod;
+        }
+    }
+};
+\end{lstlisting}
+
+\newpage 
+\subsection{任意模数MTT} 
+采用原根来表达，都为整数运算，可以相对fft减少精度的影响。
+\begin{lstlisting}
+/*
+如果要用ntt就是如下
+根据理论的乘法之后系数大小,通常最大10^(25)，因此可以通过中国剩余定理来设置三模数且满足ntt形式
+使其lcm(m1,m2,m3)>理论最大系数，来分别继续ntt操作，常数较大，需要9次ntt
+千万记得改变模数时候改变原根和原根的逆元！
+*/
+LL md[3]={469762049,998244353,1004535809};//常用三模数
+\end{lstlisting}
+\begin{lstlisting}
+//这里是基于FFT拆系数的MTT
+long long ksm(long long a,long long b,long long mod){
+    long long res=1;
+    a%=mod;
+    while(b){
+        if(b&1) res=res*a%mod;
+        a=a*a%mod;
+        b>>=1;
+    }
+    return res;
+}
+#define double long double 
+const double PI=acos(-1);
+struct complex_{
+    double a,b;
+    complex_(){a=0;b=0;}
+    complex_(double _a,double _b){a=_a;b=_b;}
+    complex_ operator +(const complex_ &w)const{
+        return complex_(a+w.a,b+w.b);
+    }
+    complex_ operator -(const complex_ &w)const{
+        return complex_(a-w.a,b-w.b);
+    }
+    complex_ operator *(const complex_ &w)const{
+        return complex_(a*w.a-b*w.b,a*w.b+b*w.a);
+    }
+    complex_ operator /(const double w){
+        return complex_(a/w,b/w);
+    }
+};
+namespace MTT{
+    using poly=vector<long long>;
+    using poly1=vector<complex_>;
+    const int N=3e6+10;
+    const long long B=(1<<15);
+    const complex_ I(0,1);
+    int mod=1e9+7;
+    int r[N],limit,L;
+    void init(int n,int m){
+        limit=1;L=0;
+        while(limit<=n+m) limit<<=1,L++;
+        for(int i=0;i<limit;i++){
+            r[i]=(r[i>>1]>>1)|((i&1)<<(L-1));
+        }
+    }
+    void fft(poly1 &v,int type){
+        int len=v.size();
+        for(int i=0;i<len;i++){
+            if(i<r[i]) swap(v[i],v[r[i]]);
+        }
+        for(int mid=1;mid<len;mid<<=1){
+            complex_ wn(cos(PI/mid),type*sin(PI/mid));
+            for(int R=mid<<1,j=0;j<len;j+=R){
+                complex_ w(1,0);
+                for(int k=0;k<mid;k++,w=w*wn){
+                    complex_ x=v[j+k],y=w*v[j+k+mid];
+                    v[j+k]=x+y;
+                    v[j+k+mid]=x-y;
+                }
+            }
+        }
+        if(type==-1){
+            for(int i=0;i<len;i++){
+                v[i]=v[i]/(double)len;
+            }
+        }
+    }
+    void mtt(poly1 &a,poly1 &b){
+        for(int i=0;i<limit;i++){
+            a[i].b=b[i].a;
+        }
+        fft(a,1);
+        b[0]=complex_(a[0].a,-a[0].b);
+        for(int i=1;i<limit;i++){
+            b[i]=complex_(a[limit-i].a,-a[limit-i].b);
+        }
+        complex_ t1,t2;
+        for(int i=0;i<limit;i++){
+            t1=a[i],t2=b[i];
+            a[i]=(t1+t2)/2.0;
+            b[i]=(t2-t1)*I/2.0;
+        }
+    }
+    long long rd(const double x){
+        if(x>=0) return (long long)(x+0.5)%mod;
+        return (long long)(x-0.5)%mod;
+    }
+    poly Mul(poly a,poly b,int len=0){
+        int n=(int)a.size(),m=(int)b.size();
+        if(len){
+            if(n>=len){
+                n=len;
+            }
+            if(m>=len){
+                m=len;
+            }
+        }
+        if(n<=30||m<=30){
+            poly res(n+m-1);
+            for(int i=0;i<n;i++){
+                for(int j=0;j<m;j++){
+                    res[i+j]=(res[i+j]+a[i]*b[j]%mod)%mod;
+                }
+            }
+            if(len){
+                res.resize(len);
+            }
+            return res;
+        }
+        if(len){
+            init(len,len);
+        }else{
+            init(n,m);
+        }
+        a.resize(n+m-1);
+        poly1 a0(limit),b0(limit),a1(limit),b1(limit);
+        for(int i=0;i<limit;i++){
+            a0[i]=a1[i]=complex_(0,0);
+            if(i<n){
+                a1[i].a=a[i]%B;
+                a0[i].a=a[i]/B;
+            }
+        }
+        for(int i=0;i<limit;i++){
+            b0[i]=b1[i]=complex_(0,0);
+            if(i<m){
+                b1[i].a=b[i]%B;
+                b0[i].a=b[i]/B;
+            }
+        }
+        mtt(a0,a1);mtt(b0,b1);
+        complex_ t1,t2;
+        for(int i=0;i<limit;i++){
+            t1=a0[i]*b0[i]+I*a1[i]*b0[i];
+            t2=a0[i]*b1[i]+I*a1[i]*b1[i];
+            a0[i]=t1;b0[i]=t2;
+        }
+        fft(a0,-1);fft(b0,-1);
+        for(int i=0;i<n+m-1;i++){
+            long long ans=1ll*B*B%mod*rd(a0[i].a)%mod+
+            1ll*B*rd(b0[i].a+a0[i].b)%mod+rd(b0[i].b)%mod;
+            a[i]=(ans+mod)%mod;
+        }
+        if(len) a.resize(len);
+        return a;
+    }
+     //反转多项式系数
+    void Reverse(poly &a){
+        reverse(a.begin(),a.end());
+    }
+    //B(x)=2B'(x)-A(x)B'(x)B'(x) 
+    poly GetInv(int n,poly &a){
+        if(n==1){
+            return {ksm(a[0],mod-2,mod)};
+        }
+        poly b=GetInv((n+1)>>1,a);
+        poly c=a;
+        c=Mul(c,b,n);
+        for(int i=0;i<n;i++){
+            c[i]=(mod-c[i])%mod;
+        }
+        c[0]=(c[0]+2)%mod;
+        c=Mul(c,b,n);
+        return c;
+    }
+    //多项式求逆
+    poly Inv(poly a){
+        int len=a.size();
+        return GetInv(len,a);
+    }
+}
+using namespace MTT;
+\end{lstlisting}
+
+\newpage 
+\subsection{牛顿迭代法} 
+${f(x)\equiv{f_0(x)-{\frac{g(f_0(x))}{g'(f_0(x))}}}(mod x)}$
+
+多项式求逆，开方和eps都可以用此公式推出递推方程
+
+\newpage 
+\subsection{分治NTT}
+\begin{lstlisting}
+//通过区间前半段的f值来反馈贡献给后半段区间
+void CDQ_NTT(int l,int r,poly &g,poly &f){
+    if(l==r){
+        return;
+    }
+    int mi=(l+r)>>1;
+    CDQ_NTT(l,mi,g,f);
+    poly a(mi-l+1,0),b(r-l+1,0);
+    int n=mi-l+1,m=r-l+1;
+    for(int i=l;i<=mi;i++){
+        a[i-l]=f[i];
+    }A
+    for(int i=0;i<m;i++){
+        b[i]=g[i];
+    }
+    init(m,m);
+    a.resize(limit);b.resize(limit);
+    for(int i=n;i<limit;i++){
+        a[i]=0;
+        if(i>=m) b[i]=0;
+    }
+    a=Mul(a,b);//根据具体卷积定义来调整
+    for(int i=mi+1;i<=r;i++){
+        f[i]=(f[i]+a[i-l])%mod;
+    }
+    CDQ_NTT(mi+1,r,g,f);
+}
+\end{lstlisting}
+
+\newpage 
+\subsection{二次剩余}
+\begin{lstlisting}
+//二次剩余 2log
+struct cipolla {
+    long long n,p,w2,a; //w2 = a*a-n mod p
+ 
+    struct cx {long long x,y;} ;//Fp2 = {x+yw | x,y belong to Fp}
+    cx mul(cx a,cx b) {return (cx){(a.x*b.x+a.y*b.y%p*w2)%p,(a.x*b.y+a.y*b.x)%p};}
+    cx cx_qpow(cx a,int n) {
+        cx ans = (cx){1,0};
+        for (;n;n>>=1,a=mul(a,a)) if (n&1) ans=mul(ans,a);
+        return ans;
+    }
+ 
+    void getsol(long long _n,long long _p,long long&ans1,long long&ans2)
+    {
+        n = _n, p = _p;
+        ans1=ans2=-1; //最多两个解,无解是-1
+        if (n==0 || p==2) {ans1=n; return ;}
+ 
+        if (ksm((long long)n,(long long)(p-1)/2,(long long)p) == p-1) return ;
+ 
+        for (a=rand()%p;;a==p-1?(a=0):(++a)) {
+            if (ksm((a*a-n+p)%p,(p-1)/2,p) == p-1) {
+                w2 = (a*a-n+p)%p;
+                break;
+            }
+        }
+        cx b = (cx){a,1};
+        b = cx_qpow(b,(p+1)/2);
+        ans1 = b.x;
+        if (ans1 != p-ans1) ans2 = p-ans1;
+        return ;
+    }
+};
+//三次剩余 9log
+struct cuberoot {
+    long long n,p,epsi;
+    struct tri {long long x,y,z; };
+    tri mul(tri a,tri b) {
+        return (tri){((a.x*b.x%p+a.y*b.z%p*n%p)%p+a.z*b.y%p*n%p)%p,(a.x*b.y%p+a.y*b.x%p+a.z*b.z%p*n%p)%p,(a.x*b.z%p+a.y*b.y%p+a.z*b.x%p)%p};
+    }
+    tri tri_qpow(tri a,int n) {
+        tri ans = (tri){1,0,0};
+        for (;n;n>>=1,a=mul(a,a)) if (n&1) ans=mul(ans,a);
+        return ans;
+    }
+    void getsol(long long _n,long long _p,long long &ans1,long long &ans2,long long &ans3)
+    {
+        n = _n, p = _p;
+        ans1=ans2=ans3=-1;
+        if (n==0 || p==2 || p==3) {ans1=n; return ;}
+        if (p%3 == 2) {ans1 = ksm(n,(2*p-1)/3,p); return ;}
+ 
+        if (ksm(n,(p-1)/3,p) != 1) return ;
+        cipolla cip;
+        long long tmp;
+        cip.getsol(p-3,p,epsi,tmp);
+        epsi = (epsi-1)*((p+1)/2)%p;
+ 
+        for (;;) {
+            tri a;
+            a.x = rand()%p, a.y = rand()%p+1, a.z = rand()%p+1;
+            a = tri_qpow(a,(p-1)/3);
+            if (a.x==0&&a.z==0) {
+                ans1 = ksm(a.y,p-2,p);
+                ans2 = ans1*epsi % p;
+                ans3 = ans2*epsi % p;
+                return ;
+            }
+        }
+    }
+};
+\end{lstlisting}
+
+\newpage 
+\subsection{多项式通用模板(NTT)} 
+\begin{lstlisting}
+namespace Poly{
+    const int N=3e6+10;
+    const int mod=998244353;
+    const int g=3,gi=332748118;//根据模数不同改变原根
+    using poly=vector<long long>;
+    long long ksm(long long a,long long b,long long mod){
+        long long res=1;
+        a%=mod;
+        while(b){
+            if(b&1) res=res*a%mod;
+            a=a*a%mod;
+            b>>=1;
+        }
+        return res;
+    }
+    int r[N];
+    int limit,L;
+    void init(int n,int m){
+        limit=1;L=0;
+        while(limit<=n+m) limit<<=1,L++;
+        for(int i=0;i<limit;i++){
+            r[i]=(r[i>>1]>>1)|((i&1)<<(L-1));
+        }
+    }
+    void ntt(poly &v,int type){
+        int len=v.size();
+        for(int i=0;i<len;i++){
+            if(i<r[i]) swap(v[i],v[r[i]]);
+        }
+        for(int mid=1;mid<len;mid<<=1){
+            long long wn=ksm(type==1?g:gi,(mod-1)/(mid<<1),mod);
+            for(int j=0,R=mid<<1;j<limit;j+=R){
+                long long w=1;
+                for(int k=0;k<mid;k++,w=(w*wn)%mod){
+                    long long x=v[j+k],y=v[j+mid+k]*w%mod;
+                    v[j+k]=(x+y)%mod;
+                    v[j+k+mid]=(x-y+mod)%mod;
+                }
+            }
+        }
+        if(type==-1){
+            long long inv=ksm(len,mod-2,mod);
+            for(int i=0;i<len;i++){
+                v[i]=v[i]*inv%mod;
+            }
+        }
+    }
+    //反转多项式系数
+    void Reverse(poly &a){
+        reverse(a.begin(),a.end());
+    }
+    //多项式乘法
+    poly Mul(poly A,poly B,int len=0){
+        int n=A.size(),m=B.size();
+        if(len){
+            if(n>len){
+                A.resize(len),n=len;
+            }
+            if(m>len) B.resize(len),m=len;
+        }
+        if(n<=30||m<=30){
+            poly res(n+m-1);
+            for(int i=0;i<n;i++){
+                for(int j=0;j<m;j++){
+                    res[i+j]=(res[i+j]+A[i]*B[j]%mod)%mod;
+                }
+            }
+            if(len){
+                res.resize(len);
+            }
+            return res;
+        }
+        init(n,m);
+        A.resize(limit);B.resize(limit);
+        for(int i=min(n,m);i<limit;i++){
+            if(i>=n) A[i]=0;
+            if(i>=m) B[i]=0;
+        }
+        ntt(A,1);ntt(B,1);
+        for(int i=0;i<limit;i++){
+            A[i]=A[i]*B[i]%mod;
+        }
+        ntt(A,-1);
+        if(len==0){
+            A.resize(n+m-1);
+        }
+        else{
+            A.resize(len);
+        }
+        return A;
+    }
+    //求导
+    poly Direv(poly res){
+        for(int i=1;i<(int)res.size();i++){
+            res[i-1]=res[i]*i%mod;
+        }
+        res.pop_back();
+        return res;
+    }
+    //积分
+    poly Inter(poly res){
+        int len=res.size();
+        for(int i=len-1;i>=1;i--){
+            res[i]=res[i-1]*ksm(i,mod-2,mod)%mod;
+        }
+        res[0]=0;
+        return res;
+    }
+    //B(x)=2B'(x)-A(x)B'(x)B'(x) 
+    poly GetInv(int n,poly &a){
+        if(n==1){
+            return {ksm(a[0],mod-2,mod)};
+        }
+        poly b=GetInv((n+1)>>1,a);
+        poly c=a;
+        int m=b.size();
+        init(n,n);
+        c.resize(limit);b.resize(limit);
+        for(int i=m;i<limit;i++){
+            b[i]=0;
+        }
+        for(int i=n;i<limit;i++){
+            c[i]=0;
+        }
+        ntt(b,1);ntt(c,1);
+        for(int i=0;i<limit;i++){
+            c[i]=(2-c[i]*b[i]%mod+mod)%mod;
+            c[i]=c[i]*b[i]%mod;
+        }
+        ntt(c,-1);
+        c.resize(n);
+        return c;
+    }
+    //多项式求逆
+    poly Inv(poly a){
+        int len=a.size();
+        return GetInv(len,a);
+    }
+    //b'x=a'x/ax
+    poly Ln(poly a){
+        int n=a.size();
+        a=Mul(Direv(a),Inv(a));
+        a.resize(n);
+        return Inter(a);
+    }
+    //gx=g'x(1-ln(g'x)+ax)
+    poly Exp(int n,poly &a){
+        if(n==1){
+            return {1};
+        }
+        poly b=Exp((n+1)>>1,a);
+        b.resize(n);
+        for(int i=(n+1)>>1;i<n;i++) {
+            b[i]=0;
+        }
+        poly e=Ln(b);
+        poly c=a;
+        init(n,n);
+        b.resize(limit);e.resize(limit);c.resize(limit);
+        for(int i=n;i<limit;i++){
+            c[i]=e[i]=b[i]=0;
+        }
+        ntt(b,1);ntt(c,1);ntt(e,1);
+        for(int i=0;i<limit;i++){
+            c[i]=b[i]*((1-e[i]+mod+c[i])%mod)%mod;
+        }
+        ntt(c,-1);
+        c.resize(n);
+        return c;
+    }
+    poly Exp(poly a){
+        return Exp((int)a.size(),a);
+    }
+    const int inv2=ksm(2,mod-2,mod);
+    //g(x)=(f(x)+g'x*g'x)/(2*g'x)
+    poly Sqrt(int n,poly &a){
+        if(n==1){
+            if(a[0]==1)
+                return {1};
+            else{
+                long long ans1,ans2;
+                cipolla res;
+                res.getsol(a[0],mod,ans1,ans2);
+                return {min(ans1,ans2)};
+            }
+        }
+        poly b=Sqrt((n+1)>>1,a);
+        b.resize(n);
+        for(int i=(n+1)>>1;i<n;i++) {
+            b[i]=0;
+        }
+        poly e=Inv(b);
+        poly c=a;
+        init(n,n);
+        b.resize(limit);c.resize(limit);e.resize(limit);
+        for(int i=n;i<limit;i++){
+            c[i]=b[i]=e[i]=0;
+        }
+        ntt(b,1);ntt(c,1);ntt(e,1);
+        for(int i=0;i<limit;i++){
+            c[i]=(c[i]+b[i]*b[i]%mod)%mod*inv2%mod*e[i]%mod;
+        }
+        ntt(c,-1);
+        c.resize(n);
+        return c;
+    }
+    poly Sqrt(poly a){
+        int n=(int)a.size();
+        return Sqrt(n,a);
+    }
+    //f(x)^k=e^(kln(f(x)))
+    poly Pow_1(poly a,long long k){
+        a=Ln(a);
+        for(int i=0;i<(int)a.size();i++){
+            a[i]=a[i]*k%mod;
+        }
+        return Exp(a);
+    }
+    //f(x)^k=(f(x)/f(t))^k*(f(t)^k) t为第一个不为0元素
+    poly Pow_2(poly a,long long k,long long k1){
+        int x=-1;
+        for(int i=0;i<(int)a.size();i++){
+            if(a[i]) {
+                x=i;
+                break;
+            }
+        }
+        int n=(int)a.size();
+        if(x==-1||x*k>n)
+        return vector<long long>(n,0);
+        poly res(n-x);
+        long long val=a[x];
+        long long inv=ksm(val,mod-2,mod);
+        for(int i=x;i<n;i++){
+            res[i-x]=a[i]*inv%mod;
+        }
+        res=Pow_1(res,k);
+        val=ksm(val,k1,mod);
+        x=x*k;
+        x=min(x,n);
+        for(int i=0;i<x;i++){
+            a[i]=0;
+        }
+        for(int i=x;i<n;i++){
+            a[i]=res[i-x]*val%mod;
+        }
+        return a;
+    }
+    poly Pow(poly a,long long k,long long k1){
+        return a[0]==1?Pow_1(a,k):Pow_2(a,k,k1);
+    }
+    //多项式除法 y=kx+b
+    void Div(poly y,poly x,poly &k,poly &b){
+        int n=y.size(),m=x.size();
+        Reverse(y);Reverse(x);
+        poly o=x;o.resize(n-m+1);
+        k=Mul(y,Inv(o),n-m+1);
+        Reverse(k);Reverse(y);Reverse(x);
+        b=Mul(k,x,m-1);
+        for(int i=0;i<m-1;i++){
+            b[i]=(mod-b[i]+y[i])%mod;
+        }
+    }
+    long long w4=ksm(g,(mod-1)/4,mod);
+    long long invw4=ksm(w4,mod-2,mod);
+    //欧拉公式变换得出
+    poly Cos(poly a){
+        int n=a.size();
+        poly b;
+        for(int i=0;i<n;i++){
+            a[i]=a[i]*w4%mod;
+        }
+        a=Exp(a);
+        b=Inv(a);
+        for(int i=0;i<n;i++){
+            a[i]=(a[i]+b[i])%mod*inv2%mod;
+        }
+        return a;
+    }
+    poly Sin(poly a){
+        int n=a.size();
+        poly b;
+        for(int i=0;i<n;i++){
+            a[i]=a[i]*w4%mod;
+        }
+        a=Exp(a);
+        b=Inv(a);
+        for(int i=0;i<n;i++){
+            a[i]=(a[i]+mod-b[i])%mod*inv2%mod*invw4%mod;
+        }
+        return a;
+    }
+}
+using namespace Poly;
+\end{lstlisting}
+
+\newpage 
+\subsection{类欧几里得} 
+定义${{f(a,b,c,n)}={\sum_{i=0}^n{\lfloor {\frac{ai+b}{c}} \rfloor}}}$
+
+在${log(n)}$时间内得出答案
+\begin{lstlisting}
+#define ll long long
+ll f(ll a, ll b, ll c, ll n) {
+    if(n <= 0) return 0;
+    return n * (n - 1) / 2 * (a / c) + n * (b / c) + f(c, (a * n + b) % c, a % c, (a % c * n + b % c) / c);
+}
+\end{lstlisting}
+\subsubsection{拓展}
+再定义${g(a,b,c,n)={\sum_{i=0}^n{i\lfloor {\frac{ai+b}{c}} \rfloor}},}$ ${h(a,b,c,n)={\sum_{i=0}^n{\lfloor {\frac{ai+b}{c}}\rfloor}^2}}$
+
+可以一起得出来
+\begin{lstlisting}
+const int mod=998244353;
+using ll=long long;
+const ll inv2=ksm(2,mod-2,mod),inv6=ksm(6,mod-2,mod);
+struct Data
+{
+    ll f,g,h;
+    Data(){
+        f=g=h=0;
+    }
+};
+
+Data cale(ll n,ll a,ll b,ll c){
+    ll ac=a/c,bc=b/c,m=(a*n+b)/c,n1=n+1,n21=n*2+1;
+    Data d;
+    if(a==0){//边界
+        d.f=bc*n1%mod;
+        d.g=bc*n%mod*n1%mod*inv2%mod;
+        d.h=bc*bc%mod*n1%mod;
+        return d;
+    }
+    if(a>=c||b>=c){//取模
+        d.f=n*n1%mod*inv2%mod*ac%mod+bc*n1%mod;
+        d.g=ac*n%mod*n1%mod*n21%mod*inv6%mod+bc*n%mod*n1%mod*inv2%mod;
+        d.h=ac*ac%mod*n%mod*n1%mod*n21%mod*inv6%mod+
+            bc*bc%mod*n1%mod+ac*bc%mod*n%mod*n1%mod;
+        d.f%=mod;d.g%=mod;d.h%=mod;
+        Data e=cale(n,a%c,b%c,c);//迭代
+        d.h+=e.h+2*bc%mod*e.f%mod+2*ac%mod*e.g%mod;
+        d.g+=e.g;d.f+=e.f;
+        d.f%=mod;d.g%=mod;d.h%=mod;
+        return d;
+    }
+    Data e=cale(m-1,c,c-b-1,a);
+    d.f=n*m%mod-e.f,d.f=(d.f%mod+mod)%mod;
+    d.g=m*n%mod*n1%mod-e.h-e.f,d.g=(d.g*inv2%mod+mod)%mod;
+    d.h=n*m%mod*(m+1)%mod-2*e.g-2*e.f-d.f;
+    d.h=(d.h%mod+mod)%mod;
+    return d;
+}
+\end{lstlisting}
+
+\newpage 
+\subsection{区间维护等差数列} 
+当有修改操作等需要给某一段区间加上等差数列，可以通过如下操作来进行维护，最后多用于求某单点值
+\begin{lstlisting}
+#include<bits/stdc++.h>
+using namespace std;
+/*
+这是无离散化版本
+离散化只需要将有下标的地方改成对应 id[下标]即可 
+*/
+const int N=1e5+10;
+int n,q;
+int a[N];
+struct pp
+{
+	long long a,d;
+}tr[N<<2];
+
+void build(int k,int l,int r)
+{
+	tr[k].a=tr[k].d=0;
+	if(l==r)
+	{
+		tr[k].a=a[l];
+		return;
+	}
+	int mi=(l+r)>>1;
+	build(k<<1,l,mi);
+	build(k<<1|1,mi+1,r);
+}
+
+void down(int k,int l,int r)
+{
+	int mi=(l+r)>>1;
+	tr[k<<1].d+=tr[k].d;
+	tr[k<<1|1].d+=tr[k].d;
+	tr[k<<1].a+=tr[k].a;
+	tr[k<<1|1].a+=tr[k].a+(mi+1-l)*tr[k].d;
+	tr[k].a=tr[k].d=0;
+}
+
+void mif(int k,int l,int r,int x,int y,int tp,long long a,long long d)
+{
+	if(l==x&&r==y)
+	{
+		tr[k].d+=d;
+		tr[k].a+=a+(l-tp)*d;
+		return;
+	}
+	int mi=(l+r)>>1;
+	down(k,l,r);
+	if(y<=mi) mif(k<<1,l,mi,x,y,tp,a,d);
+	else if(mi<x) mif(k<<1|1,mi+1,r,x,y,tp,a,d);
+	else mif(k<<1,l,mi,x,mi,tp,a,d),mif(k<<1|1,mi+1,r,mi+1,y,tp,a,d);
+}
+
+long long qr(int k,int l,int r,int x)
+{
+	if(l==x&&r==x)
+	{
+		return tr[k].a;
+	}
+	int mi=(l+r)>>1;
+	down(k,l,r);
+	if(x<=mi) return qr(k<<1,l,mi,x);
+	else return qr(k<<1|1,mi+1,r,x);
+}
+
+int main()
+{
+	ios::sync_with_stdio(false);cin.tie(0);cout.tie(0);
+	cin>>n>>q;
+	for(int i=1;i<=n;i++)
+	{
+		cin>>a[i];
+	}
+	build(1,1,n);
+	while(q--)
+	{
+		int op;
+		cin>>op;
+		if(op==1)
+		{
+			int l,r;
+			long long a,d;
+			cin>>l>>r>>a>>d;
+			mif(1,1,n,l,r,l,a,d);
+		}
+		else{
+			int x;
+			cin>>x;
+			cout<<qr(1,1,n,x)<<'\n';
+		}
+	}
+	return 0;
+}
+\end{lstlisting}
+
+\newpage
+\subsection{随机化}
+\subsubsection{随机数据生成器} 
+\begin{lstlisting}
+mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());   //uint
+mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());//ull  大概率生成不相同数据
+int getRand(int l,int r){
+    uniform_int_distribution < int > uid(l,r);
+    return uid(rng);
+}
+\end{lstlisting}
+\subsubsection{随机排列数组} 
+\begin{lstlisting}
+random_shuffle(a,a+n);
+\end{lstlisting}
+
+\newpage 
+\subsection{二项式反演} 
+可以总结归结为俩个式子：
+$g_n$表示至多有n个/种方案数量，$f_n$恰好n个/种方案数量
+${g_{n}={\sum_{i=0}^n}{C_n^i}{f_{i}}{\Leftrightarrow}{f_n}={\sum_{i=0}^n(-1)^{n-i}{C_n^i}g_i}}$
+形式2
+$g_k$表示至少有n个/种方案数量，$f_k$恰好n个/种方案数量
+${g_k={\sum_{i=k}^n{C_i^k}f_i}{\Leftrightarrow}f_k={\sum_{i=k}^n(-1)^{i-k}{C_i^k}g_i}}$
+
+\subsection{积性函数} 
+常见的积性函数有:莫比乌斯函数，欧拉函数，一个数的约数和，一个数约数个数，$f(x)=x^k$
+当$f(x)\ g(x)$是积性函数时，他们的迪利克雷卷积也是积性函数$h(x)={\sum_{d|x}f(d)g(\frac{x}{d})}$
+\subsubsection{莫比乌斯反演} 
+
+设 $g(x)\ f(x)$ \par $f(d)$ 是 $x=d$ 时候的答案 $\ g(d)$ 是 $d|x$ 时候的答案   则有 $g(x)=\sum_{x|n}f(n)$ \par 反演得 $f(d)=\sum_{d|x}u(x)g(x)$
+
+\newpage 
+\subsection{Pollard-Rho} 
+\begin{lstlisting}
+#define LL long long
+LL mul(LL a, LL b, LL p) {
+    return (a * b - (LL)(a / (long double)p * b + 1e-3) * p + p) % p;
+}
+LL power(LL a, LL r, LL p) {
+    LL res = 1;
+    for (; r; a = mul(a, a, p), r >>= 1)
+        if (r & 1)
+            res = mul(res, a, p);
+    return res;
+};
+bool miller_rabin(LL n) {
+    static LL p[9] = {2, 3, 5, 7, 11, 13, 17, 19, 23};
+    if (n == 1)
+        return false;
+    LL d = n - 1, r = 0;
+    for (; not(d & 1); d >>= 1)
+        r += 1;
+    bool res = true;
+    for (int i = 0; i < 9 and p[i] < n and res; i += 1) {
+        LL x = power(p[i], d, n);
+        if (x == 1 or x == n - 1)
+            continue;
+        for (int j = 1; j < r; j += 1) {
+            x = mul(x, x, n);
+            if (x == n - 1)
+                break;
+        }
+        if (x != n - 1)
+            res = false;
+    }
+    return res;
+};
+vector<LL> pollard_rho(LL n) {
+    vector<LL> res;
+    function<void(LL)> rho = [&](LL n) {
+        if (n == 1)
+            return;
+        if (miller_rabin(n))
+            return res.push_back(n), void();
+        LL d = n;
+        while (d == n) {
+            d = 1;
+            for (LL k = 1, y = 0, x = 0, s = 1, c = rand() % n; d == 1;
+                 k <<= 1, y = x, s = 1) {
+                for (int i = 1; i <= k; i += 1) {
+                    x = (mul(x, x, n) + c) % n;
+                    s = mul(s, abs(x - y), n);
+                    if (not(i % 127) or i == k) {
+                        d = __gcd(s, n);
+                        if (d != 1)
+                            break;
+                    }
+                }
+            }
+        }
+        rho(d);
+        rho(n / d);
+    };
+    rho(n);
+    return res;
+}
+\end{lstlisting}
+
+\newpage 
+\subsection{杜教筛} 
+能够在 ${O(n^\frac{2}{3})}$的时间负责度里求前n项积性函数的和
+${g(1)s(n)}=\sum_{i=1}^n(f*g)(i)-\sum_{i=2}^ng(i)s(\lfloor\frac{n}{i}\rfloor)$
+前n项目欧拉函数和莫比乌斯函数和
+\begin{lstlisting}
+const int N=3e6+10;
+int q[N],cnt;
+long long u[N],o[N];
+bool vis[N];
+long long sumol[N],sumu[N];
+void init(int n=N-10)
+{
+	vis[1]=true;
+	o[1]=1;
+	u[1]=1;
+	for(int i=2;i<=n;i++)
+	{
+		if(vis[i]==false)
+		{
+			q[cnt++]=i;
+			u[i]=-1;
+			o[i]=i-1;
+		}
+		for(int j=0;1ll*q[j]*i<=n;j++)
+		{
+			int nu=q[j]*i;
+			vis[nu]=true;
+			if(i%q[j]==0)
+			{
+				u[nu]=0;
+				o[nu]=o[i]*q[j];
+				break;
+			}
+			u[nu]=-u[i];
+			o[nu]=o[i]*(q[j]-1);
+		}
+	}
+	for(int i=1;i<=n;i++)
+	{
+		sumol[i]=sumol[i-1]+o[i];
+		sumu[i]=sumu[i-1]+u[i];
+	}
+}
+map<long long,long long>mpo,mpu;
+long long get_o(long long n)//前n项欧拉函数的和
+{
+	if(n<=N-10) return sumol[n];
+	if(mpo.count(n)) return mpo[n];
+	long long ans=1ll*n*(n+1)/2;
+	for(long long int l=2,r;l<=n;l=r+1)
+	{
+		r=n/(n/l);
+		ans-=get_o(n/l)*(r-l+1);
+	}
+	return mpo[n]=ans;
+}
+
+long long get_u(long long n)//前n项莫比乌斯函数的和
+{
+	if(n<=N-10) return sumu[n];
+	if(mpu.count(n)) return mpu[n];
+	long long ans=1;
+	for(long long int l=2,r;l<=n;l=r+1)
+	{
+		r=n/(n/l);
+		ans-=get_u(n/l)*(r-l+1);
+	}
+	return mpu[n]=ans;
+}
+\end{lstlisting}
+
+\newpage 
+\subsection{min25筛}
+俩个条件：
+1.$f(p^k)$ p为质数可以用多项式表示,且项数比较少 \par
+2. $f(p^k)$可以常数时间计算出这个值
+
+\begin{lstlisting}
+long long f(long long x){
+    long long res=0;
+    return res;
+}
+int q[N],cnt;
+bool vis[N];
+long long sum[N];
+void init(int n){
+    q[0]=1;
+    for(int i=2;i<=n;i++){
+        if(!vis[i]){
+            q[++cnt]=i;
+            sum[cnt]=sum[cnt-1]+f(i);
+        }
+        for(int j=1;1ll*q[j]*i<=n;j++){
+            int nu=q[j]*i;
+            vis[nu]=true;
+            if(i%q[j]==0){
+                break;
+            }
+        }
+    }
+}
+int id1[N],id2[N],m;
+long long w[N];
+long long n;
+int T;
+int find(long long x){
+    return x<=T?id1[x]:id2[n/x];
+}
+long long g[N];
+long long s(long long x){
+    long long res=0;
+    return res;
+}
+//min25第一步质数积性函数和
+void G(){
+    m=0;cnt=0;
+    T=sqrtl(n);
+    init(T);
+    for(long long l=1,r;l<=n;l=r+1){
+        long long k=n/l;r=n/k;
+        w[++m]=k;
+        if(k<=T) id1[k]=m;
+        else id2[n/k]=m;
+        g[m]=s(k);
+    }
+    for(int i=1;i<=cnt;i++){
+        for(int j=1;j<=m&&1ll*q[i]*q[i]<=w[j];j++){
+            int id=find(w[j]/q[i]);
+            g[j]=g[j]-f(q[i])*(g[id]-sum[i-1]);
+        }
+    }
+}
+//min25第二步除一之外数的积性函数的和
+long long S(long long n,int k){
+    if(q[k]>=n) return 0;
+    int id=find(n);
+    long long ans=g[id]-sum[k];
+    for(int i=k+1;i<=cnt&&1ll*q[i]*q[i]<=n;i++){
+        long long p=q[i],pp=1ll*q[i]*q[i];
+        while(pp<=n){
+            long long F1=f(p),F2=f(pp);
+            ans=ans+F1*S(n/p,i)+F2;
+            p=pp;pp*=q[i];
+        }
+    }
+    return ans;
+}
+\end{lstlisting}
+
+\newpage 
+\subsection{斯特林数}
+\subsubsection{第一类斯特林数(斯特林轮换数)}
+意义：将n个不同元素，划分成m个非空圆排列的方案数记作$n \brack m$
+
+递推式：$n \brack m$=$n-1 \brack m-1$+$m*{n-1 \brack m}$
+\subsubsection{第一类斯特林数(斯特林轮换数)}
+意义：将n个不同元素，划分成m个非空子集的方案数记作$n \brace m$
+
+递推式：$n \brace m$=$n-1 \brace m-1$+$m*{n-1 \brace m}$
+
+通项：${{s(n,k)}={\frac{1}{k!}}{\sum_{i=0}^k}{(-1)^i}{C_k^i(k-i)^n}}$
+
+生成函数形式：${\sum_{n=0}}{s(n,k){\frac{x^n}{n!}}}={\frac{1}{k!}}{(exp(x)-1)^k}$
+\subsubsection{行}
+可以运用通项式得出：${{\sum_{i=0}^k}{\frac{(-1)^i}{i!}}}{\frac{(k-i)^n}{(k-i)!}}$的卷积形式，运用NTT快速求值
+\subsubsection{列}
+可以运用生成函数形式直接得出相对应系数，不过要注意最后的答案形式依旧是指数生成函数形式，所以对于相关系数记得乘对应系数的阶乘
+
+\subsubsection{下降幂}
+$x^{\underline{k}}={C_x^k*k!}$
+
+\subsubsection{变换}
+${{x^n}={\sum_{k=0}^n} {n \brace k}{x^{\underline{k}}}={\sum_{k=0}^n}{n \brace k}{C_x^k*k!}}$
+${x^{\underline{n}}={\sum_{k=0}^n}{n \brack k}{(-1)^{n-k}}{x^k}}$
+
+\subsubsection{上升幂}
+$x^{\underline{k}}={C_x^k*k!}$
+
+\subsubsection{变换}
+${{x^n}={\sum_{k=0}^n}{n \brace k}{(-1)^{n-k}}{x^{\overline{k}}}}$
+${{x^{\overline{n}}}={\sum_{k=0}^n}{n\brack k}{x^k}}$
+
+\newpage 
+\subsection{十二种球盒模型} 
+\begin{lstlisting}
+using ll=long long;
+//n个球,m个盒子
+//球之间互不相同，盒子互不相同
+ll cale1(ll n,ll m)//
+{
+    /*
+        一个球可以选m个,n个就是(m)^n
+    */
+    if(n<0||m<0) return 0;
+    ll ans=ksm(m,n,mod);
+    return ans;
+}
+ll cale2(ll n,ll m)//每个盒子最多一个球
+{
+    /*
+        让球从1-n被还没有选过的盒子选,便是m*(m-1)*...*(m-n+1)=p(m,n)
+    */
+    if(n<0||m<0) return 0;
+    ll ans=P(m,n);
+    return ans;
+}
+ll cale3(ll n,ll m)//每个盒子至少装一个球
+{
+    /*
+        考虑容斥
+    */
+    if(n<0||m<0) return 0;
+    ll ans=0;
+    for(int i=0,f=1;i<=m;i++,f=(mod-f)%mod){
+        ans=(ans+C(m,i)*f%mod*cale1(n,m-i)%mod)%mod;
+    }
+    return ans;
+}
+//球之间互不相同,盒子全部相同
+ll cale4(ll n,ll m)//
+{
+    /*
+        根据第二类斯特林数可以得到
+        n个不同元素,放在x个不为空的集合里面方案数
+        那么这个问题便可以枚举有几个非空集合得出答案
+    */
+    if(n<0||m<0) return 0;
+    ll ans=0;
+    poly a(m+1,0),b(m+1,0);
+    for(int i=0,f=1;i<=m;i++,f=(mod-f)%mod){
+        a[i]=f*inv[i]%mod;
+        b[i]=ksm(i,n,mod)*inv[i]%mod;
+    }
+    a=Mul(a,b);
+    for(int i=0;i<=m;i++){
+        ans=(ans+a[i])%mod;
+    }
+    return ans;
+}
+ll cale5(ll n,ll m)//每个盒子最多装一个球
+{
+    /*
+        n个球都要被装完,只需要看盒子数量够不够装完n个球
+    */
+    if(n<0||m<0) return 0;
+    ll ans=(n<=m);
+    return ans;
+}
+ll cale6(ll n,ll m)//每个盒子至少一个球
+{
+    /*
+        n个不同元素,分成m个非空集合方案数
+        第二类斯特林数通项直接可得
+    */
+    if(n<0||m<0) return 0;
+    ll ans=0;
+    for(int i=0,f=1;i<=m;i++,f=(mod-f)%mod){
+        ans=(ans+f*C(m,i)%mod*ksm(m-i,n,mod)%mod)%mod;
+    }
+    ans=ans*inv[m]%mod;
+    return ans;
+}
+//球全部相同,盒子之间互不相同
+ll cale7(ll n,ll m)//
+{
+    /*
+        隔板法,相当于a[1]+a[2]+..+a[m]=n 条件(a[i]>=0)
+        那么只要让(a[1]+1)+(a[2]+1)+..+(a[m]+1)=n+m
+        便和a[1]+a[2]+..+a[m]=n 条件(a[i]>=1) 形式一样
+    */
+    if(n<0||m<0) return 0;
+    ll ans=C(n+m-1,m-1);
+    return ans;
+}
+ll cale8(ll n,ll m)//每个盒子最多装一个球
+{
+    /*
+        那么就可以转换成,从m个盒子里选n个出来放球
+    */
+    if(n<0||m<0) return 0;
+    ll ans=C(m,n);
+    return ans;
+}
+ll cale9(ll n,ll m)//每个盒子至少一个球
+{
+    /*
+        a[1]+a[2]+..+a[m]=n 条件(a[i]>=1) 
+    */
+    if(n<0||m<0) return 0;
+    ll ans=C(n-1,m-1);
+    return ans;
+}
+//球全部相同,盒子全部相同
+ll cale10(ll n,ll m)//
+{
+    /*
+        便是构造一重无序且大小为m,集合元素和为n的方案数
+        就通过生成函数可以得到
+        当集合可能有v的时候
+        有 0,1,2,3...min((n/x),m) 这个集合可能有这么几种可能包含x
+        那么生成函数为 x+x^v+x^(2v)...=(1-x^(k+1))/(1-x^v)
+        去掉上界 g(v)=1/(1-x^v)
+        便是(1-n) g(i)的累乘,通过ln把乘法变加分之后再exp回来的第n项便是答案
+    */
+    if(n<0||m<0) return 0;
+    ll ans=0;
+    poly a(n+1,0);
+    for(int i=1;i<=m;i++){
+        for(int j=i;j<=n;j+=i){
+            a[j]=(a[j]+in[j/i])%mod;
+        }
+    }
+    a=Exp(a);
+    ans=a[n];
+    return ans;
+}
+ll cale11(ll n,ll m)//每个盒子最多装一个球
+{
+    /*
+        取决于盒子能不能被放完
+    */
+    if(n<0||m<0) return 0;
+    ll ans=(n<=m);
+    return ans;
+}
+ll cale12(ll n,ll m)//每个盒子至少一个球
+{
+    /*
+        先让每个盒子有一个球,然后问题同cale10一样
+    */
+    if(n<0||m<0) return 0;
+    ll ans=cale10(n-m,m);
+    return ans;
+}
+\end{lstlisting}
+
+
+\newpage 
+\subsection{贝尔数} 
+\flushleft
+${bell(n)}$是将n个不同的球分成若干的集合的方案数\par
+
+设：${f(x)}$为非空集合EGF，${f(x)=e^x-1}$  \par
+
+​       ${g(x)}$为贝尔数的EGF，那么因为多项式的复合性，可得${g(x)=e^{f(x)}}$ \par
+\centering
+
+\subsection{欧拉数} 
+\flushleft
+具体意义：一个大小为${n}$排列中有${k}$个位置使得${p_i<p_{i+1}(i<n)}$  \par
+递推式：${f(n,m)=f(n-1,m-1)*(n-k)+f(n-1,k)*(k+1)}$ \par
+
+通项式：${f(n,m)={\sum_{k=0}^m}{C_{n+1}^k}(-1)^k(m-k+1)^k}$ \par
+\centering
+
+
+\subsection{小公式}
+\flushleft
+1. ${ln(1-x^k)=-{\sum_{i=1}}{\frac{x^{ik}}{i}}}$ \par
+2.${a_0=1\ a_n=\frac{\sum_{i=0}^{n-1}C_{2n}^i(n-i)2^i}{n}}$   ${1 \ 1\  5\  29\  181\  1181\  7941\  54573}$ \par
+3.${(a^n+b^n)==0(\bmod (a+b))} $(n为奇数)\par
+\centering
+
+\subsection{常见泰勒展开}
+\flushleft
+1.$e^x=1+x+{\frac{x^2}{2!}}+{\frac{x^3}{3!}}+{\frac{x^4}{4!}}+...+{\frac{x^n}{n!}}...$ \par
+2.$sinx=x-{\frac{x^3}{3!}}+{\frac{x^5}{5!}}+...+(-1)^{m-1}{\frac{x^{2m-1}}{{2m-1}!}}...$ \par
+3.$cosx=1-{\frac{x^2}{2!}}+{\frac{x^4}{4!}}+...+(-1)^{m}{\frac{x^{2m}}{{2m}!}}...$ \par
+4.$ln(1+x)=x-{\frac{x^2}{2!}}+{\frac{x^3}{3!}}+...+(-1)^{n-1}{\frac{x^n}{n!}}...$ \par
+5.${(1+x)^a=1+ax+{\frac{a*(a-1)}{2!}}}x^2+...+C_{a}^{i}x^n...$ \par
+6.${\frac{1}{1-x}}=1+x+x^2+...+x^n.. $ 为 $a$ 次方时第i位系数为  $C_{i+a-1}^{a-1}$\par
+\centering
+
+\subsection{佩尔(pell)方程} 
+\flushleft
+${x^2-d*y^2=1}$其中${d}$为正整数且不为完全平方数时候，可以借助本方程特性构建矩阵\par
+\begin{lstlisting}
+mt[0][0]=x0;mt[0][1]=d1*y0;
+mt[1][0]=y0;mt[1][1]=x0;
+\end{lstlisting}
+${x_n=x_{n-1}*x_0+d*y_0*y_{n-1}}$\par
+
+${y_n=y_{n-1}*x_0+y_0*x_{n-1}}$\par
+\centering
+
+\subsection{LGV引理}
+\flushleft
+结论：当有一个起始点的子集${A}$，和一个终点子集${B}$，大小为${m}$且一一对应
+
+那么${A}$到${B}$且路径俩俩互不相交的方案数为：一个大小为${m\times m}$的二维矩阵，第${i}$行第${j}$列的值为${a_i}$到${b_j}$的方案数，的矩阵行列式的值 \par
+\centering
+
+\subsection{伯特兰-切比雪夫定理} 
+\flushleft
+若整数n>3，则至少存在一个质数P，符合n<P<2*n-2 ，一个稍弱说法，一个大于1的整数，至少存在一个质数P，符合n<P<2*n \par
+\centering
+
+
+\newpage 
+\subsection{基础博弈论} 
+\begin{lstlisting}
+一. 巴什博奕（Bash Game）：
+
+A和B一块报数，每人每次报最少1个，最多报4个，看谁先报到30。这应该是最古老的关于巴什博奕的游戏了吧。
+
+其实如果知道原理，这游戏一点运气成分都没有，只和先手后手有关，比如第一次报数，A报k个数，那么B报5-k个数，那么B报数之后问题就变为，A和B一块报数，看谁先报到25了，进而变为20,15,10,5，当到5的时候，不管A怎么报数，最后一个数肯定是B报的，可以看出，作为后手的B在个游戏中是不会输的。
+
+那么如果我们要报n个数，每次最少报一个，最多报m个，我们可以找到这么一个整数k和r，使n=k*（m+1）+r，代入上面的例子我们就可以知道，如果r=0，那么先手必败；否则，先手必胜。
+
+二. 威佐夫博弈（Wythoff Game）：
+
+有两堆各若干的物品，两人轮流从其中一堆取至少一件物品，至多不限，或从两堆中同时取相同件物品，规定最后取完者胜利。
+
+直接说结论了，若两堆物品的初始值为（x，y），且x<y，则另z=y-x；
+
+记w=（int）[（（sqrt（5）+1）/2）*z ]；
+
+若w=x，则先手必败，否则先手必胜。
+
+三. 尼姆博弈（Nimm Game）：
+
+尼姆博弈指的是这样一个博弈游戏：有任意堆物品，每堆物品的个数是任意的，双方轮流从中取物品，每一次只能从一堆物品中取部分或全部物品，最少取一件，取到最后一件物品的人获胜。
+
+结论就是：把每堆物品数全部异或起来，如果得到的值为0，那么先手必败，否则先手必胜。
+
+四. 斐波那契博弈：
+
+有一堆物品，两人轮流取物品，先手最少取一个，至多无上限，但不能把物品取完，之后每次取的物品数不能超过上一次取的物品数的二倍且至少为一件，取走最后一件物品的人获胜。
+
+结论是：先手胜当且仅当n不是斐波那契数（n为物品总数）
+\end{lstlisting}
+
+\newpage 
+\section{几何}
+能不用浮点就不用 
+\subsection{几何通用}
+\begin{lstlisting}
+//#define double long double//wa了就试一下
+const double eps=1e-12;
+const double pi=acos(-1);
+int cmpb(double x)
+{
+    if(fabs(x)<eps) return 0;
+    if(x>0) return 1;
+    return -1;
+}
+struct point{
+    double x,y;
+    point(){x=0;y=0;}
+    point(double _x,double _y){x=_x;y=_y;};
+    double operator |(const point &w) const//点乘
+    {
+        return x*w.x+y*w.y;
+    }
+    double operator ^(const point &w) const//叉乘
+    {
+        return x*w.y-y*w.x;
+    }
+    point operator -(const point &w) const
+    {
+        point res;
+        res.x=x-w.x;res.y=y-w.y;
+        return res;
+    }
+    point operator +(const point &w) const
+    {
+        point res;
+        res.x=x+w.x;res.y=y+w.y;
+        return res;
+    }
+    point operator /(double w) const
+	{
+    	point res(x/w,y/w);
+		return res;	
+	}
+	point operator *(double w) const
+	{
+    	point res(x*w,y*w);
+		return res;	
+	}
+    double db(double x)   //平方
+    {
+        return x*x;
+    }
+    double dict(point &to)//点距
+    {
+        return sqrt(db(x-to.x)+db(y-to.y));
+    }
+    double dz()
+    {
+    	return sqrt(db(x)+db(y));
+	}
+	void rotate(double _o) //旋转都是逆时针 
+	{
+		double _x=x,_y=y;
+		x=_x*cos(_o)-_y*sin(_o);
+    	y=_x*sin(_o)+_y*cos(_o);
+	}
+    double arg()//-pi,pi x轴正方向为0 逆时针
+    {
+        return atan2(y,x);
+    }
+};
+struct Line{
+    double a,b,c;     //直线一般式
+    Line(){a=0;b=0;c=0;}
+    Line(double _a,double _b,double _c)
+    {
+        a=_a;
+        b=_b;
+        c=_c;
+    }
+    Line(point &x,point &y)//俩点一线
+    {
+        a=y.y-x.y;
+        b=x.x-y.x;
+        c=x.y*y.x-x.x*y.y;
+    }
+    point cross(Line &x)   //线交点
+    {
+        point res;
+        res.x=(x.c*b-c*x.b)/(a*x.b-x.a*b);
+        res.y=(x.c*a-c*x.a)/(b*x.a-x.b*a);
+        return res;
+    }
+     bool check(point &x)//判断点是否在线上
+    {
+        return cmpb(x.x*a+x.y*b+c)==0;
+    }
+    Line getL(point &x){//获得得某点到这个条线的垂直线
+        double a1,b1,c1;
+        if(a==0) {
+            a1=1.0;
+            b1=0;
+            c1=-x.x;
+        }
+        else if(b==0)
+        {
+            a1=0;
+            b1=1.0;
+            c1=-x.y;
+        }
+        else{
+            a1=b;
+            b1=-a;
+            c1=a*x.y-b*x.x;
+        }
+        Line re(a1,b1,c1);
+        return re;
+    }
+    bool Px(Line &w)//判断平行
+    {
+        return cmpb(a*w.b-b*w.a)==0;
+    }
+    bool Li(Line &w)//判断垂直
+    {
+        return cmpb(a*w.b+b*w.a)==0;
+    }
+};
+struct Line //起点 终点版 
+{
+    point s,e;
+    Line(){}
+    Line(point _s,point _e){s=_s;e=_e;}
+    point cross(Line &W) {
+        point u=s-W.s,v=e-s,w=W.e-W.s;
+        double t=(u^w)/(w^v);
+        return s+v*t;
+    }
+    bool right(Line b,Line c)//判断b,c交点是否在当前线段右边 
+    {
+        point p=b.cross(c);
+        return ((e-s)^(p-s))<0;
+    }
+    double arg() //极角 (-pi,pi]
+    {
+        return atan2(e.y-s.y,e.x-s.x); 
+    }
+};
+double cro(point a,point b,point c)
+{
+	return (b-a)^(c-a);
+}
+
+double dot(point a,point b,point c)
+{
+	return (b-a)|(c-a);
+}
+
+struct point3{//三维 
+	double x,y,z;
+	point3()
+	{
+		x=0.0;y=0.0;z=0.0;
+	}
+	point3(double _x,double _y,double _z)
+	{
+		x=_x;y=_y;z=_z;
+	}
+	point3 operator -(const point3 w)
+	{
+		return (point3){x-w.x,y-w.y,z-w.z};
+	}
+	point3 operator +(const point3 w)
+	{
+		return (point3){x+w.x,y+w.y,z+w.z};
+	}
+	point3 operator ^(const point3 w)
+	{
+		return (point3){(y*w.z-z*w.y),(z*w.x-x*w.z),(x*w.y-y*w.x)};
+	}
+	double operator |(const point3 w)
+	{
+		return x*w.x+y*w.y+z*w.z;
+	}
+	double rand01()
+	{
+		return (double)rand()/(double)RAND_MAX;
+	}
+    double randeps()
+    {
+        return (double)(rand01()-0.5)*eps; 
+    }
+	void noise()//三维点需要抖动一下避免有一些影响 十分重要！
+	{
+		x+=randeps();y+=randeps(),z+=randeps();
+	}
+	double db(double x)
+	{
+		return x*x;
+	}
+	double dict(const point3 w)
+	{
+		return sqrt(db(x-w.x)+db(y-w.y)+db(z-w.z));
+	}
+	double mod()
+	{
+		return sqrt(x*x+y*y+z*z);
+	}
+};
+\end{lstlisting}
+
+\newpage 
+\subsection{极角序} 
+\begin{lstlisting}
+//排序cmp
+struct argcmp{//极角排序
+    int quad(const point&x) //象限排序 根据题目定义
+        {
+            if(x.y<-eps) return 1;
+            else if(x.y>eps) return 3;
+            else if(x.x>eps) return 4;
+            else if(x.x<-eps) return 5;
+            return 2;
+        };
+    bool operator()(const point &x,const point &y) 
+    {
+        
+        int xb=quad(x);
+        int yb=quad(y);
+        if(xb!=yb)
+        {
+            return xb<yb;
+        }
+        return (x^y)>eps; //右手定则
+    }
+};
+\end{lstlisting}
+
+\newpage 
+\subsection{凸包}
+\subsubsection{二维凸包} 
+\begin{lstlisting}
+const int N=4e5+10;
+bool cmp(point x,point y)
+{
+	return (x.x==y.x?x.y<y.y:x.x<y.x);
+}
+point st[N],p[N];
+int top,tp;
+double Andrew()
+{
+    top=0;//多组清空
+	sort(p+1,p+tp+1,cmp);
+	for(int i=1;i<=tp;i++)
+	{
+		while(top>1&&((st[top]-st[top-1])^(p[i]-st[top-1]))<=0.0) top--;
+		st[++top]=p[i];
+	}
+	int t=top;
+	for(int i=tp-1;i>=1;i--)
+	{
+		while(top>t&&((st[top]-st[top-1])^(p[i]-st[top-1]))<=0.0) top--;
+		st[++top]=p[i];
+ 	}
+ 	double ans=0.0;
+ 	for(int i=1;i<top;i++)
+ 	{
+ 		ans=ans+st[i].dict(st[i+1]);
+	}
+	return ans;
+}
+\end{lstlisting}
+
+\newpage 
+\subsection{三维凸包} 
+\subsubsection{暴力}
+\begin{lstlisting}
+const int N=110;
+point3 p[N];
+int n;
+bool check(int id,int id1,int id2)
+{
+	double now=0;
+	int c1=0,c2=0;
+	point3 vr=(p[id1]-p[id])^(p[id2]-p[id]);
+	for(int i=1;i<=n;i++)
+	{
+		if(i==id||i==id1||i==id2) continue;
+		now=((p[i]-p[id])|vr);
+		if(now>0)
+		{
+			c1++;
+		}
+		else if(now<0){
+			c2++;
+		}
+		if(c1&&c2) return false;
+		
+	}
+	return true;
+}
+void solve()
+{
+	scanf("%d",&n);
+	for(int i=1;i<=n;i++)
+	{
+		scanf("%Lf%Lf%Lf",&p[i].x,&p[i].y,&p[i].z);
+		p[i].noise();
+	}
+	double ans=0;
+	for(int i=1;i<=n;i++)
+	{
+		for(int j=i+1;j<=n;j++)
+		{
+			for(int k=j+1;k<=n;k++)
+			{
+				if(check(i,j,k))
+				{
+					ans+=((p[j]-p[i])^(p[k]-p[i])).mod()/2.0; //通过向量积的模长一半求得出 
+				}
+			}
+		}
+	}
+	printf("%Lf",ans);
+}
+\end{lstlisting}
+
+\newpage 
+\subsection{增量法} 
+\begin{lstlisting}
+const int N=2010;
+point3 p[N];
+struct face{
+	int v[3];
+	face(){v[0]=v[1]=v[2]=0;}
+	face(int a,int b,int c){v[0]=a;v[1]=b;v[2]=c;}
+	point3 normal(){return ((p[v[1]]-p[v[0]])^(p[v[2]]-p[v[0]]));}
+	double area(){return normal().mod()/2.0;}
+};
+int cansee(face A,point3 b) {return ((b-p[A.v[0]])|A.normal())>0;}
+face cv[N],h[N];
+int n,th,cnt,vis[N][N];
+void convex3() {
+	cnt=th=0;
+	cv[++cnt]=face(1,2,3);
+	cv[++cnt]=face(3,2,1);
+	for(int i=4;i<=n;++i) {
+		for(int j=1,v;j<=cnt;++j) {
+			if(!(v=cansee(cv[j],p[i])))h[++th]=cv[j];
+			for(int k=0;k<3;++k) 
+				vis[cv[j].v[k]][cv[j].v[k>1?0:k+1]]=v;
+		}
+		for(int j=1;j<=cnt;++j)
+			for(int k=0;k<3;++k) {
+				int x=cv[j].v[k],y=cv[j].v[k>1?0:k+1];
+				if(vis[x][y]&&!vis[y][x])h[++th]=face(x,y,i);
+			}
+		for(int j=1;j<=th;++j)cv[j]=h[j];
+		cnt=th,th=0;
+	}
+}
+double calc(){
+	double res=0;
+	for(int i=1;i<=cnt;i++)
+	{
+		res+=cv[i].area();
+	}
+	return res;
+}
+double vol6(point3 a,point3 b,point3 c,point3 d) {
+	return ((b-a)^(c-a))|(d-a);
+} //计算体积的6倍。理解：先算出底的有向面积的2倍，向量的方向变为高，然后点乘就是另一条边在高方向的投影，由体积公式(V=1/3*Sh)，这个值就是体积的6倍
+double calcV() {//体积 
+	double res=0;
+	for(int i=1;i<=cnt;++i)
+		res+=fabs(vol6(p[1],p[cv[i].v[0]],p[cv[i].v[1]],p[cv[i].v[2]]));
+	res/=6.0;
+	return res;
+}
+\end{lstlisting}
+
+\newpage 
+\subsection{线段到线段最小距离} 
+\begin{lstlisting}
+double cro(point a,point b,point c)
+{
+    return ((b-a)^(c-a));
+}
+
+double dot(point p0,point p1,point p2){  //点积 p0为角点
+    return (p1-p0)|(p2-p0);
+}
+  
+double getDis(point p0,point p1,point p2){
+     if(cmpb(p0.dict(p1))==0) return p0.dict(p2);//p0 p1共同点
+     if(cmpb(dot(p0,p1,p2))==-1) return p2.dict(p0);//钝角
+     if(cmpb(dot(p1,p0,p2))==-1) return p2.dict(p1);//钝角
+     return fabs(cro(p0,p1,p2)/p0.dict(p1));  //点到线的距离
+}
+  
+double minDis(point p1,point p2,point p3,point p4){//线段间最短距离
+     return min(min(getDis(p1,p2,p3),getDis(p1,p2,p4)),min(getDis(p3,p4,p1),getDis(p3,p4,p2)));
+}
+\end{lstlisting}
+
+\newpage 
+\subsection{旋转卡壳} 
+\subsubsection{凸包直径}
+\begin{lstlisting}
+double rotating_calingpers()
+{
+    top--;
+ 	double ans=0;
+    for(int i=0,j=1;i<top;i++)
+    {
+        while(((st[(i+1)%top]-st[i])^(st[j]-st[i]))<
+              ((st[(i+1)%top]-st[i])^(st[(j+1)%top]-st[i]))){
+            j=(j+1)%top;
+        }
+        ans=max(ans,st[i].dict(st[j]));
+        ans=max(ans,st[(i+1)%top].dict(st[j]));
+    }
+    return ans;
+}
+\end{lstlisting}
+
+\newpage 
+\subsubsection{俩个不相交凸包最小距离} 
+\begin{lstlisting}
+double cro(point a,point b,point c)
+{
+    return ((b-a)^(c-a));
+}
+
+double dot(point p0,point p1,point p2){  //点积 p0为角点
+    return (p1-p0)|(p2-p0);
+}
+  
+double getDis(point p0,point p1,point p2){
+     if(cmpb(p0.dict(p1))==0) return p0.dict(p2);//p0 p1共同点
+     if(cmpb(dot(p0,p1,p2))==-1) return p2.dict(p0);//钝角
+     if(cmpb(dot(p1,p0,p2))==-1) return p2.dict(p1);//钝角
+     return fabs(cro(p0,p1,p2)/p0.dict(p1));  //点到线的距离
+}
+  
+double minDis(point p1,point p2,point p3,point p4){//线段间最短距离
+     return min(min(getDis(p1,p2,p3),getDis(p1,p2,p4)),min(getDis(p3,p4,p1),getDis(p3,p4,p2)));
+}
+
+double r_c(int f)
+{
+    int ymi=1,ymx=1;
+    for(int i=1;i<=top[f];i++) 
+    {
+        if(st[f][i].y<st[f][ymi].y) ymi=i;
+    }
+    for(int i=1;i<=top[f^1];i++) 
+    {
+        if(st[f^1][i].y>st[f^1][ymx].y) ymx=i;
+    }//分别最小和最大的开始找就保证的下面那些情况保证在凸多边形靠近的那附件来旋转
+    double t=0,ans=1e20;
+    for(int i=1;i<=top[f];i++){
+        //因为是逆时针 所以所以旋转到acb>acd时候 就相当于 (| /) (\ /) (\ |) 这种情况 
+        while(t=cro(st[f][ymi],st[f][ymi+1],st[f^1][ymx])-cro(st[f][ymi],st[f][ymi+1],st[f^1][ymx+1])<-eps)
+        {
+            ymx=ymx%top[f^1]+1;
+        }
+        if(t>eps) ans=min(ans,getDis(st[f][ymi],st[f][ymi+1],st[f^1][ymx]));
+        else ans=min(ans,minDis(st[f][ymi],st[f][ymi+1],st[f^1][ymx],st[f^1][ymx+1]));
+        ymi=ymi%top[f]+1;
+    }
+    return ans;
+}
+\end{lstlisting}
+
+\newpage 
+\subsubsection{最小矩阵覆盖} 
+\begin{lstlisting}
+double r_c()
+{
+    double ans=1e20;
+    int a,b,c;
+    a=b=c=2;
+    int n=top-1;
+    for(int i=2;i<=top;i++)
+    {
+        while(cro(st[i-1],st[i],st[a])<cro(st[i-1],st[i],st[a%n+1])) a=a%n+1;
+        while(dot(st[i-1],st[i],st[b])<dot(st[i-1],st[i],st[b%n+1])) b=b%n+1;
+        if(i==2) c=a;
+        while(dot(st[i],st[i-1],st[c])<dot(st[i],st[i-1],st[c%n+1])) c=c%n+1;
+        double H=cro(st[i-1],st[i],st[a]);
+        double d=st[i].dict(st[i-1]);
+        H/=d;
+        double R=dot(st[i-1],st[i],st[b])/d,L=dot(st[i],st[i-1],st[c])/d;
+        if(H*(R+L-d)<ans)
+        {
+            ans=H*(R+L-d);
+            res[0]=st[i-1]+(st[i]-st[i-1])*R/d;
+            res[3]=st[i]+(st[i-1]-st[i])*L/d;
+            res[1]=res[3]-res[0];
+            res[1].rotate(-pi/2.0);
+            res[1]=res[1]*H/(L+R-d);
+            res[1]=res[1]+res[0];
+            res[2]=res[0]-res[3];
+            res[2]=res[2]*H/(L+R-d);
+            res[2].rotate(pi/2.0);
+            res[2]=res[2]+res[3]; 
+        }
+        
+    }
+    return ans;
+}
+\end{lstlisting}
+
+\newpage 
+\subsection{闵可夫斯基和} 
+A,B俩个凸包的闵可夫斯基和为${ C={a+b| a\in A , b\in B }}$
+\begin{lstlisting}
+const int N=4e5+10;
+bool cmp(point x,point y)
+{
+	return (x.x==y.x?x.y<y.y:x.x<y.x);
+}
+point st[3][N],p[3][N];
+int top[3],tp[3];
+void Andrew(int id)
+{
+    top[id]=0;//多组清空
+	sort(p[id]+1,p[id]+tp[id]+1,cmp);
+	for(int i=1;i<=tp[id];i++)
+	{
+		while(top[id]>1&&((st[id][top[id]]-st[id][top[id]-1])^(p[id][i]-st[id][top[id]-1]))<=0.0) top[id]--;
+		st[id][++top[id]]=p[id][i];
+	}
+	int t=top[id];
+	for(int i=tp[id]-1;i>=1;i--)
+	{
+		while(top[id]>t&&((st[id][top[id]]-st[id][top[id]-1])^(p[id][i]-st[id][top[id]-1]))<=0.0) top[id]--;
+		st[id][++top[id]]=p[id][i];
+ 	}
+ 	top[id]--;
+}
+point s1[N],s2[N];
+void Minkovski(int id,int id1,int id2)//a={b+c}
+{
+	for(int i=1;i<top[id1];i++) s1[i]=st[id1][i+1]-st[id1][i];s1[top[id1]]=st[id1][1]-st[id1][top[id1]];//s1是id1凸包
+	for(int i=1;i<top[id2];i++) s2[i]=st[id2][i+1]-st[id2][i];s2[top[id2]]=st[id2][1]-st[id2][top[id2]];//s2是id2凸包
+	int p1=1,p2=1;
+	tp[id]=1;
+	p[id][tp[id]]=st[id1][1]+st[id2][1];//归并加入一下，p[id]数组就是闵可夫斯基和
+	while(p1<=top[id1]&&p2<=top[id2]) tp[id]++,p[id][tp[id]]=p[id][tp[id]-1]+((s1[p1]^s2[p2])>=0?s1[p1++]:s2[p2++]);//极角序从小到大并从p[id][top[id]-1]开始往后接
+	while(p1<=top[id1]) tp[id]++,p[id][tp[id]]=p[id][tp[id]-1]+s1[p1++];
+	while(p2<=top[id2]) tp[id]++,p[id][tp[id]]=p[id][tp[id]-1]+s2[p2++];
+}
+bool cmp2(point a,point b)//判断 
+{
+	return (a^b)>0||(a^b)==0&&a.dz()<b.dz();
+}
+int in(point a,int id) //通过极角序来判断点是否在凸包中 
+{
+	if((a^st[id][1])>0||(st[id][top[id]]^a)>0) return 0;
+	int to=lower_bound(st[id]+1,st[id]+top[id]+1,a,cmp2)-st[id]-1;
+	return ((a-st[id][to])^(st[id][to%top[id]+1]-st[id][to]))<=0;
+}
+\end{lstlisting}
+
+\newpage 
+\subsection{半平面交} 
+\begin{lstlisting}
+const int N=4e5+10;
+Line le[N],dq[N];
+int pt;
+bool cmphp(Line a,Line b)//极角+左侧 
+{
+	double A=a.arg(),B=b.arg();
+	return cmpb(A-B)!=0?A<B:((a.e-a.s)^(b.e-a.s))<0.0;
+}
+void half_plane()//半平面交 
+{
+	sort(le+1,le+pt+1,cmphp);
+	int h=1,t=1;dq[1]=le[1];
+	for(int i=2;i<=pt;i++)
+	{
+		if(le[i].arg()-le[i-1].arg()<eps) continue;
+		while(h<t&&le[i].right(dq[t],dq[t-1])) t--;//维护头尾 
+		while(h<t&&le[i].right(dq[h],dq[h+1])) h++;
+		dq[++t]=le[i];
+	}
+	while(h<t&&dq[h].right(dq[t],dq[t-1])) t--; //割多余尾巴 
+// 	dq[++t]=dq[h];//封口 看题目需要 
+}
+\end{lstlisting}
+
+\newpage 
+\subsection{最小圆覆盖} 
+\begin{lstlisting}
+const int N=1e5+10;
+int n;
+point p[N];
+point gauss(point x,point y,point z){
+    double c1=x.db(x.dz())-y.db(y.dz());
+    double c2=x.db(x.dz())-z.db(z.dz());
+    point e=x-y,e1=x-z;
+    point o;
+    o.x=(c1*e1.y-c2*e.y)/(2.0*(e.x*e1.y-e1.x*e.y));
+    o.y=(c1*e1.x-c2*e.x)/(2.0*(e.y*e1.x-e1.y*e.x));
+    return o;
+}
+void getcircle(point &o,double &r){
+    random_shuffle(p,p+n);
+    o=p[0];
+    for(int i=1;i<n;i++){
+        if(cmpb(r-o.dict(p[i]))==-1){
+            o=p[i];
+            r=0.0;
+            for(int j=0;j<i;j++){
+                if(cmpb(r-o.dict(p[j]))==-1){
+                    o=(p[i]+p[j])/2.0;
+                    r=o.dict(p[j]);
+                    for(int k=0;k<j;k++){
+                        if(cmpb(r-o.dict(p[k]))==-1){
+                            o=gauss(p[i],p[j],p[k]);
+                            r=o.dict(p[k]);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+\end{lstlisting}
+
+\newpage 
+\subsection{三角形和圆交面积} 
+拓展：多边形和圆的相交面积可以使多边形三角剖分之后逐步求面积
+\begin{lstlisting}
+double R;//半径
+point o;//圆心
+bool onSeg(point p,point a,point b){
+    return cmpb((a-p)^(b-p))==0&&((a-p)|(b-p))<=eps;
+}
+point getNode(point a,point u,point b,point v){
+    double t=((a-b)^v)/(v^u);
+    return a+(u*t);
+}
+double getDP2(point a,point b,point &pa,point &pb){
+    point i=(b-a);
+    i.rotate(pi/2);
+    point e=getNode(a,b-a,o,i);//垂足
+    double d=o.dict(e);
+    if(!onSeg(e,a,b)) d=min(o.dict(a),o.dict(b));
+    if(R<=d) return d;
+    double len=sqrt(R*R-o.dict(e)*o.dict(e));
+    pa=e+(a-b).norm()*len;
+    pb=e+(b-a).norm()*len;
+    return d;
+}
+//圆上扇形面积
+double sector(point a,point b){
+    double angle=acos(((a)|(b))/a.dz()/b.dz());
+    if(cmpb((a)^(b))==-1) angle=-angle;
+    return R*R*angle/2.0;
+}
+double getArea(point a,point b){
+    if(cmpb(a^b)==0) return 0;
+    double da=a.dict(o),db=b.dict(o);
+    if(R>=da&&R>=db) return (a^b)/2;//三角形在圆内
+    point pa,pb;
+    double d=getDP2(a,b,pa,pb);
+    if(R<=d) return sector(a,b);//ab在圆外
+    if(R>=da) return (a^pb)/2+sector(pb,b);//a在圆内
+    if(R>=db) return sector(a,pa)+(pa^b)/2;
+    return (pa^pb)/2+sector(a,pa)+sector(pb,b);//ab是割线
+}
+double GetArea(point a,point b,point c){
+    return fabs(getArea(a,b)+getArea(b,c)+getArea(c,a));
+}
+\end{lstlisting}
+
+\newpage 
+\subsection{二维向量绕O点旋转n度} 
+\begin{lstlisting}
+x1=x*cos(n)-y*sin(n);
+y1=x*sin(n)+y*cos(n);
+\end{lstlisting}
+
+\subsection{椭圆} 
+a为长半轴 b为短半轴 周长为 L=2πb+4(a-b) 面积为 S=πab
+
+\subsection{皮克定理} 
+格点三角形的面积 ${S=n+m/2-1}$  ${n}$表示三角形内部点的格点数量 ${m}$表示三角形边上的顶点数
+
+\subsection{浮点输入} 
+\begin{lstlisting}
+string s;
+cin>>s;
+double d=stod(s);
+\end{lstlisting}
+
+\subsection{浮点输出} 
+\begin{lstlisting}
+cout<<fixed<<setprecision(2)<<ans;
+\end{lstlisting}
+
+\subsection{浮点取模} 
+\begin{lstlisting}
+fmod(a,b)==a%b
+\end{lstlisting}
+
+\newpage 
+\subsection{扫描线} 
+\begin{lstlisting}
+#include<bits/stdc++.h>
+using namespace std;
+const int N=2e5+10;
+struct Line
+{
+    int x,y1,y2,f,id1,id2;
+    bool operator<(const Line &le1)
+    {
+        return x<le1.x;
+    }
+}le[N];
+vector<int>b;
+int n;
+int find(int x)
+{
+	return lower_bound(b.begin(),b.end(),x)-b.begin()+1;
+} 
+struct pp
+{
+	long long le;
+	int f;
+}tr[N<<4];
+void up(int k,int l,int r)
+{
+    if(!tr[k].f){
+        tr[k].le=tr[k<<1].le+tr[k<<1|1].le;
+    }
+    else{
+        tr[k].le=b[r]-b[l-1];
+    }
+}
+void mif(int k,int l,int r,int x,int y,int f)
+{
+	if(l==x&&r==y)
+	{
+		tr[k].f+=f;
+		up(k,l,r);
+		return;
+	}
+	int mi=(l+r)>>1;
+	if(y<=mi) mif(k<<1,l,mi,x,y,f);
+	else if(mi<x) mif(k<<1|1,mi+1,r,x,y,f);
+	else mif(k<<1,l,mi,x,mi,f),mif(k<<1|1,mi+1,r,mi+1,y,f);
+	up(k,l,r);
+}
+int main()
+{
+    ios::sync_with_stdio(false);cin.tie(0);cout.tie(0);
+    cin>>n;
+    for(int i=1;i<=n;i++)
+    {
+        int x,y,x1,y1;
+        cin>>x>>y>>x1>>y1;
+        le[i]={x,y,y1,1};
+        le[n+i]={x1,y,y1,-1};
+        b.push_back(y);
+        b.push_back(y1);
+    }
+    sort(b.begin(),b.end());
+    b.erase(unique(b.begin(),b.end()),b.end());
+    n<<=1;
+    sort(le+1,le+n+1);
+    for(int i=1;i<=n;i++)
+	{
+		le[i].id1=find(le[i].y1);
+		le[i].id2=find(le[i].y2);
+	}
+	long long ans=0;
+	int m=(int)b.size();
+	for(int i=1;i<n;i++)
+	{
+		mif(1,1,m,le[i].id1,le[i].id2-1,le[i].f);
+		ans+=1ll*tr[1].le*(le[i+1].x-le[i].x);
+	}
+	cout<<ans;
+    return 0;
+}
+\end{lstlisting}
+
+\newpage 
+\subsection{平面最近点对} 
+\begin{lstlisting}
+const int N=1e6+10;
+int n;
+point p[N],st[N];
+bool cmpx(point &x,point &y){
+    return x.x<y.x;
+}
+bool cmpy(point &x,point &y){
+    return x.y<y.y;
+}
+double find(int l,int r){
+    if(l==r) return 1e18;
+    if(r-l==1){
+        return p[l].dict(p[r]);
+    }
+    int mi=(l+r)>>1;
+    double d=min(find(l,mi),find(mi+1,r));
+    int tp=0;
+    for(int i=l;i<=r;i++){
+        if(cmpb(d-fabs(p[i].x-p[mi].x))==1){
+            st[++tp]=p[i];
+        }
+    }
+    sort(st+1,st+tp+1,cmpy);
+    for(int i=1;i<tp;i++){
+        for(int j=i+1;j<=tp&&st[j].y-st[i].y<d;j++){
+            d=min(d,st[i].dict(st[j]));
+        }
+    }
+    return d;
+}
+\end{lstlisting}
+
+\newpage 
+\subsection{自适应辛普森公式} 
+分成很多小段把一小段当成二次函数，通过分治进行求解
+\begin{lstlisting}
+const double eps=1e-12;
+int cmpb(double x)
+{
+    if(fabs(x)<eps) return 0;
+    if(x>0) return 1;
+    return -1;
+}
+double f(double x)//对应题目函数 
+{
+	double ans;
+	return ans;
+}
+double simpson(double l,double r){//辛普森公式 
+	return (r-l)*(f(r)+f(l)+4.0*f((r+l)/2.0))/6.0;
+}
+double asr(double l,double r,double ans){//自适应 
+	double mi=(l+r)/2.0;
+	double a=simpson(l,mi),b=(simpson(mi,r));
+	if(cmpb(a+b-ans)==0) return ans;
+	return asr(l,mi,a)+asr(mi,r,b);
+}
+\end{lstlisting}
+
+\newpage 
+\section{其它} 
+\subsection{快读快写开O2} 
+\begin{lstlisting}
+#pragma GCC optimize(2)
+#pragma GCC optimize(3,"Ofast","inline")
+
+inline int read()
+{
+    char c=getchar();int x=0,f=1;
+    while(c<'0'||c>'9'){if(c=='-')f=-1;c=getchar();}
+    while(c>='0'&&c<='9'){x=x*10+c-'0';c=getchar();}
+    return x*f;
+}
+inline void write(int x)
+{
+	static int t[25];int tp=0;
+	if(x==0) return(void)(putchar('0'));else if(x<0) putchar('-'),x=-x;
+	while(x) t[tp++]=x%10,x/=10;
+	while(tp--) putchar(t[tp]+48);
+}
+\end{lstlisting}
+
+\newpage 
+\subsection{bitset处理多维偏序} 
+\begin{lstlisting}
+#include<bits/stdc++.h>
+using namespace std;
+
+const int N=5010,M=510;
+int n,m;
+int mp[M][N];
+long long p[N],dp[N];
+bitset<N>tp[N];
+vector<int>tr[N];
+int in[N];
+typedef pair<int,int> pii;
+bool cmp(pii x,pii y)
+{
+	if(x.first==y.first)
+	{
+		return x.second<y.second;
+	}
+	return x.first<y.first;
+}
+int main()
+{
+	ios::sync_with_stdio(false);cin.tie(0);cout.tie(0);
+	cin>>n>>m;
+	for(int i=1;i<=m;i++)
+	{
+		cin>>p[i];
+		dp[i]=p[i];
+	}
+	for(int i=1;i<=n;i++)
+	{
+		for(int j=1;j<=m;j++)
+		{
+			cin>>mp[i][j];
+		}
+	}
+	for(int i=1;i<=m;i++)
+	{
+		for(int j=1;j<=m;j++){
+			tp[i][j]=1;
+		}
+	}
+	for(int i=1;i<=n;i++) 
+	{
+		vector<pii>v;
+		for(int j=1;j<=m;j++)
+		{
+			v.push_back({mp[i][j],j});
+		}
+		sort(v.begin(),v.end(),cmp);
+		bitset<N>tpp;
+		int l=0;
+		for(int j=0;j<(int)v.size();j++)
+		{
+			if(v[l].first!=v[j].first)
+			{
+				while(l<j){
+					tpp[v[l].second]=1;
+					l++;
+				}
+			}
+			tp[v[j].second]&=tpp;
+		}
+	}
+	long long ans=0;
+	for(int i=1;i<=m;i++)
+	{
+		for(int j=1;j<=m;j++)
+		{
+			if(tp[i][j]){
+				tr[j].push_back(i);
+				in[i]++;
+			}
+		}
+	}
+	queue<int>q;
+	for(int i=1;i<=m;i++)
+	{
+		if(in[i]==0) q.push(i);
+	}
+	while(q.size())
+	{
+		int v=q.front();
+		q.pop();
+		ans=max(ans,dp[v]);
+		for(int u:tr[v])
+		{
+			dp[u]=max(dp[u],dp[v]+p[u]);
+			if(--in[u]==0) q.push(u);
+		}
+	}
+	cout<<ans;
+	return 0;
+ } 
+\end{lstlisting}
+
+\newpage 
+\subsection{CDQ分治} 
+三维偏序（陌上开花）
+\begin{lstlisting}
+#include<bits/stdc++.h>
+using namespace std;
+
+const int N=2e5+10;
+int n,k;
+struct pp
+{
+    int a,b,c,cnt,ans;
+    bool operator ==(const pp &x)
+    {
+        return a==x.a&&b==x.b&&c==x.c;
+    }
+    bool operator <(const pp &x)
+    {
+        if(a==x.a)
+        {
+            if(b==x.b)
+            {
+                return c<x.c;
+            }
+            return b<x.b;
+        }
+        return a<x.a;
+    }
+}p[N],nw[N];
+bool cmp(pp x,pp y)
+{
+    return x.b<y.b;
+}
+int top;
+int tr[N];
+int lowbit(int x)
+{
+    return x&-x;
+}
+void add(int x,int val)
+{
+    for(int i=x;i<=k;i+=lowbit(i)) tr[i]+=val;
+}
+int qr(int x)
+{
+    int res=0;
+    for(int i=x;i;i-=lowbit(i)) res+=tr[i];
+    return res;
+}
+void CDQ(int l,int r)
+{
+    if(l==r) return;
+    int mi=(l+r)>>1;
+    CDQ(l,mi);
+    CDQ(mi+1,r);
+    sort(nw+l,nw+mi+1,cmp);
+    sort(nw+mi+1,nw+r+1,cmp);
+    int j=l;
+    for(int i=mi+1;i<=r;i++)
+    {
+        while(j<=mi&&nw[j].b<=nw[i].b){
+            add(nw[j].c,nw[j].cnt);
+            j++;
+        }
+        nw[i].ans+=qr(nw[i].c);
+    }
+    for(int i=l;i<j;i++) add(nw[i].c,-nw[i].cnt);
+}
+int ans[N];
+int main()
+{
+    ios::sync_with_stdio(false);cin.tie(0);cout.tie(0);
+    cin>>n>>k;
+    for(int i=1;i<=n;i++)
+    {
+        cin>>p[i].a>>p[i].b>>p[i].c;p[i].cnt=1;
+    }
+    sort(p+1,p+n+1);
+    for(int i=1,r=1;i<=n;i=r)
+    {
+        top++;
+        int re=1;
+        while(re+i<=n&&p[i]==p[re+i]){
+            re++;
+        }
+        nw[top]=p[i];nw[top].cnt=re;
+        r=i+re;
+    }
+    CDQ(1,top);
+    for(int i=1;i<=top;i++)
+    {
+        ans[nw[i].cnt+nw[i].ans-1]+=nw[i].cnt;
+    }
+    for(int i=0;i<n;i++) {
+        cout<<ans[i]<<'\n';
+    }
+    return 0;
+}
+\end{lstlisting}
+
+\newpage 
+\subsection{Tanjan} 
+\subsubsection{边双连通分量} 
+\begin{lstlisting}
+#include<bits/stdc++.h>
+using namespace std;
+
+const int N=5e6+10;
+int n,m;
+int head[N],ne[N],to[N],ct=1;
+void add(int v,int u)
+{
+	ne[++ct]=head[v];
+	head[v]=ct;
+	to[ct]=u;
+}
+int dfn[N],low[N],p;
+int st[N],tp;
+int tot[N],cnt;
+bool in[N];
+void tanjan(int now,int old)
+{
+	if(dfn[now]==0)
+	{
+		dfn[now]=++p;
+		low[now]=dfn[now];
+		st[++tp]=now;
+		in[now]=true;
+	}
+	for(int i=head[now];~i;i=ne[i])
+	{
+		int v=to[i];
+		if(!dfn[v])
+		{
+			tanjan(v,i);
+			low[now]=min(low[now],low[v]);
+		}
+		else if(i!=(old^1)) {
+			low[now]=min(low[now],dfn[v]);
+		}
+	}
+	if(low[now]==dfn[now])
+	{
+		++cnt;
+		int x;
+		do
+		{
+			x=st[tp--];
+			tot[x]=cnt;
+		}while(x!=now);
+	}
+}
+
+int main()
+{
+	ios::sync_with_stdio(false);cin.tie(0);cout.tie(0);
+	cin>>n>>m;
+	for(int i=1;i<=n;i++)
+	{
+		head[i]=-1;
+	}
+	for(int i=1;i<=m;i++)
+	{
+		int v,u;
+		cin>>v>>u;
+		if(v==u) continue;
+		add(v,u);
+		add(u,v);
+	}	
+	vector<vector<int>>ans(n+1);
+	for(int i=1;i<=n;i++)
+	{
+		if(!dfn[i])
+		{
+			tanjan(i,0);
+		}
+	}
+	for(int i=1;i<=n;i++) ans[tot[i]].push_back(i);
+	cout<<cnt<<'\n';
+	for(int i=1;i<=cnt;i++)
+	{
+		cout<<(int)ans[i].size()<<" ";
+		for(int j=0;j<(int)ans[i].size();j++)
+		{
+			cout<<ans[i][j]<<" ";
+		}
+		cout<<'\n';
+	}
+	return 0;
+}
+\end{lstlisting}
+
+\newpage 
+\subsubsection{缩点} 
+\begin{lstlisting}
+#include<bits/stdc++.h>
+using namespace std;
+
+const int N=2e5+10;
+int head[N],ne[N],to[N],ct=1;
+void add(int v,int u)
+{
+	ne[++ct]=head[v];
+	head[v]=ct;
+	to[ct]=u;
+}
+int n,m;
+long long w[N],totw[N];
+int tot[N];
+int st[N],tp;
+int dfn[N],low[N],cnt,p;
+bool vis[N];
+void tanjan(int now,int old)
+{
+	dfn[now]=++p;
+	low[now]=p;
+	st[++tp]=now;
+	vis[now]=true;
+	for(int i=head[now];~i;i=ne[i])
+	{
+		int v=to[i];
+		if(!dfn[v])
+		{
+			tanjan(v,i);
+			low[now]=min(low[now],low[v]);
+		}
+		else if(vis[v]){
+			low[now]=min(low[now],dfn[v]);
+		}
+	}
+	if(dfn[now]==low[now])
+	{
+		++cnt;
+		int x;
+		do{
+			x=st[tp--];
+			totw[cnt]+=w[x];
+			vis[x]=false;
+			tot[x]=cnt;
+		}while(x!=now);
+	}
+}
+vector<int>tr[N];
+int in[N];
+long long dp[N];
+int main()
+{
+	ios::sync_with_stdio(false);cin.tie(0);cout.tie(0);
+	cin>>n>>m;
+	for(int i=1;i<=n;i++)
+	{
+		cin>>w[i];
+		head[i]=-1;
+	}
+	for(int i=1;i<=m;i++)
+	{
+		int v,u;
+		cin>>v>>u;
+		if(v==u) continue;
+		add(v,u);
+	}
+	for(int i=1;i<=n;i++)
+	{
+		if(!dfn[i])
+		{
+			tanjan(i,0);
+		}
+	}
+	for(int i=1;i<=n;i++)
+	{
+		for(int j=head[i];~j;j=ne[j])
+		{
+			int v=to[j];
+			if(tot[i]!=tot[v])
+			{
+				tr[tot[i]].push_back(tot[v]);
+			}
+		}
+	}
+	queue<int>q;
+	for(int i=1;i<=cnt;i++)
+	{
+		sort(tr[i].begin(),tr[i].end());
+		tr[i].erase(unique(tr[i].begin(),tr[i].end()),tr[i].end());
+	}
+	for(int i=1;i<=cnt;i++)
+	{
+		for(int v:tr[i])
+		{
+			in[v]++;
+		}
+	}
+	for(int i=1;i<=cnt;i++) {
+		if(in[i]==0){
+		  q.push(i);
+		}
+		dp[i]=totw[i];
+	}
+	long long ans=0;
+	while(q.size())
+	{
+		int u=q.front();
+		q.pop();
+		ans=max(ans,dp[u]);
+		for(int i=0;i<(int)tr[u].size();i++)
+		{
+			int v=tr[u][i];
+			dp[v]=max(dp[u]+totw[v],dp[v]);
+			if(--in[v]==0) q.push(v); 
+		}
+	}
+	cout<<ans;
+	return 0;
+}
+\end{lstlisting}
+
+\newpage 
+\subsection{可持久化kmp} 
+在原来朴素kmp的基础上提供了删除维护操作
+\begin{lstlisting}
+int ne[N];
+int pr[N];
+char st[N];
+int tp;
+void add(char c)
+{
+	int j=tp;
+	while(j&&st[ne[j]+1]!=c) j=pr[j];
+	st[++tp]=c;
+	j=ne[j]+1;
+	if(tp==1) ne[1]=pr[1]=0;
+	else if(st[j]==c)
+	{
+		ne[tp]=j;
+		if(st[ne[j]+1]==st[j+1]) pr[tp]=pr[j];
+		else pr[tp]=j;
+	}
+	else ne[tp]=pr[tp]=0;
+	
+}
+\end{lstlisting}
+
+\newpage 
+\subsection{map排序} 
+可以根据map key-val来进行排序具体操作
+\begin{lstlisting}
+map<（key类型）,(val类型),decltype(&cmp)>mp{&cmp}; //cmp为定义的排序规则
+ for(map<point,pair<double,double>,decltype(&cmp)>::iterator it=mp.begin();it!=mp.end();it++)//11都能用
+{
+     ；
+}
+
+class cmp{//换struct一样
+    public:
+    bool operator()(const point &x,const point &y) const//排序方法
+    {
+        return (x^y)>0;
+    }
+};
+map<point,pair<double,double>,cmp>mp;
+for(map<point,pair<double,double>,cmp>::iterator it=mp.begin();it!=mp.end();it++)//迭代器遍历
+{   
+    ;
+}
+\end{lstlisting}
+
+\newpage 
+\subsection{更快的哈希表} 
+\begin{lstlisting}
+#include <ext/pb_ds/assoc_container.hpp>
+using namespace __gnu_pbds;
+const int RANDOM = chrono::high_resolution_clock::now().time_since_epoch().count();
+struct chash {
+    int operator()(int x) const { return x ^ RANDOM; }
+};
+typedef gp_hash_table<int, int, chash> hash_t;
+\end{lstlisting}
+
+\end{document}

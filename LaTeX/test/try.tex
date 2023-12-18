@@ -1,0 +1,3008 @@
+%!TEX program = xelatex
+\documentclass[12pt, a4paper, oneside]{ctexart}
+\usepackage[utf8]{inputenc}
+\usepackage{ctex} %导入中文包
+\usepackage{listings}
+\usepackage{fontspec}
+\usepackage{geometry} %设置页边距的包
+\usepackage{listings}
+\usepackage{xcolor} 
+
+\usepackage{graphicx}
+\usepackage{float}
+
+
+
+\title{\fontsize{70}{30}\selectfont  ACM 模板} 
+\author{Buns\_out} 
+\date{\today} 
+
+
+
+\geometry{left=2.5cm,right=2cm,top=2.54cm,bottom=2.54cm} %设置书籍的页边距
+\definecolor{mygray}{rgb}{0.97,0.97,0.97}%定制颜色
+
+\setsansfont{Monaco} 
+\setmainfont{Monaco}
+
+
+%对于lstset排版
+\lstset{
+tabsize=4,
+	breaklines, 					% 自动将长的代码行换行排版
+	backgroundcolor = \color{white},     			 % 背景色：淡黄
+	numbers=left, 									% 行号在左侧显示
+	numberstyle= \small, 								% 行号字体
+	keywordstyle= \color{ red!70},						 % 关键字颜色
+	commentstyle= \color{red!50!green!50!blue!50}, 		% 注释颜色
+	rulesepcolor= \color{ red!20!green!20!blue!20} ,
+	frame=single,                               % 设置代码框形式
+	escapeinside=``,									 % 英文分号中可写入中文
+	xleftmargin=2em,xrightmargin=2em, aboveskip=1em,
+	framexleftmargin=2em
+} 
+
+
+
+\begin{document} 
+
+
+
+\maketitle
+\thispagestyle{empty}
+\centering
+\includegraphics[scale=1.3]{1.png}
+
+
+
+\newpage
+\tableofcontents 
+\thispagestyle{empty}
+
+
+
+\newpage 
+\section{STL} 
+\subsection{快读快写} 
+\lstset{language=C++}
+\begin{lstlisting}
+inline void read(int &x){
+   int s = 0, w = 1; char ch = getchar();
+   while(ch < '0' || ch > '9'){ if(ch == '-') w = -1; ch = getchar(); }
+   while(ch >= '0' && ch <= '9') s = s * 10 + ch - '0', ch = getchar();
+   x = s*w;
+   return ;
+}
+inline void write(int x){
+    if(x<0){
+    	putchar('-');
+		x=-x;
+	}
+    if(x>9)write(x/10);
+    putchar(x%10+'0');
+}  
+\end{lstlisting}
+\begin{lstlisting}
+unordered_map<int,int>mp;
+unordered_set<int>s;
+multiset<int>S;
+
+int x=floor(0.1);//xia
+int y=ceil(1.0);//shang
+\end{lstlisting}
+
+\newpage
+\subsection{自定义开O2 开栈} 
+\begin{lstlisting}
+#pragma GCC optimize(2)
+#pragma GCC optimize(3,"Ofast","inline")
+
+#pragma comment(linker, "/STACK:1024000000,1024000000")
+
+//自定义开栈
+	int size(512<<20); // 512M
+    __asm__ ( "movq %0, %%rsp\n"::"r"((char*)malloc(size)+size)); // YOUR CODE
+\end{lstlisting}
+
+
+\newpage
+\subsection{set} 
+\begin{lstlisting}
+unordered_set<int>s;
+multiset<int>S;
+fl=lower_bound(a,a+13,x)-a;//在从小到大的序列中找出大于等于x的数的地址 
+fl=upper_bound(a,a+13,x)-a;//在从小到大的序列中找出大于x的书的地址
+
+fl=lower_bound(b,b+13,x,greater<int>() )-b;//在从大到小的序列中找出小于等于x的数的地址 
+fl=upper_bound(b,b+13,x,greater<int>() )-b;//在从小到大的序列中找出小于x的数的地址 
+s.erase(s.find(tmp));
+\end{lstlisting}
+
+
+
+\subsection{string} 
+\begin{lstlisting}
+string a=string(10,'9'); 
+int x=stoll(a);
+a=to_string(x);
+\end{lstlisting}
+
+
+\subsection{python math库} 
+\begin{lstlisting}
+import math
+math.e #常量e,2.718281828459045
+math.pi #常量pi,3.141592653589793
+math.factorial(x) #x的阶乘
+math.gcd(x,y) #x,y的gcd
+math.sqrt(x) #x的平方根
+x=math.log(n,a) #以a为底n的对数x,a^x=n,默认底数为e
+math.log(32,2) #5.0
+math.degrees(math.pi/4) #将Π/4转为角度
+math.radians(45) #将45度转为弧度
+math.cos(math.pi/4) #参数都为弧度
+
+\end{lstlisting}
+
+
+
+
+\subsection{rand()、测速  } 
+\begin{lstlisting}
+srand(time(0));
+clock_t start, finish;start = clock();
+finish = clock();
+solve();
+cout << "the time cost is" <<double(finish - start)/CLOCKS_PER_SEC;
+\end{lstlisting}
+
+
+
+\subsection{struct} 
+\begin{lstlisting}
+struct node
+{
+	int sum,ls,rs,ts;
+	node():sum(0),ls(0),rs(0),ts(0){}
+	node(int a,int b,int c,int d):sum(a),ls(b),rs(c),ts(d){}
+};
+\end{lstlisting}
+
+
+
+\subsection{vector  } 
+\begin{lstlisting}
+int sum=accumulate(v.begin(),v.end(),0); // 求和
+//去重
+vector<int> vector_unique(vector<int>v ){
+	sort(v.begin(),v.end());
+	auto v_it = unique(v.begin(),v.end());
+	if(v_it != v.end())
+		v.erase(v_it,v.end());
+	return v;
+}
+//两个vector求并集
+vector<int> vector_set_union(vector<int>v1 ,vector<int>v2){
+	vector<int>v;
+	sort(v1.begin(),v1.end());
+	sort(v2.begin(),v2.end());
+	set_union(v1.begin(),v1.end(),v2.begin(),v2.end(),back_inserter(v));
+	return v;
+}
+//两个vector求交集
+vector<int> vector_set_intersection(vector<int>v1 ,vector<int>v2){
+	vector<int>v;
+	sort(v1.begin(),v1.end());
+	sort(v2.begin(),v2.end());
+	set_intersection(v1.begin(),v1.end(),v2.begin(),v2.end(),back_inserter(v));
+	return v;
+}
+//判断vector的某一元素是否存在
+bool is_element_in_vector(vector<int>v,int element){
+    // vector<int>::iterator it;
+    auto it=find(v.begin(),v.end(),element);
+    if (it!=v.end()){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+void Erase()
+{
+	vector<int>v;
+	v.push_back(1);	v.push_back(2);v.push_back(3);
+	//直接引用
+	v.back()-=1;
+	//删除最后一个元素
+	v.erase(v.end()-1,v.end());
+	//删除第一个元素
+	v.erase(v.begin(),v.begin()+1);
+	for(auto i:v)
+		cout<<i<<" ";cout<<endl;
+	//sum
+	int sum=accumulate(v.begin(),v.end(),0);
+	// cout<<sum<<endl;
+	string str= accumulate(
+		next(v.begin()),
+		v.end(),
+		to_string(v[0]),
+		[](string a,int b){
+			return a+'-'+to_string(b);
+		}
+	);
+	cout<<str<<endl;
+	int MA = *max_element(v.begin(),v.end());//取值
+	int MA_fl = max_element(v.begin(),v.end())-v.begin();//取下标
+
+	int MI = *min_element(v.begin(),v.end());//取值
+	int MI_fk = min_element(v.begin(),v.end())-v.begin();//取下标
+}
+\end{lstlisting}
+
+
+
+\subsection{STL函数} 
+\begin{lstlisting}
+next_permutation(p+1,p+1+9);
+prev_permutation(p+1,p+1+9);
+//数字里面的 1 的个数
+cnt=__builtin_popcount(x);
+cnt=__builtin_popcountll(X);
+//二进制表示形式中末尾0的个数
+cnt=__builtin_ctz(x);
+cnt=__builtin_ctzll(X);
+//二进制表示形式中前导0的个数
+cnt=__builtin_clz(x);
+cnt=__builtin_clzll(X);
+//二进制表示形式中1的个数的奇偶性（偶：0，奇：1）
+cnt=__builtin_parity(x);
+cnt=__builtin_parityll(X);
+//二进制表示形式中最后一个1在第几位
+cnt= __builtin_ffs(x);
+cnt= __builtin_ffsll(X);
+//快速开平方
+cnt=__builtin_sqrt(x);
+\end{lstlisting}
+
+
+\newpage
+\subsection{差分矩阵 } 
+\begin{lstlisting}
+void insert(int x1,int y1,int x2,int y2,int c)
+{
+	s[x1][y1]+=c;
+	s[x2+1][y2+1]+=c;
+	s[x1][y2+1]-=c;
+	s[x2+1][y1]-=c;
+}
+void solve()
+{
+	cin>>n>>m>>q;
+	for(int i=1;i<=n;i++)
+		for(int j=1;j<=m;j++)
+			cin>>p[i][j],insert(i,j,i,j,p[i][j]);
+	while(q--)
+	{
+		int a,b,c,d,k;
+		cin>>a>>b>>c>>d>>k;
+		insert(a,b,c,d,k);
+	}
+	for(int i=1;i<=n;i++)
+	{
+		for(int j=1;j<=m;j++){
+			p[i][j]=p[i-1][j]+p[i][j-1]-p[i-1][j-1]+s[i][j];
+			cout<<p[i][j]<<" ";
+		}
+		cout<<endl;
+	}
+}
+\end{lstlisting}
+
+
+
+\newpage
+\subsection{前缀和矩阵  } 
+\begin{lstlisting}
+void solve(int a)
+{
+	cin>>n>>m>>q;
+	for(int i=1;i<=n;i++)
+		for(int j=1;j<=m;j++){
+			cin>>p[i][j];
+			s[i][j]=s[i-1][j]+s[i][j-1]-s[i-1][j-1]+p[i][j];
+		}
+	while(q--)
+	{
+		int x1,x2,y1,y2;
+		cin>>x1>>y1>>x2>>y2;
+		cout<<s[x2][y2]-s[x2][y1-1]-s[x1-1][y2]+s[x1-1][y1-1]<<endl;
+	}
+}
+\end{lstlisting}
+
+
+
+
+
+\subsection{ 分治，最大字段和 } 
+\begin{lstlisting}
+int p[maxn];
+int n,m;
+//分治
+int MaxIn(int *a)
+{
+	vector<int>dp(n+1,0);
+	int ma=0;
+	for(int i=1;i<=n;i++)
+	{
+		if(dp[i-1]>0)
+		{
+			dp[i]=dp[i-1]+a[i];
+		}
+		else dp[i]=a[i];
+		ma=max(ma,dp[i]);
+	}
+	return ma;
+}
+int MaxIn(int *a,int l,int r)
+{
+	if(l==r)
+		return a[l]>0?a[l]:0;
+	int mid=(l+r)>>1;
+	//左边区间的最大子段和
+	int l_max = MaxIn(a,l,mid);
+	//右边区间的最大子段和
+	int r_max = MaxIn(a,mid+1,r);
+
+	int sum = 0;
+	int left_max = 0;
+	for(int i=mid;i>=l;i--)
+	{
+		sum+=a[i];
+		if(sum>left_max)
+			left_max = sum;
+	}
+
+	sum = 0;
+	int right_max = 0;
+	for(int i=mid+1;i<=r;i++)
+	{
+		sum+=a[i];
+		if(sum>right_max)
+			right_max = sum;
+	}
+	int res = left_max + right_max;
+	if(res < l_max)
+		res = l_max;
+	if(res < r_max)
+		res = r_max;
+	return res;
+}
+void solve()
+{
+	cin>>n;
+	for(int i=1;i<=n;i++)
+		cin>>p[i];
+	cout<<MaxIn(p)<<endl;
+}
+\end{lstlisting}
+
+
+
+
+\newpage
+\section{字符串} 
+\subsection{kmp} 
+\begin{lstlisting}
+struct KMP{
+	int nxt[maxn];
+	int len;
+	void init(char *s)
+	{
+		nxt[1]=0;
+		len=strlen(s+1);
+		for(int i=2;i<=len;i++)
+		{
+			nxt[i]=nxt[i-1];
+			while(s[nxt[i]+1]!=s[i]&&nxt[i])
+				nxt[i]=nxt[nxt[i]];
+			if(s[nxt[i]+1]==s[i])nxt[i]++;
+		}
+	}
+    void kmp(char *s,char *t)
+	{
+		int lens=strlen(s+1);
+		int lent=strlen(t+1);
+		int cnt=0;
+		for(int i=0,j=0;i<lens;i++)
+		{
+			while(j&&s[i+1]!=t[j+1])j=nxt[j];
+			if(s[i+1]==t[j+1])j++;
+			if(j==lent)
+			{
+				cnt++;
+				j=nxt[j];
+			}
+		}
+	}
+	/* 循环周期 形如 acaca 中 ac 是一个合法周期 */
+	vector<int> periodic()
+	{
+		vector<int>ret;
+		int now=len;
+		while(now)
+		{
+			now=nxt[now];
+			ret.push_back(len-now);
+		}
+		return ret;
+	}
+	/* 循环节 形如 acac 中ac、acac是循环节，aca不是*/
+	vector<int> periodic_loop()
+	{
+		vector<int>ret;
+		for(auto i:periodic())
+		{
+			if(len%i==0)
+				ret.push_back(i);
+		}
+		return ret;
+	}
+	void debug(){
+		for (int i=0;i<=len;i++){
+			printf("[debug] nxt[%d]=%d\n",i,nxt[i]);
+		}
+	}
+}kmp;
+\end{lstlisting}
+
+
+
+
+\newpage
+\subsection{exKMP  } 
+对于个长度为n的字符串 。定义函数 表示$z[i]$表示$s$ 和 $s[i,n-1]$（即以$s[i]$开头的后缀）的最长公共前缀$(LCP)$的长度。 被称为 的  \textbf{Z函数}。
+\begin{lstlisting}
+struct EXKMP{
+//result: ext[i] = LCP(S[i,lens],T)
+//require: nxt[i] = LCP(T[i,lent],T)
+//nxt : s  Mode_String
+//ext : s  Text_String t Mode_String
+void exkmp(char *s,int lens,char *t,int lent,int *ext,int *nxt)
+{
+    ext[0]=0;
+    for(int i=1,p0=0,p=0;i<=lens;i++)
+    {
+        ext[i]=i<=p?min(nxt[i-p0+1],p-i+1):0;
+        while(i+ext[i]<=lens&&ext[i]<lent&&s[i+ext[i]]==t[ext[i]+1])ext[i]++;
+        if(i+ext[i]-1>=p&&i!=1)p0=i,p=i+ext[i]-1;                  //最右端
+    }
+}
+}exKMP;
+char s[maxn];
+char t[maxn];
+int nxt[maxn];
+int ext[maxn];
+void solve()
+{ 
+	scanf("%s",t+1);
+	scanf("%s",s+1);
+	exKMP.exkmp(s,strlen(s+1),s,strlen(s+1),nxt,nxt);//
+	exKMP.exkmp(t,strlen(t+1),s,strlen(s+1),ext,nxt);  
+}
+\end{lstlisting}
+
+
+
+
+\newpage
+\subsection{Manacher} 
+\begin{lstlisting}
+struct Manacher{
+	char ch[maxn];
+	int lc[maxn];
+	int N;
+	void init(char *s){
+		int n=strlen(s+1);// puts(s+1);
+		ch[n*2+1]='#';
+		ch[0]='@';
+		ch[n*2+2]='\0';
+		for(int i=1;i<=n;i++)ch[i*2]=s[i],ch[i*2-1]='#';
+		N=n*2+1;
+	}
+	void manacher(){
+		lc[1]=1;  int k=1,ma=1;
+		for (int i=2;i<=N;i++){
+			int p = k+lc[k]-1;
+			if (i<=p){lc[i]=min(lc[2*k-i],p-i+1);
+			}else{	lc[i]=1;}
+			while(ch[i+lc[i]]==ch[i-lc[i]])lc[i]++;
+			if(i+lc[i]>k+lc[k])k=i;
+			ma=max(ma,lc[i]-1);
+		}
+	}
+}Manch;
+char s[maxn];
+void solve()
+{
+	scanf("%s",s+1);
+	Manch.init(s);
+	Manch.manacher();
+}
+
+\end{lstlisting}
+
+
+
+\newpage
+\subsection{字符串哈希} 
+\begin{lstlisting}
+#define ull unsigned long long
+using ll=long long;
+using pii=pair<int,int>;
+const int inf=0x3f3f3f3f;
+const int INF=1e9+7;
+const int maxn=1e6;
+const ull mod=212370440130137957ll;
+const ull prime=233317;
+const ull base=131;
+const ull more=19260817;
+const ull seed[]={911,146527,19260817,91815541};
+ull bas[maxn];
+map<ull,bool>mp;
+ull a[maxn];
+int n;
+namespace EEE{
+	class StringHash{
+	public:
+		const ull mod=212370440130137957ll;
+		const ull prime=233317;
+		const ull base=131;
+		vector<ull>h;
+		vector<ull>bas;
+		StringHash():h(1),bas(1,1){}
+		void push_back(char ch){
+			h.push_back((h.back()*base+ch)%mod + prime);
+			bas.push_back(bas.back()*base%mod);
+		}
+		ull get(int l,int r){
+			return (h[r] + __int128(h[l])*(mod-bas[r-l]))%mod;
+		}
+	};
+	void A()
+	{
+		string str;
+		StringHash hs,rhs;
+		int N=int(str.size());
+		for(int i=0;i<N;i++)
+			hs.push_back(str[i]);
+		for(int i=N-1;i>=0;i--)
+			rhs.push_back(str[i]);
+	}
+};
+ull get_hash(string &s)
+{
+	ull ans=0;
+	for(int i=0;i<s.size();i++)
+		ans=(ans*base+(ull)s[i])%mod+prime;
+	return ans;
+
+
+	bas[0]=1;
+    for(int i=1;i<=n;i++){
+        bas[i]=bas[i-1]*seed[0]%mod;
+    }
+}
+void solve()
+{
+	cin>>n;
+	for(int i=1;i<=n;i++)
+	{
+		string str;
+		cin>>str;
+		a[i]=get_hash(str);
+	}
+	sort(a+1,a+1+n);
+	int ans=1;
+	for(int i=2;i<=n;i++)
+		if(a[i]!=a[i-1])
+			ans++;
+	cout<<ans<<endl;
+}
+signed main()
+{	
+	ios::sync_with_stdio(false);
+	cin.tie(nullptr);cout.tie(nullptr);
+		solve();
+	return 0;
+}
+\end{lstlisting}
+
+
+
+
+\newpage
+\subsection{最小表示法} 
+\begin{lstlisting}
+int Get_Min(int *p,int n)
+{
+	int i=0,j=1,k=0;
+	while(i<n&&j<n&&k<n)
+	{
+		if(p[(i+k)%n]==p[(j+k)%n])k++;
+		else
+		{
+			if(p[(i+k)%n]>p[(j+k)%n])i=i+k+1;
+			else j=j+k+1;
+			if(i==j)i++;
+			k=0;
+		}
+	}
+	return min(i,j);
+}
+string str;
+int p[maxn];
+int n;
+void solve()
+{
+	cin>>n;
+	for(int i=0;i<n;i++)
+		cin>>p[i];
+	int tmp=Get_Min(p,n);
+	// cout<<tmp<<endl;
+	for(int i=0;i<n;i++)
+		cout<<p[(i+tmp)%n]<<" ";
+}
+\end{lstlisting}
+
+
+
+
+\newpage
+\subsection{AC自动机} 
+\begin{lstlisting}
+string mp[maxn];
+vector<string>v;
+int n;
+struct Trie{
+	int nxt[maxn][26],fail[maxn];
+	int val[maxn];
+	int cnt[maxn];
+	int id[maxn];
+	int q[maxn];
+	int root=0,indx=0;
+	int top=0,low=1;
+	void clear(){
+		for(int i=0;i<=indx;i++){
+			val[i]=cnt[i]=id[i]=q[i]=fail[i]=0;
+			for(int j=0;j<26;j++)
+				nxt[i][j]=0;
+		}
+		indx=top=0;low=1;//v.clear();
+	}
+	void insert(string& str,int x)
+	{
+		int rt=0;
+		for(int i=0;i<str.size();i++){
+			int tmp=str[i]-'a';
+			if(!nxt[rt][tmp])nxt[rt][tmp]=++indx;
+			rt=nxt[rt][tmp];
+		}
+		val[rt]++;id[x]=rt;
+	}
+	void build()
+	{
+		for(int i=0;i<26;i++)
+			if(nxt[0][i])
+				q[++top]=nxt[0][i];
+		while(low<=top){
+			int x=q[low++];
+			for(int i=0;i<26;i++){
+				int &rt=nxt[x][i];
+				if(!rt)rt=nxt[fail[x]][i];
+				else{
+					fail[rt]=nxt[fail[x]][i];
+					q[++top]=rt;
+				}
+			}
+		}
+	}
+	void query(string& s)
+	{
+		for(int i=0,j=0;i<s.size();i++){
+			j=nxt[j][s[i]-'a'];
+			cnt[j]++;
+		}
+		for(int i=indx;i;i--)
+			cnt[fail[q[i]]]+=cnt[q[i]];
+		//模式串i出现次数
+		// for(int i=1;i<=n;i++)
+		// 	cout<<cnt[id[i]]<<endl;
+		//模式串出现次数
+		// int ans=0;
+		// int now=0;
+		// for(int i=0;i<s.size();i++)
+		// {
+		// 	now=nxt[now][s[i]-'a'];
+		// 	for(int t=now;t&&val[t];t=fail[t])
+		// 		ans+=val[t],val[t]=0;
+		// }
+		// cout<<ans<<endl;
+	}
+}trie;
+void solve()
+{
+	while(cin>>n&&n)
+	{
+		trie.clear();
+		for(int i=1;i<=n;i++)
+		{
+			string str;
+			cin>>str;
+			mp[i]=str;
+			trie.insert(str,i);
+		}
+		trie.build();
+		string t;
+		cin>>t;
+		trie.query(t);
+		break;
+	}
+}
+\end{lstlisting}
+
+
+
+
+
+\newpage
+\section{图论} 
+\subsection{差分约束} 
+\begin{lstlisting}
+a-b<=c add(b,a,c)
+求最小生成树
+
+a-b>=c add(b,a,c)
+求最大生成树
+或add(a,b,-c) 
+
+a-b==c
+add(b,a,c)
+add(a,b,-c)
+\end{lstlisting}
+
+
+
+
+\subsection{Floyd} 
+\begin{lstlisting}
+for(int k=1;k<=n;k++)
+		for(int i=1;i<=n;i++)
+			for(int j=1;j<=n;j++)
+				dis[i][j]=min(dis[i][j],dis[i][k]+dis[k][j]);
+}
+\end{lstlisting}
+
+
+
+\newpage
+\subsection{2-SET} 
+\begin{lstlisting}
+void solve()
+{
+	cin>>n>>m;
+	/*
+	如果指定 x 一定为真
+	add(x,x+n);
+	如果x为假那么x一定为真
+	*/
+	for(int i=1;i<=m;i++)
+	{
+		int x,a,y,b;
+		cin>>x>>a>>y>>b;
+		if(a==1&&b==1)//x为真或者y为真
+		{
+			v[x].push_back(y+n);//x为假那么y一定为真
+			v[y].push_back(x+n);//y为假那么x一定为真
+		}
+		else if(a==0&&b==1)//x为假或者y为真
+		{
+			v[x+n].push_back(y+n);//x为真那么y一定为真
+			v[y].push_back(x);//y为假那么x一定为假
+		}
+		else if(a==1&&b==0)//x为真或者y为假
+		{
+			v[x].push_back(y);//x为假那么y一定为假
+			v[y+n].push_back(x+n);//y为真那么x一定为真
+		}
+		else if(a==0&&b==0)//x为假或者y为假
+		{
+			v[x+n].push_back(y);
+			v[y+n].push_back(x);
+		}
+	}
+	for(int i=1;i<=n*2;i++)
+		if(!dfn[i])
+			tarjan(i);
+	//判断无解情况
+	for(int i=1;i<=n;i++)
+		if(col[i]==col[i+n]){
+			cout<<"IMPOSSIBLE"<<endl;
+			return ;
+		}
+	//输出拓扑序靠后(col较小)
+	cout<<"POSSIBLE"<<endl;
+	for(int i=1;i<=n;i++)
+		cout<<(col[i]>col[i+n])<<" ";
+	cout<<endl;
+}
+\end{lstlisting}
+
+\newpage
+\subsection{倍增优化建图} 
+\begin{lstlisting}
+int find(int x,int y){
+    if(id[x][y])return id[x][y];
+    id[x][y]=++Flow::tot;
+    if(!y){
+        Flow::Add(id[x][y],Flow::t,val[x]);
+    }
+    else {
+        Flow::Add(id[x][y],find(x,y-1),INF);
+        Flow::Add(id[x][y],find(f[x][y-1],y-1),INF);
+    }
+    return id[x][y];
+}
+​
+// 与倍增求lca相同的循环
+int lca=LCA(x,y);
+for(int i=14;i>=0;i--)
+    if((dep[x]-dep[lca])>>i&1)
+    {
+        Flow::Add(now,find(x,i),INF);
+        x=f[x][i];
+    }
+for(int i=14;i>=0;i--)
+    if((dep[y]-dep[lca])>>i&1)
+    {
+        Flow::Add(now,find(y,i),INF);
+        y=f[y][i];
+    }
+\end{lstlisting}
+
+
+
+\newpage
+\subsection{prim} 
+\begin{lstlisting}
+#include<bits/stdc++.h>
+using namespace std;
+#define endl "\n"
+using ull=unsigned long long;
+using ll=long long;
+using pii=pair<int,int>;
+const int dx[]={0,0,1,-1,1,-1,1,-1};
+const int dy[]={1,-1,0,0,1,-1,-1,1};
+const ull str_mod=212370440130137957ll;
+const ull more=19260817;
+const ull prime=233317;
+const ull base=131;
+const int inf=0x3f3f3f3f;
+const int INF=1e9+7;
+const int maxn=1e6;
+struct node
+{
+    int t;int d;
+    bool operator < (const node &a) const
+    {
+        return d>a.d;
+    }
+};
+struct Edge{
+    int to,next,w;
+}edge[maxn];
+int head[maxn],cnt;
+bitset<maxn>vis;
+int n,m;
+void add(int from,int to,int w){
+    edge[++cnt].w=w;
+    edge[cnt].to=to;
+    edge[cnt].next=head[from];
+    head[from]=cnt;
+}
+void prim()
+{
+    priority_queue<node>q;
+    q.push({1,0});
+    int ans=0;
+    while(!q.empty())
+    {
+        auto [x,X]=q.top();q.pop();
+        if(vis[x])continue;
+        vis[x]=1;
+        ans+=X;
+        for(int i=head[x];i;i=edge[i].next)
+            if(!vis[edge[i].to])
+                q.push({edge[i].to,edge[i].w});
+    }
+    int flag=1;
+    for(int i=1;i<=n;i++)
+        if(!vis[i])flag=0;
+    if(!flag)cout<<"orz"<<endl;
+    else cout<<ans<<endl;
+}
+void solve()
+{
+    cin>>n>>m;
+    for(int i=1;i<=m;i++)
+    {
+        int x,y,w;
+        cin>>x>>y>>w;
+        add(x,y,w);
+        add(y,x,w);
+    }
+    prim();
+}
+signed main(){
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);cout.tie(nullptr);
+        solve();
+    return 0;
+}
+\end{lstlisting}
+
+
+\newpage
+\subsection{匈牙利} 
+\begin{lstlisting}
+#include<bits/stdc++.h>
+using namespace std;
+using ll=long long;
+using pii=pair<int,int>;
+const int maxn=1e6;
+vector<int>v[maxn];
+int mt[maxn];
+int n,m,e;
+bitset<maxn>vis;
+bool dfs(int x)
+{
+	if(vis[x])return 0;
+	vis[x]=1;
+	for(auto y:v[x]){
+		if(!mt[y]||dfs(mt[y])){
+			mt[y]=x;
+			return 1;
+		}
+	}
+	return 0;
+}
+int main()
+{
+	cin>>n>>m>>e;
+	for(int i=1;i<=e;i++){
+		int x,y;
+		cin>>x>>y;
+		v[x].push_back(y);
+		// v[y].push_back(x);
+	}
+	int ans=0;
+	for(int i=1;i<=n;i++){
+		vis.reset();
+		if(dfs(i))ans++;
+	}
+	cout<<ans<<endl;
+}
+\end{lstlisting}
+
+
+\newpage
+\subsection{KM} 
+\begin{lstlisting}
+#include <bits/stdc++.h>
+using namespace std;
+#define int long long
+using ll=long long;
+using pii=pair<int,int>;
+const int INF=1e9+7;
+const int mod=998244353;
+const int N=303;
+int w[N][N];
+int n,m;
+bitset<N>vx,vy;
+namespace KM {
+	long long cal(int n, int m) {
+		std::vector<long long> u(n + 1), v(m + 1), p(m + 1), way(m + 1);
+		for (int i = 1; i <= n; i++) {
+			p[0] = i;
+			long long j0 = 0;
+			std::vector<long long> minv(m + 1, 1e18);
+			std::vector<char> used(m + 1, false);
+			do {
+				used[j0] = true;
+				long long i0 = p[j0], delta = 1e18, j1;
+				for (int j = 1; j <= m; ++j) {
+					if (!used[j]) {
+						long long cur = w[i0][j] - u[i0] - v[j];
+						if (cur < minv[j]) {
+							minv[j] = cur, way[j] = j0;
+						}
+						if (minv[j] < delta) {
+							delta = minv[j], j1 = j;
+						}
+					}
+				}
+				for (int j = 0; j <= m; ++j) {
+					if (used[j]) {
+						u[p[j]] += delta, v[j] -= delta;
+					}
+					else {
+						minv[j] -= delta;
+					}
+				}
+				j0 = j1;
+			} while (p[j0] != 0);
+			do {
+				long long j1 = way[j0];
+				p[j0] = p[j1];
+				j0 = j1;
+			} while (j0);
+		}
+		long long res = 0;
+		for (int i = 1; i <= m; i++) {
+			res += w[p[i]][i];
+		}
+		return res;
+	}
+}
+void solve()
+{
+	while(cin>>n)
+	{
+		for(int i=1;i<=n;i++)
+		{
+			for(int j=1;j<=n;j++)
+			{
+				cin>>w[i][j];
+			}
+		}
+		/*最小费用*/
+		cout<<KM::cal(n, n)<<endl;
+	}
+}
+signed main()
+{
+	ios::sync_with_stdio(false);
+	cin.tie(0);cout.tie(0);
+	int __;cin>>__;
+	while(__--)
+		solve();
+}
+
+\end{lstlisting}
+
+
+\newpage
+\subsection{点双} 
+\begin{lstlisting}
+struct Edge{
+	int to,next,w;
+}edge[maxn];
+int head[maxn],cnt;
+int dfn[maxn],low[maxn],indx;
+vector<int>bcc[maxn];
+int col[maxn],tot;
+bitset<maxn>vis;
+stack<int>s;
+int bri[maxn];
+int cut[maxn];
+int n,m,bcc_cnt;
+void add(int from,int to)
+{
+	edge[++cnt].to=to;
+	edge[cnt].next=head[from];
+	head[from]=cnt;
+}
+void tarjan(int x,int fa)
+{
+	dfn[x]=low[x]=++indx;
+	vis[x]=1;
+	s.push(x);
+	int num=0;
+	for(int i=head[x];i;i=edge[i].next)
+	{
+		int y=edge[i].to;
+		if(!dfn[y])
+		{
+			num++;
+			tarjan(y,i);
+			low[x]=min(low[x],low[y]);
+			if(dfn[x]<low[y])
+				bri[i]=bri[i^1]=1;
+			if(low[y]>=dfn[x])
+			{
+				cut[x]=1;
+				bcc_cnt++;
+				bcc[bcc_cnt].push_back(x);
+				int v;
+				do{
+					v=s.top();s.pop();
+					bcc[bcc_cnt].push_back(v);
+				}while(v!=y);
+			}
+		}
+		else if(vis[y]&&dfn[y]<dfn[x]&&i!=(fa^1))
+			low[x]=min(low[x],dfn[y]);
+	}
+	if(fa==0&&num==1)cut[x]=0;
+}
+\end{lstlisting}
+
+
+
+\newpage
+\subsection{边双} 
+\begin{lstlisting}
+void tarjan(int x,int fa)
+{
+	dfn[x]=low[x]=++indx;
+	vis[x]=1;
+	s.push(x);
+	for(int i=head[x];i;i=edge[i].next)
+	{
+		int y=edge[i].to;
+		if(!dfn[y])
+		{
+			tarjan(y,i);
+			low[x]=min(low[x],low[y]);
+			if(dfn[x]<low[y])
+				bri[i]=bri[i^1]=1;
+		}
+		else if(vis[y]&&dfn[y]<dfn[x]&&i!=(fa^1))
+			low[x]=min(low[x],dfn[y]);
+	}
+	if(dfn[x]==low[x])
+	{
+		tot++;
+		int y;
+		do{
+			y=s.top();s.pop();
+			vis[y]=0;
+			col[y]=tot;
+		}while(x!=y);
+	}
+}
+\end{lstlisting}
+
+\newpage
+\subsection{仙人掌图求环路径长度}
+\begin{lstlisting}
+const int mod=998244353;
+const int inf=0x3f3f3f3f;
+const int INF=1e14+7;
+const int maxn=4e6+100;
+struct Edge{
+	int to,w,next;
+}edge[maxn];
+int head[maxn],cnt;
+int dfn[maxn],low[maxn],indx;
+stack<pii>s;
+int n,m,ans;
+void init()
+{
+	while(!s.empty())s.pop();
+	for(int i=1;i<=n;i++)
+	{
+		dfn[i]=low[i]=head[i]=0;
+	}
+	cnt=1;
+	indx=0;
+	ans=INF;
+}
+void add(int from,int to,int w)
+{
+	edge[++cnt].w=w;
+	edge[cnt].to=to;
+	edge[cnt].next=head[from];
+	head[from]=cnt;
+}
+void tarjan(int x,int fa)
+{
+	dfn[x]=low[x]=++indx;
+	for(int i=head[x];i;i=edge[i].next)
+	{
+		int y=edge[i].to;
+		if(!dfn[y])
+		{
+			s.push({x,edge[i].w});
+			tarjan(y,i);
+			low[x]=min(low[x],low[y]);
+			if(low[y]>=dfn[x])
+			{
+				vector<int>g;
+				pii v;
+				do{
+					v=s.top();s.pop();
+					g.push_back(v.second);
+				}while(v.first!=x);
+
+				sort(g.begin(),g.end());
+
+				if(g.size()==1)ans=min(ans,g[0]);
+				else if(g.size()==2)ans=min(ans,g[0]+g[1]);
+				else ans=min(ans,min(g[0]+g[1],g[2]));
+			}
+		}
+		else if(dfn[x]>dfn[y]&&i!=(fa^1))
+		{
+			low[x]=min(low[x],dfn[y]);
+			s.push({x,edge[i].w});
+		}
+	}
+}
+void solve()
+{
+	cin>>n>>m;
+	init();
+	for(int i=1;i<=m;i++)
+	{
+		int x,y,w;
+		cin>>x>>y>>w;
+		add(x,y,w);
+		add(y,x,w);
+	}
+	tarjan(1,0);
+	cout<<ans<<endl;
+}
+signed main(){
+	int size(512<<20); // 512M
+    __asm__ ( "movq %0, %%rsp\n"::"r"((char*)malloc(size)+size)); // YOUR CODE
+	ios::sync_with_stdio(false);
+	cin.tie(nullptr);cout.tie(nullptr);
+	int __;cin>>__;
+	while(__--)
+		solve();
+	exit(0);
+}
+
+\end{lstlisting}
+
+
+
+\newpage
+\subsection{DINIC} 
+\begin{lstlisting}
+struct Edge{
+	int to,next,w;
+}edge[maxn];
+int head[maxn],cnt=1;
+int dep[maxn];
+int n,m,s,t,tot;
+void init(){
+	memset(head+1,0,sizeof(int)*tot);
+	cnt=1;
+	tot=0;
+}
+void add(int from,int to,int w)
+{
+	edge[++cnt].w=w;
+	edge[cnt].to=to;
+	edge[cnt].next=head[from];
+	head[from]=cnt;
+}
+bool bfs(int s,int t)
+{
+	memset(dep+1,0,sizeof(int)*tot);
+	queue<int>q;
+	dep[s]=1;
+	q.push(s);
+	while(!q.empty())
+	{
+		int x=q.front();q.pop();
+		if(x==t)return true;
+		for(int i=head[x];i;i=edge[i].next)
+		{
+			int y=edge[i].to;
+			int w=edge[i].w;
+			if(dep[y]==0&&w>0)
+				q.push(y),dep[y]=dep[x]+1;
+		}
+	}
+	return false;
+}
+int dfs(int x,int flow,int t)
+{
+	if(x==t)return flow;
+	int out=flow;
+	for(int i=head[x];i;i=edge[i].next)
+	{
+		int y=edge[i].to;
+		int w=edge[i].w;
+		if(w!=0&&dep[y]==dep[x]+1)
+		{
+			int tmp=dfs(y,min(out,w),t);
+			edge[i].w-=tmp;
+			edge[i^1].w+=tmp;
+			out-=tmp;
+			if(!out)break;
+		}
+	}
+	if(out==flow)dep[x]=0;
+	return flow-out;
+}
+int DINIC(int s,int t)
+{
+	int ans=0;
+	while(bfs(s,t))
+		ans+=dfs(s,INF,t);
+	return ans;
+}
+\end{lstlisting}
+
+
+
+\newpage
+\subsection{MCMF} 
+\begin{lstlisting}
+struct node{
+	int to,next,w,c;
+}edge[maxn];
+int head[maxn],cnt;
+int dis[maxn],flow[maxn],last[maxn];
+bitset<maxn>vis;
+int n,m,s,t;
+void init(){
+	memset(head+1,0,sizeof(int)*n);
+	cnt=1;
+}
+void add(int from,int to,int w,int c)
+{
+	edge[++cnt].w=w;
+	edge[cnt].c=c;
+	edge[cnt].to=to;
+	edge[cnt].next=head[from];
+	head[from]=cnt;
+}
+bool spfa(int s,int t)
+{
+	memset(dis+1,INF,sizeof(int)*n);
+	memset(last+1,-1,sizeof(int)*n);
+	vis.reset();
+	queue<int>q;
+	q.push(s);
+	dis[s]=0;
+	vis[s]=1;
+	flow[s]=INF;
+	while(!q.empty())
+	{
+		int x=q.front();q.pop();
+		vis[x]=0;
+		for(int i=head[x];i;i=edge[i].next)
+		{
+			int y=edge[i].to;
+			int w=edge[i].w;
+			int c=edge[i].c;
+			if(w>0&&dis[y]>dis[x]+c)
+			{
+				dis[y]=dis[x]+c;
+				last[y]=i;
+				flow[y]=min(flow[x],w);
+				if(!vis[y])
+					q.push(y),vis[y]=1;
+			}
+		}
+	}
+	return last[t]!=-1;
+}
+void MCMF(int s,int t)
+{
+	int maxf=0,maxc=0;
+	while(spfa(s,t))
+	{
+		maxf+=flow[t];
+		maxc+=flow[t]*dis[t];
+		for(int i=t;i!=s;i=edge[last[i]^1].to)
+		{
+			edge[last[i]].w-=flow[t];
+			edge[last[i]^1].w+=flow[t];
+		}
+	}
+	cout<<maxf<<" "<<maxc<<endl;
+}
+\end{lstlisting}
+
+
+
+\newpage
+\subsection{朱流算法(Edmonds)} 
+\begin{lstlisting}
+#include<bits/stdc++.h>
+using namespace std;
+#define endl "\n"
+const int INF=2e9+7;
+const int maxn=1e6+100;
+struct node{
+	int x,y,w;
+}e[maxn];
+int vis[maxn];//标记是否走过
+int pre[maxn];//前驱节点
+int inv[maxn];//节点权值
+int id[maxn];//新的标号
+int n,m,root;
+int Edmonds()
+{
+	int ans=0;
+	while(1)
+	{
+		/**********1.找最短弧集合*********/
+		//初始化
+		for(int i=1;i<=n;i++)
+			inv[i]=INF;
+		for(int i=1;i<=m;i++)
+		{
+			int x=e[i].x;
+			int y=e[i].y;
+			//找到每个点的最小入边 以及前驱
+			if(x!=y&&e[i].w<inv[y])
+				inv[y]=e[i].w,pre[y]=x;
+		}
+		//如果一个点不是根 并且没有入边则不是树形图
+		for(int i=1;i<=n;i++)
+			if(i!=root&&inv[i]==INF)
+				return -1;
+		int cnt=0;
+		//初始化标记
+		for(int i=1;i<=n;i++)
+			vis[i]=id[i]=0;
+		/*******2.判断集合E中有没有有向环，如果有转步骤3，否则转4*********/
+		for(int i=1;i<=n;i++)
+		{
+			if(i==root)continue;
+			ans+=inv[i];
+			int v=i;
+			while(vis[v]!=i&&!id[v]&&v!=root)
+			{
+				vis[v]=i;
+				v=pre[v];
+			}
+			/**********3.收缩G中的有向环*********/
+			if(!id[v]&&v!=root)
+			{
+				id[v]=++cnt;
+				for (int u=pre[v];u!=v;u=pre[u])
+					id[u]=cnt;
+			}
+		}
+		if(cnt==0)break;
+		for(int i=1;i<=n;i++)
+			if(!id[i])id[i]=++cnt;
+		for(int i=1;i<=m;i++)
+		{
+			int u=e[i].x;
+			int v=e[i].y;
+			e[i].x=id[u];
+			e[i].y=id[v];
+			if(id[u]!=id[v])
+				e[i].w-=inv[v];
+		}
+		root=id[root];
+		n=cnt;
+	}
+	return ans;
+}
+void solve()
+{
+	cin>>n>>m>>root;
+	for(int i=1;i<=m;i++)
+		cin>>e[i].x>>e[i].y>>e[i].w;
+	cout<<Edmonds()<<endl;
+}
+signed main(){
+		solve();
+	return 0;
+}
+\end{lstlisting}
+
+
+
+
+\newpage
+\subsection{最小生成树Boruvka} 
+\begin{lstlisting}
+#define mp make_pair
+const int N=200005;
+const int M=500005;
+const LL inf=1e12;
+int f[N],pd,n,m;
+struct node{ int a,b; LL c; }p[M];
+pair<LL,LL> E[N];
+int find(int r){
+	return f[r]=(r==f[r])?r:find(f[r]); 
+}
+LL Boruvka(){
+	LL res=0; pd=1; int num=0;
+	for(int i=1;i<=n;i++)
+		f[i]=i;
+	while(num<n-1)
+	{
+		int tmp=0;
+		for(int i=1;i<=n;i++)
+		{
+			int fa=find(i);
+			E[fa]={inf,inf};
+		}
+		for(int i=1;i<=m;i++)
+		{
+			int fa=find(p[i].a); 
+			int fb=find(p[i].b);
+			if (fa==fb) continue;
+			tmp++;
+			E[fa]=min(E[fa],{p[i].c,i*1ll});
+			E[fb]=min(E[fb],{p[i].c,i*1ll});
+		}
+		if (tmp==0) break;
+		for(int i=1;i<=m;i++)
+		{
+			int fa=find(p[i].a); int fb=find(p[i].b);
+			if (fa==fb) continue;
+			if ((E[fa]==mp(p[i].c,i*1ll))||(E[fb]==mp(p[i].c,i*1ll)))
+			{ f[fa]=fb; res+=p[i].c; num++;	}
+		}
+	}
+	if (num<n-1) pd=0; 
+	return res;
+}
+int main(){
+	scanf("%d%d",&n,&m);
+	for(int i=1;i<=m;i++)
+		scanf("%d%d%lld",&p[i].a,&p[i].b,&p[i].c); 
+	LL ans=Boruvka(); 
+	if (!pd) printf("orz\n");
+	else printf("%lld\n",ans);
+	return 0;
+}
+\end{lstlisting}
+
+
+
+\newpage
+\subsection{基尔霍夫矩阵} 
+\begin{lstlisting}
+/*
+基尔霍夫局矩阵树
+用于解决:
+	给定n个点m条边的无向图，求图的生成树个数
+基本定义：
+1.无向图G:给定n个点，m条边的无向图，设点击为V，边集为E，记为G(V,E)
+2.度数矩阵D[G]:当i!=j时，D[i][j]=0,当i==j时,D[i][j]=点v的度数
+3.邻接矩阵A[G]:当vi，vj有边链接时，A[i][j]=1,当vi，vj无边连接时，A[i][j]=0
+4.基尔霍夫矩阵:K[G]:K[G]=D[G]-A[G],K[i][j]=D[i][j]-A[i][j]
+定理：
+	对于已经得出的基尔霍夫矩阵，去掉随意一行一列得出的矩阵的行列式
+其绝对值为生成树个数
+
+一般来说求(1,1)~(n-1,n-1)这个行列式
+*/
+ll det(int n)
+{
+	ll res=1;
+	for(int i=2;i<=n;i++){
+		for(int j=i+1;j<=n;j++){
+			while(a[j][i]){
+				ll t=a[i][i]/a[j][i];
+				for(int k=i;k<=n;k++)
+					a[i][k]=(a[i][k]-a[j][k]*t);
+				for(int k=i;k<=n;k++)
+					swap(a[i][k],a[j][k]);
+				res=-res;
+			}
+		}
+		if(a[i][i]==0)res=-res;
+		res*=a[i][i];
+	}
+	if(res<0)res=-res;
+	return res;
+}
+void solve()
+{
+	init();
+	cin>>n>>m;
+	while(m--)
+	{
+		int x,y;
+		cin>>x>>y;
+		a[x][x]++;
+		a[y][y]++;
+		a[x][y]--;
+		a[y][x]--;
+	}
+	cout<<det(n)<<endl;
+}
+\end{lstlisting}
+
+
+
+\newpage
+\subsection{全源最短路} 
+\begin{lstlisting}
+struct node{
+	int x;ll dis;
+	bool operator<(const node&a)const{
+		return a.dis<dis;
+	}
+};
+struct Edge{int to,next;ll w;}edge[maxn];
+int head[maxn],cnt;
+ll dis[maxn];
+ll h[maxn];
+int n,m;
+void add(int from,int to,ll w){
+	edge[++cnt].w=w;
+	edge[cnt].to=to;
+	edge[cnt].next=head[from];
+	head[from]=cnt;
+}
+bool spfa(int s)
+{
+	for(int i=0;i<=n;i++)h[i]=INF;
+	vector<int>in(n+10,0);
+	bitset<maxn>vis;
+	queue<int>q;
+	vis[s]=1;
+	h[s]=0;
+	q.push(s);
+	while(!q.empty()){
+		int x=q.front();q.pop();
+		vis[x]=0;
+		in[x]++;
+		if(in[x]>n)return 0;
+		for(int i=head[x];i;i=edge[i].next){
+			int y=edge[i].to;
+			if(h[y]>h[x]+edge[i].w){
+				h[y]=h[x]+edge[i].w;
+				if(!vis[y])q.push(y),vis[y]=1;
+			}
+		}
+	}
+	return 1;
+}
+void dij(int s)
+{
+	for(int i=1;i<=n;i++)dis[i]=INF;
+	priority_queue<node>q;
+	bitset<maxn>vis;
+	q.push({s,0});
+	dis[s]=0;
+	while(!q.empty()){
+		auto [x,now]=q.top();q.pop();
+		if(vis[x])continue;
+		vis[x]=1;
+		for(int i=head[x];i;i=edge[i].next){
+			int y=edge[i].to;
+			if(dis[y]>dis[x]+edge[i].w){
+				dis[y]=dis[x]+edge[i].w;
+				q.push({y,dis[y]});
+			}
+		}
+	}
+}
+int main()
+{
+	cin>>n>>m;
+	for(int i=1;i<=m;i++){
+		int x,y,z;
+		cin>>x>>y>>z;
+		add(x,y,z);
+	}
+	for(int i=1;i<=n;i++)
+		add(0,i,0);
+	//建立虚点，从0开始单源最短路
+	//0开始单源最短路即为势能
+	//同时spfa判断是否存在负环（in[x]>n)
+	if(!spfa(0)){
+		cout<<-1<<endl;
+		return 0;
+	}
+	//每一条路加上势能差
+	for(int u=1;u<=n;u++){
+		for(int i=head[u];i;i=edge[i].next){
+			edge[i].w+=h[u]-h[edge[i].to];
+		}
+	}
+	for(int i=1;i<=n;i++){
+		dij(i);
+		ll ans=0;
+		for(int j=1;j<=n;j++){
+			if(dis[i]==INF)ans+=j*INF;
+			else ans+=j*(dis[j]+h[j]-h[i]);
+			//减去势能差
+		}
+		cout<<ans<<endl;
+	}
+}
+\end{lstlisting}
+
+
+
+\newpage
+\subsection{全局最小割} 
+\begin{lstlisting}
+int G[MAX_N][MAX_N];
+int v[MAX_N];//v[i]代表节点i合并到的顶点
+int w[MAX_N];//定义w(A,x) = ∑w(v[i],x)，v[i]∈A
+bool visited[MAX_N]; //用来标记是否该点加入了A集合
+int squ[MAX_N];  //记录移除的节点次序
+int index;//记录最小割的位置，以便分开整个图的节点
+  
+int stoer_wagner(int n)
+{
+    int min_cut = INF,r=0;
+    for (int i = 0; i < n; ++i){
+        v[i] = i; //初始还未合并，都代表节点本身
+    }
+    while (n > 1){
+        int pre = 0;//pre用来表示之前加入A集合的点（在t之前一个加进去的点）
+        memset(visited, 0, sizeof(visited));
+        memset(w, 0, sizeof(w));
+        for (int i = 1; i < n; ++i){
+            //求出 某一轮最大生成树的最后两个节点，并且去除最后的t，将与t连接的边归并
+            int k = -1;
+            for (int j = 1; j < n; ++j){ //选取V-A中的w(A,x)最大的点x加入集合
+                if (!visited[v[j]]){
+                    w[v[j]] += G[v[pre]][v[j]];
+                    if (k == -1 || w[v[k]] < w[v[j]])
+                        k = j;
+                }
+            }
+            visited[v[k]] = true; //标记该点x已经加入A集合
+            if (i == n - 1) //若|A|=|V|（所有点都加入了A），结束
+            {
+                const int s = v[pre], t = v[k];
+                //令倒数第二个加入A的点（v[pre]）为s，最后一个加入A的点（v[k]）为t
+                cout<<t<<"--->"<<s<<endl;
+                squ[r++]=t;
+                if(w[t]<min_cut){
+                    min_cut=w[t];
+                    index=r;
+                }
+                //min_cut = min(min_cut, w[t]);        
+                // 则s-t最小割为w(A,t)，用其更新min_cut
+                for (int j = 0; j < n; ++j) //Contract(s, t)
+                {
+                    G[s][v[j]] += G[v[j]][t];
+                    G[v[j]][s] += G[v[j]][t];
+                }
+                v[k] = v[--n];//删除最后一个点（即删除t，也即将t合并到s）
+            }
+            pre = k;
+        }
+    }
+    return min_cut;
+}
+int main(int argc, char *argv[]){
+    int n, m;
+    while (scanf("%d%d", &n, &m) != EOF)
+    {
+        memset(G, 0, sizeof(G));
+        while (m--)
+        {
+            int u, v, w;
+            scanf("%d%d%d", &u, &v, &w);
+            G[u][v] += w;
+            G[v][u] += w;
+        }
+        int z=n;
+        //printf("%d\n", stoer_wagner(n));
+        cout<<"\r\n归并的步骤为："<<endl;
+        int res=stoer_wagner(n);
+        cout<<"\r\n最小割的总权值为： "<<res<<"\r\n图划分为部分A：";
+        //cout<<"图划分为部分A：";
+        for(int i=0;i<z;i++)
+        {
+            if(i==index)
+                cout<<"部分B：";
+            cout<<squ[i]<<"  ";
+        }
+    }
+    return 0;
+}
+\end{lstlisting}
+
+
+\newpage
+\section{数据结构} 
+\subsection{MultiplyLCA} 
+\begin{lstlisting}
+struct Multiply_LCA{
+	vector<int>v[maxn];
+	int dep[maxn];
+	int f[maxn][25];
+
+	void dfs(int x,int fa)
+	{		dep[x]=dep[fa]+1;
+		f[x][0]=fa;
+		for(int i=1;i<=20;i++)
+			f[x][i]=f[f[x][i-1]][i-1];
+		for(auto y:v[x])
+			if(y!=fa)
+				RMQ(y,x);
+	}
+	int LCA(int x,int y)
+	{
+		if(dep[x]<dep[y])swap(x,y);
+		for(int i=20;i>=0;i--)
+			if(dep[f[x][i]]>=dep[y])
+				x=f[x][i];
+		if(x==y)return x;
+		for(int i=20;i>=0;i--)
+			if(dep[f[x][i]]!=dep[f[y][i]])
+				x=f[x][i],y=f[y][i];
+		return f[x][0];
+	}
+
+};
+\end{lstlisting}
+
+
+
+\newpage
+\subsection{ST} 
+\begin{lstlisting}
+struct ST{
+	int f[maxn][30];
+	void init(){
+		for(int i=1;i<=n;i++)//距离为0初始化 
+			f[i][0]=p[i];
+		int t=log(n)/log(2)+1;//j定位 
+		for(int j=1;j<t;j++){
+			for(int i=1;i<=n-(1<<j)+1;i++){
+				f[i][j]=max(f[i][j-1],f[i+(1<<(j-1))][j-1]);
+				//f[i][j-1]为f[i][j]的长为2^j-1的前半段，另一段为f[i+(1<<(j-1))][j-1] 
+			}
+		} 
+	}
+	int query(int l,int r){
+		int k=log2(r-l+1);
+		return max(f[l][k],f[r-(1<<k)+1][k]);
+	}
+}st;
+\end{lstlisting}
+
+
+
+\newpage
+\subsection{GrayCode} 
+\begin{lstlisting}
+// n位格雷码
+vector<int> grayCode(int n) {
+	int count = 1 << n;
+	vector<int> res(count,0);
+	for(int i = 1 ; i < count; i ++)
+	{
+		int bin = i,cur = bin >> (n - 1);
+		for(int k = n - 1;k > 0;k --)
+			cur = (cur << 1) + (((bin >> k) & 1) ^ ((bin >>(k - 1)) & 1));
+		res[i] = cur;
+	}
+	return res;
+}
+//递归实现n位格雷码
+vector<string> gray_code(int n){
+	if(n==1)return {"0","1"};
+	else{
+		vector<string>v,v1;
+		v1=gray_code(n-1);
+		for(int i=0;i<v1.size();i++)
+			v.push_back("0"+v1[i]);
+		for(int i=(v1.size()-1);i>-1;i--)
+			v.push_back("1"+v1[i]);
+		return v;
+	}
+}
+void solve()
+{
+	int n;
+	cin>>n;
+	vector<string>v=gray_code(n);
+	for(int i=0;i<v.size();i++)
+		cout<<v[i]<<endl;
+}
+\end{lstlisting}
+
+
+
+
+\subsection{归并排序} 
+\begin{lstlisting}
+void doit()
+{
+	int n;
+	vector<int>p(n+1,0);
+	auto mg_sort = [&](auto mg_sort,int l,int r)->ll{
+		if(l>=r)return 0;
+		int mid=(l+r)>>1;
+		ll t = mg_sort(mg_sort,l,mid)+mg_sort(mg_sort,mid+1,r);
+		vector<int>temp;
+		int i=l,j=mid+1;
+		while(i<=mid&&j<=r)
+		{
+			if(p[i]<=p[j])temp.push_back(p[i++]);
+			else t+=mid-i+1,temp.push_back(p[j++]);
+		}
+		while(i<=mid)temp.push_back(p[i++]);
+		while(j<=r)temp.push_back(p[j++]);
+		for(int i=l,j=0;i<=r;i++,j++)
+			p[i]=temp[j];
+		return t;
+	};
+	mg_sort(mg_sort,1,n);
+}
+\end{lstlisting}
+
+
+
+\newpage
+\subsection{树链剖分} 
+\begin{lstlisting}
+struct Seg{int l,r,val,lazy;}t[maxn<<2];
+struct Edge{int to,next,w;}edge[maxn];
+int head[maxn],cnt;
+int siz[maxn],f[maxn],dep[maxn],son[maxn];
+int id[maxn],di[maxn],top[maxn],tot;
+int w[maxn];
+int n,root,q,P;
+inline void add(int from,int to,int w=0){
+	edge[++cnt]={to,head[from],w};
+	head[from]=cnt;
+}
+inline void pushup(int rt){
+	t[rt].val=t[rt<<1].val+t[rt<<1|1].val;
+}
+inline void pushdown(int rt){
+	if(t[rt].lazy){
+		(t[rt<<1].val+=(t[rt].lazy*(t[rt<<1].r-t[rt<<1].l+1))%P)%=P;
+		(t[rt<<1|1].val+=(t[rt].lazy*(t[rt<<1|1].r-t[rt<<1|1].l+1))%P)%=P;
+		(t[rt<<1].lazy+=t[rt].lazy)%=P;
+		(t[rt<<1|1].lazy+=t[rt].lazy)%=P;
+		t[rt].lazy=0;
+	}
+}
+inline void build(int rt,int l,int r)
+{
+	t[rt]={l,r,0,0};
+	if(l==r){
+		(t[rt].val=w[di[l]])%=P;
+		return ;
+	}
+	int mid=(l+r)>>1;
+	build(rt<<1,l,mid);
+	build(rt<<1|1,mid+1,r);
+	pushup(rt);
+}
+inline void update(int rt,int l,int r,int k)
+{
+	if(l<=t[rt].l&&t[rt].r<=r){
+		(t[rt].val+=(k*(t[rt].r-t[rt].l+1))%P)%=P;
+		(t[rt].lazy+=k)%=P;
+		return ;
+	}
+	pushdown(rt);
+	int mid=(t[rt].l+t[rt].r)>>1;
+	if(l<=mid)update(rt<<1,l,r,k);
+	if(r>mid)update(rt<<1|1,l,r,k);
+	pushup(rt);
+}
+inline int query(int rt,int l,int r){
+	if(l<=t[rt].l&&t[rt].r<=r)
+		return t[rt].val;
+	pushdown(rt);
+	int mid=(t[rt].l+t[rt].r)>>1;
+	int ans=0;
+	if(l<=mid)(ans+=query(rt<<1,l,r))%=P;
+	if(r>mid)(ans+=query(rt<<1|1,l,r))%=P;
+	return ans;
+}
+inline void upRange(int x,int y,int k)
+{
+	while(top[x]!=top[y]){
+		if(dep[top[x]]<dep[top[y]])swap(x,y);
+		update(1,id[top[x]],id[x],k);
+		x=f[top[x]];
+	}
+	if(dep[x]>dep[y])swap(x,y);
+	update(1,id[x],id[y],k);
+}
+inline void upSon(int x,int k){
+	update(1,id[x],id[x]+siz[x]-1,k);
+}
+inline int qRange(int x,int y)
+{
+	int ans=0;
+	while(top[x]!=top[y]){
+		if(dep[top[x]]<dep[top[y]])swap(x,y);
+		(ans+=query(1,id[top[x]],id[x]))%=P;
+		x=f[top[x]];
+	}
+	if(dep[x]>dep[y])swap(x,y);
+	(ans+=query(1,id[x],id[y]))%=P;
+	return ans;
+}
+inline int qSon(int x){
+	return query(1,id[x],id[x]+siz[x]-1);
+}
+inline int LCA(int x,int y)
+{
+	while(top[x]!=top[y]){
+		if(dep[top[x]]<dep[top[y]])swap(x,y);
+		x=f[top[x]];
+	}
+	if(dep[x]>dep[y])swap(x,y);
+	return x;
+}
+inline void dfs1(int x)
+{
+	siz[x]=1;
+	for(int i=head[x];i;i=edge[i].next){
+		int y=edge[i].to;
+		if(y==f[x])continue;
+		f[y]=x;dep[y]=dep[x]+1;
+		dfs1(y);
+		siz[x]+=siz[y];
+		if(siz[y]>siz[son[x]])
+			son[x]=y;
+	}
+}
+inline void dfs2(int x,int topf)
+{
+	id[x]=++tot;
+	di[tot]=x;
+	top[x]=topf;
+	if(son[x])dfs2(son[x],topf);
+	for(int i=head[x];i;i=edge[i].next)
+	{
+		int y=edge[i].to;
+		if(y==f[x]||y==son[x])continue;
+		dfs2(y,y);
+	}
+}
+void solve()
+{
+	cin>>n>>q>>root>>P;
+	for(int i=1;i<=n;i++)
+		cin>>w[i];
+	for(int i=1;i<n;i++)
+	{
+		int x,y;
+		cin>>x>>y;
+		add(x,y);
+		add(y,x);
+	}
+	f[root]=0;
+	dfs1(root);
+	dfs2(root,root);
+	build(1,1,n);
+	while(q--)
+	{
+		int op,x,y,k;
+		cin>>op;
+		if(op==1)
+		{
+			cin>>x>>y>>k;
+			upRange(x,y,k);
+		}
+		else if(op==2)
+		{
+			cin>>x>>y;
+			cout<<qRange(x,y)<<endl;
+		}
+		else if(op==3)
+		{
+			cin>>x>>k;
+			upSon(x,k);
+		}
+		else
+		{
+			cin>>x;
+			cout<<qSon(x)<<endl;
+		}
+	}
+}
+\end{lstlisting}
+
+
+
+\newpage
+\subsection{扫描线线段树} 
+\begin{lstlisting}
+struct Seg{
+	int l,r,len,cv,_l,_r,cnt;
+}t[maxn];
+pp(4) p[maxn];
+int w[maxn];
+int n,m,cnt;
+void build(int rt,int l,int r)
+{
+	t[rt]={l,r,0,0,0,0,0};
+	if(l==r)return ;
+	int mid=(l+r)>>1;
+	build(rt<<1,l,mid);
+	build(rt<<1|1,mid+1,r);
+}
+void pushup(int rt)
+{
+	if(t[rt].cv)
+	{
+		t[rt]._l=t[rt]._r=1;
+		t[rt].len=w[t[rt].r+1]-w[t[rt].l];
+		t[rt].cnt=1;
+	}
+	else if(t[rt].l==t[rt].r)
+	{
+		t[rt]._l=t[rt]._r=0;
+		t[rt].len=0;
+		t[rt].cnt=0;
+	}
+	else
+	{
+		t[rt]._l=t[rt<<1]._l;
+		t[rt]._r=t[rt<<1|1]._r;
+		t[rt].len=t[rt<<1].len+t[rt<<1|1].len;
+		t[rt].cnt=t[rt<<1].cnt+t[rt<<1|1].cnt-(t[rt<<1]._r&t[rt<<1|1]._l);
+	}
+}
+void update(int rt,int l,int r,int c)
+{
+	if(l<=t[rt].l&&t[rt].r<=r)
+	{
+		t[rt].cv+=c;
+		pushup(rt);
+		return ;
+	}
+	int mid=(t[rt].l+t[rt].r)>>1;
+	if(l<=mid)update(rt<<1,l,r,c);
+	if(r>mid)update(rt<<1|1,l,r,c);
+	pushup(rt);
+}
+void solve()
+{
+	cin>>n;
+	for(int i=1;i<=n;i++)
+	{
+		int x,y,_x,_y;
+		cin>>x>>y>>_x>>_y;
+		w[++m]=y;
+		w[++m]=_y;
+		p[i*2-1]={x,y,_y,1};
+		p[i*2]={_x,y,_y,-1};
+	}
+	sort(w+1,w+1+m);
+	m=unique(w+1,w+1+m)-w-1;
+	sort(p+1,p+1+n+n,[&](pp(4)a,pp(4)b){
+		if(a[0]==b[0])return a[3]>b[3];
+		return a[0]<b[0];
+	});
+	for(int i=1;i<=n<<1;i++)
+	{
+		p[i][1]=lower_bound(w+1,w+1+m,p[i][1])-w;
+		p[i][2]=lower_bound(w+1,w+1+m,p[i][2])-w;
+	}
+	build(1,1,m);
+	int pre=0;
+	int ans=0;
+	for(int i=1;i<=n<<1;i++)
+	{
+		auto [x,y,_y,op]=p[i];
+		update(1,y,_y-1,op);
+		ans+=abs(t[1].len-pre);
+		ans+=(p[i+1][0]-p[i][0])*2*t[1].cnt;
+		pre=t[1].len;
+	}
+	cout<<ans<<endl;
+}
+\end{lstlisting}
+
+
+
+\newpage
+\subsection{莫队} 
+\begin{lstlisting}
+struct Query{
+	int l,r,id,block;
+	bool operator < (const Query& q)const
+	{
+		if(block==q.block)
+			return r<q.r;
+		else
+			return block<q.block;
+	}
+}p[maxn];
+int cnt_a[maxn],cnt_b[maxn];
+int a[maxn],b[maxn];
+bool ans[maxn];
+int n,m,ok=0,cnt=0;
+void Debug()
+{
+	printf("[Debug]:");
+	int ma=0;
+	for(int i=1;i<=n;i++)
+		ma=max({ma,a[i],b[i]});
+	for(int i=1;i<=ma;i++)
+		cout<<cnt_a[i];cout<<endl;
+	printf("[Debug]:");
+	for(int i=1;i<=ma;i++)
+		cout<<cnt_b[i];
+	cout<<endl;
+	cout<<cnt<<endl;
+}
+inline void upd_a(int x,int fl)
+{
+	int fl_1=0,fl_2=0;
+	if((cnt_a[x]>0&&cnt_b[x]>0)||(cnt_a[x]==0&&cnt_b[x]==0))fl_1=1;
+	if((cnt_a[x]+fl>0&&cnt_b[x]>0)||(cnt_a[x]+fl==0&&cnt_b[x]==0))fl_2=1;
+	if(fl_1>fl_2)cnt++;
+	else if(fl_1<fl_2)cnt--;
+	cnt_a[x]+=fl;
+	if(cnt)ok=1;
+	else ok=0;
+}
+inline void upd_b(int x,int fl)
+{
+	int fl_1=0,fl_2=0;
+	if((cnt_b[x]>0&&cnt_a[x]>0)||(cnt_b[x]==0&&cnt_a[x]==0))fl_1=1;
+	if((cnt_b[x]+fl>0&&cnt_a[x]>0)||(cnt_b[x]+fl==0&&cnt_a[x]==0))fl_2=1;
+	if(fl_1>fl_2)cnt++;
+	else if(fl_1<fl_2)cnt--;
+	cnt_b[x]+=fl;
+	if(cnt)ok=1;
+	else ok=0;
+}
+void solve()
+{
+	cin>>n>>m;
+	for(int i=1;i<=n;i++)
+		cin>>a[i];
+	for(int i=1;i<=n;i++)
+		cin>>b[i];
+	int tmp=sqrt(n);
+	for(int i=1;i<=m;i++)
+	{
+		cin>>p[i].l>>p[i].r;
+		p[i].id=i;
+		p[i].block=i/tmp;
+	}
+	sort(p+1,p+1+m);
+	for(int i=1;i<=max(p[1].l,p[1].r);i++)
+	{
+		if(i<=p[1].l)
+			upd_a(a[i],1);
+		if(i<=p[1].r)
+			upd_b(b[i],1);
+	}
+	ans[p[1].id]=ok;
+	int l=p[1].l;
+	int r=p[1].r;
+	// Debug();
+	for(int i=2;i<=m;i++)
+	{
+		while(l<p[i].l)//l++;
+			l++,upd_a(a[l],1);
+		while(l>p[i].l)//l--;
+			upd_a(a[l],-1),l--;
+		while(r<p[i].r)//r++;
+			r++,upd_b(b[r],1);
+		while(r>p[i].r)//r--;
+			upd_b(b[r],-1),r--;
+		ans[p[i].id]=ok;
+		// Debug();
+	}
+	for(int i=1;i<=m;i++)
+	{
+		if(ans[i])cout<<"NO"<<endl;
+		else cout<<"YES"<<endl;
+	}
+}
+\end{lstlisting}
+
+
+\newpage
+\subsection{点分治1} 
+\begin{lstlisting}
+#include<bits/stdc++.h>
+using namespace std;
+#define endl "\n"
+const int INF=10000005;
+const int maxn=1e7+10;
+const int N=2e4+10;
+struct Edge{int to,next,w;}edge[N];
+int head[N],_cnt;
+int del[N],siz[N],maxson,root,sum;
+int dis[N],d[N],cnt;
+int ans[N],q[maxn],judge[maxn],ask[maxn];
+int n,m;
+void add(int from,int to,int w){
+	edge[++_cnt].w=w;
+	edge[_cnt].to=to;
+	edge[_cnt].next=head[from];
+	head[from]=_cnt;
+}
+void getroot(int x,int fa)
+{
+	siz[x]=1;
+	int sx=0;
+	for(int i=head[x];i;i=edge[i].next)
+	{
+		int y=edge[i].to;
+		if(y==fa||del[y])continue;
+		getroot(y,x);
+		siz[x]+=siz[y];
+		sx=max(sx,siz[y]);
+	}
+	sx=max(sx,sum-siz[x]);
+	if(sx<maxson)maxson=sx,root=x;
+}
+void getdis(int x,int fa)
+{
+	dis[++cnt]=d[x];
+	for(int i=head[x];i;i=edge[i].next)
+	{
+		int y=edge[i].to;
+		if(y==fa||del[y])continue;
+		d[y]=d[x]+edge[i].w;
+		getdis(y,x);
+	}
+}
+void calc(int x)
+{
+	judge[0]=1;
+	int p=0;
+	for(int i=head[x];i;i=edge[i].next)
+	{
+		int y=edge[i].to;
+		if(del[y])continue;
+		cnt=0;
+		d[y]=edge[i].w;
+		getdis(y,x);
+		for(int j=1;j<=cnt;j++)
+			for(int k=1;k<=m;k++)
+				if(ask[k]>=dis[j])
+					ans[k]|=judge[ask[k]-dis[j]];
+		for(int j=1;j<=cnt;j++)
+			if(dis[j]<INF)
+				q[++p]=dis[j],judge[q[p]]=1;
+	}
+	for(int i=1;i<=p;i++)
+		judge[q[i]]=0;
+}
+void divide(int x)
+{
+	calc(x);
+	del[x]=1;
+	for(int i=head[x];i;i=edge[i].next)
+	{
+		int y=edge[i].to;
+		if(del[y])continue;
+		maxson=sum=siz[y];
+		getroot(y,0);
+		divide(root);
+	}
+}
+char ch[maxn];
+void solve()
+{
+	cin>>n>>m;
+	for(int i=1;i<n;i++)
+	{
+		int x,y,w;
+		cin>>x>>y>>w;
+		add(x,y,w);
+		add(y,x,w);
+	}
+	for(int i=1;i<=m;i++)
+		cin>>ask[i];
+	maxson=sum=n;
+	getroot(1,0);
+	getroot(root,0);
+	divide(root);
+	for(int i=1;i<=m;i++)
+		cout<<(ans[i]?"AYE\n":"NAY\n");
+}
+signed main(){
+	ios::sync_with_stdio(false);
+	cin.tie(nullptr);cout.tie(nullptr);
+		solve();
+	return 0;
+}
+\end{lstlisting}
+
+
+
+\newpage
+\subsection{点分治2} 
+\begin{lstlisting}
+#include<bits/stdc++.h>
+using namespace std;
+#define endl "\n"
+const int INF=10000005;
+const int maxn=1e7+10;
+const int N=2e4+10;
+struct Edge{int to,next,w;}edge[N];
+int head[N],_cnt;
+int del[N],siz[N],maxson,root,sum;
+int dis[N],d[N],cnt;
+int ans[N],q[maxn],judge[maxn],ask[maxn];
+int n,m;
+void add(int from,int to,int w){
+	edge[++_cnt].w=w;
+	edge[_cnt].to=to;
+	edge[_cnt].next=head[from];
+	head[from]=_cnt;
+}
+void getroot(int x,int fa)
+{
+	siz[x]=1;
+	int sx=0;
+	for(int i=head[x];i;i=edge[i].next)
+	{
+		int y=edge[i].to;
+		if(y==fa||del[y])continue;
+		getroot(y,x);
+		siz[x]+=siz[y];
+		sx=max(sx,siz[y]);
+	}
+	sx=max(sx,sum-siz[x]);
+	if(sx<maxson)maxson=sx,root=x;
+}
+void getdis(int x,int fa)
+{
+	dis[++cnt]=d[x];
+	for(int i=head[x];i;i=edge[i].next)
+	{
+		int y=edge[i].to;
+		if(y==fa||del[y])continue;
+		d[y]=d[x]+edge[i].w;
+		getdis(y,x);
+	}
+}
+void calc(int x,int w,int op)
+{
+	cnt=0,d[x]=w;
+	getdis(x,0);
+	sort(dis+1,dis+1+cnt);
+	for(int i=1;i<=m;i++)
+	{
+		int l=1,r=cnt;
+		while(l<r){
+			if(dis[l]+dis[r]<=ask[i]){
+				if(dis[l]+dis[r]==ask[i])ans[i]+=op;
+				++l;
+			}
+			else --r;
+		}
+	}
+}
+void divide(int x)
+{
+	calc(x,0,1);
+	del[x]=1;
+	for(int i=head[x];i;i=edge[i].next)
+	{
+		int y=edge[i].to;
+		if(del[y])continue;
+		calc(y,edge[i].w,-1);
+		maxson=sum=siz[y];
+		getroot(y,0);
+		divide(root);
+	}
+}
+char ch[maxn];
+void solve()
+{
+	cin>>n>>m;
+	for(int i=1;i<n;i++)
+	{
+		int x,y,w;
+		cin>>x>>y>>w;
+		add(x,y,w);
+		add(y,x,w);
+	}
+	for(int i=1;i<=m;i++)
+		cin>>ask[i];
+	maxson=sum=n;
+	getroot(1,0);
+	getroot(root,0);
+	divide(root);
+	for(int i=1;i<=m;i++)
+		cout<<(ans[i]?"AYE\n":"NAY\n");
+}
+signed main(){
+	ios::sync_with_stdio(false);
+	cin.tie(nullptr);cout.tie(nullptr);
+		solve();
+	return 0;
+}
+\end{lstlisting}
+
+
+
+\newpage
+\section{数论} 
+\subsection{ExGcd} 
+\begin{lstlisting}
+int exgcd(int a,int b,int& x,int& y)
+{
+	if(b==0)return x=1,y=0,a;
+	int d=exgcd(b,a%b,y,x);
+	y-=x*(a/b);
+	return d;
+}
+\end{lstlisting}
+
+
+
+
+\subsection{快速幂} 
+\begin{lstlisting}
+int mull(int a,int b){int qw=0;while(b){if(b&1)qw=(qw+a)%mod;a=(a+a)%mod;b>>=1;}return qw;}
+
+int ksm(int b,int p){int r=1;b%=mod;while(p){if(p&1)r=(r*b)%mod;p>>=1;b=(b*b)%mod;}return r;}
+
+int ksm(int b,int p,int mod){int r=1;b%=mod;while(p){if(p&1)r=(r*b)%mod;p>>=1;b=(b*b)%mod;}return r;}
+
+\end{lstlisting}
+
+
+
+
+\subsection{整除分块} 
+\begin{lstlisting}
+ll division_block(ll n){
+	ll res = 0;
+	for(ll l = 1, r; l <= n; l = r + 1){
+		r = n / (n / l);
+		// cout<<r<<endl;
+		res += n / l * (r - l + 1);
+	}
+	return res;
+}
+\end{lstlisting}
+
+
+
+
+\subsection{欧拉函数} 
+\begin{lstlisting}
+int prime[maxn],phi[maxn];
+bool vis[maxn];
+int n;
+void doit()
+{
+	for(int i=2;i<=maxn;i++){
+		if(!vis[i])prime[++prime[0]]=i,phi[i]=i-1;
+		for(int j=1;j<=prime[0]&&prime[j]*i<=maxn;j++){
+			vis[i*prime[j]]=1;
+			if(i%prime[j]==0){
+				phi[i*prime[j]]=phi[i]*prime[j];
+				break;
+			}
+			phi[i*prime[j]]=phi[i]*(prime[j]-1);
+		}
+	}
+}
+int PHI(int x)
+{
+	//O(sqrt(x)
+	int ans=x;
+	for(int i=2;i*i<=x;i++)
+		if(x%i==0)
+		{
+			while(x%i==0)x/=i;
+			ans=ans*(i-1)/i;
+		}
+	if(x>1)ans=ans*(x-1)/x;
+	return ans;
+}
+\end{lstlisting}
+
+
+
+\newpage
+\subsection{等比数列求和} 
+\begin{lstlisting}
+int ksm(int b,int p,int mod){int r=1;b%=mod;while(p){if(p&1)r=(r*b)%mod;p>>=1;b=(b*b)%mod;}return r;}
+int sumq(int q,int n,int p)
+{
+	if(n==1)return 1;
+	if(n%2==0)return ((1+ksm(q,n/2,p))*sumq(q,n/2,p)%p)%p;
+	else return (1+q*sumq(q,n-1,p))%p;
+}
+// q^0 + q^1 + q^2 +q^(n-1)
+void solve()
+{
+	int q,n,p;
+	cin >> q >> n >> p;
+	cout << sumq(q,n,p) % p << endl;
+}
+\end{lstlisting}
+
+
+
+
+\subsection{素数} 
+\begin{lstlisting}
+bool su(int x)
+{
+	if(x==1)return 0;
+	if(x==2||x==3)return 1;
+	if(x%6!=5&&x%6!=1)return 0;
+	int tmp=sqrt(x);
+	for(int i=5;i<=tmp;i+=6)
+		if(x%i==0||x%(i+2)==0)
+			return 0;
+	return 1;
+}
+\end{lstlisting}
+
+
+
+\newpage
+\subsection{排列组合其一} 
+\begin{lstlisting}
+int gcd(int a,int b){
+    if(b==0)return a;
+    else return gcd(b,a%b);
+}
+//解线性同余方程，扩展欧几里德定理
+int x,y;
+void Extended_gcd(int a,int b){
+    if(b==0){x=1;y=0;}
+    else{Extended_gcd(b,a%b);long t=x;x=y;y=t-(a/b)*y;}
+}
+//计算不大的C(n,m)
+int C(int a,int b){
+    if(b>a)return 0;b=(ff[a-b]%mod*ff[b])%mod;a=ff[a];
+    int c=gcd(a,b);a/=c;b/=c;Extended_gcd(b,M);x=(x+mod)%mod;
+    x=(x*a)%mod;return x;
+}
+//Lucas定理
+int Combination(int n, int m)
+{
+    int ans=1;int a,b;
+    while(m||n){a=n%mod;b=m%mod;n/=mod;m/=mod;
+        ans=(ans*C(a,b))%mod;}
+    return ans;
+}
+int A(int n,int m){return (Combination(n,m)*ff[m])%mod;}
+ 
+signed main()
+{
+    int i,m,n;
+    ff[0]=1;
+    for(int i=1; i<=M; i++) //预计算n!
+        ff[i]=(ff[i-1]*i)%mod;
+    while(~scanf("%lld%lld",&n, &m))
+    {
+        printf("%lld\n",Combination(n,m));
+    }
+    return 0;
+}
+
+\end{lstlisting}
+
+
+
+
+\subsection{排列组合其二} 
+\begin{lstlisting}
+ll mod=998244353;
+ll qmi(ll a, ll k)//快速幂模板
+{
+    int res = 1;
+    while (k)
+    {
+        if (k & 1) res = (ll)res * a % mod;
+        a = (ll)a * a % mod;
+        k >>= 1;
+    }
+    return res;
+}
+ll C(ll a, ll b)//通过定理求组合数C(a, b)
+{
+    ll res = 1;
+    for (int i = 1, j = a; i <= b; i ++, j -- )
+    {
+        res = (ll)res * j % mod;
+        res = (ll)res * qmi(i, mod - 2) % mod;
+    }
+    return res;
+}
+ll lucas(ll a, ll b)
+{
+    if (a < mod && b < mod) return C(a, b);
+    return (ll)C(a % mod, b % mod)*lucas(a / mod, b / mod) % mod;
+}
+\end{lstlisting}
+
+
+
+
+\subsection{排列组合其三} 
+\begin{lstlisting}
+int ksm(int b,int p){int r=1;b%=mod;while(p){if(p&1)r=(r*b)%mod;p>>=1;b=(b*b)%mod;}return r;}
+
+int C(int n,int m){
+	return F[n]*INF[n-m]*INF[m];
+}
+F[0]=INF[0]=1;
+for(int i=1;i<M;i++)
+{
+    F[i]=F[i-1]*i%mod;
+    INF[i]=ksm(F[i],mod-2);
+}
+\end{lstlisting}
+
+
+
+\newpage
+\subsection{单调队列维护DP} 
+\begin{lstlisting}
+int pre[N];
+int dp[N];
+int q[N];
+int n,m;
+void solve()
+{
+	cin>>n>>m;
+	for(int i=1;i<=n;i++)
+	{
+		int v,w,s;
+		cin>>v>>w>>s;
+		// 复制上一次的i-1 的DP 
+		memcpy(pre,dp,sizeof(dp));
+		//  枚举余数为J
+		for(int j=0;j<v;j++)
+		{
+			int head=0;
+			int tail=-1;
+			for(int k=j;k<=m;k+=v)
+			{
+				//k-q[head]>s*v 长度长了，最多s个
+				if(head<=tail&&q[head]<k-s*v)
+					head++;
+				while(head<=tail&&pre[q[tail]]-(q[tail]-j)/v*w<=pre[k]-(k-j)/v*w)
+					tail--;
+				if(head<=tail)
+					dp[k]=max(dp[k],pre[q[head]]+(k-q[head])/v*w);
+				q[++tail]=k;
+			}
+		}
+	}
+	cout<<dp[m]<<endl;
+}
+\end{lstlisting}
+
+
+
+
+
+
+
+
+
+\newpage
+\section{计算几何} 
+\subsection{绕点旋转后坐标} 
+\begin{lstlisting}
+pii f(double x1,double y1,double x0,double y0,double d)
+{
+	d=d/180*acos(-1);//如果是360一周
+	double x=(x1-x0)*cos(d)-(y1-y0)*sin(d)+x0;
+	double y=(x1-x0)*sin(d)+(y1-y0)*cos(d)+y0;
+	return {x,y};
+}
+\end{lstlisting}
+
+
+
+
+\subsection{正方形已知两点求另外两点} 
+\begin{lstlisting}
+void solve()
+{
+	cin>>a>>b>>c>>d;
+	double x=(a-b+c+d)*0.5;
+	double y=(a+b-c+d)*0.5;
+	if(ceil(x) == floor(x)&&ceil(y) == floor(y))cout<<(int)x<<" "<<(int)y<<endl;
+	else cout<<"No Answer!"<<endl;
+}
+\end{lstlisting}
+
+
+
+
+\subsection{三角形} 
+\begin{lstlisting}
+class triangle{
+	double S(pii x,pii y,pii z)
+	{
+		double s=0.5*abs((y.first-x.first)*(z.second-x.second)-(z.first-x.first)*(y.second-x.second));
+		return s;
+	}
+	double S(double x,double y,double z)
+	{
+		//海伦公式
+		double p = 0.5*(x+y+z);
+		double s;
+		s=sqrt(p*(p-x)*(p-y)*(p-z));
+		// 或者
+		s=0.25*sqrt((x+y+z)*(x+y-z)*(x+z-y)*(y+z-x));
+		return s;
+	}
+	//能否构成三角形
+	bool ok(pii x,pii y,pii z)
+	{
+		if(x.first!=y.first&&y.first!=z.first&&z.first!=x.first)
+		{
+			double k1 = 1.0 * (y.second - x.second) / (y.first - x.first);
+			double k2 = 1.0 * (z.second - y.second) / (z.first - y.first);
+			double k3 = 1.0 * (z.second - x.second) / (z.first - x.first);
+			if(k1 == k2 && k2 == k3)
+				return 0;
+			else 
+				return 1;
+		}
+		else if(x.first == y.first && y.first == z.first)
+			return 0;
+		else
+		{
+			if(x.second == y.second && y.second == z.second)
+				return 0;
+			else
+				return 1;
+		}
+	}
+	//能否构成三角形
+	bool ok(int x1,int y1,int x2,int y2,int x3,int y3)
+	{
+		if (x1 != x2 && x2 != x3 && x3 != x1)
+		{
+			double k1 = 1.0 * (y2 - y1) / (x2 - x1);
+			double k2 = 1.0 * (y3 - y2) / (x3 - x2);
+			double k3 = 1.0 * (y3 - y1) / (x3 - x1);
+			if (k1 == k2 && k2 == k3)
+				return 0;
+			else
+				return 1;
+			
+		}
+		else if (x1 == x2 && x2 == x3)
+				return 0;
+		else
+		{
+			if (y1 == y2 && y2 == y3)
+				return 0;
+			else
+				return 1;
+		}
+	}
+};
+\end{lstlisting}
+
+
+
+
+\newpage
+\section{网络流建图} 
+\subsection{最小路径覆盖} 
+\textbf{最小路径覆盖}:在一个有向无环图中，找出最少的路径，使得这些路径经过了所有的点。最小路径覆盖分为\textbf{最小不相交路径覆盖}和\textbf{最小可相交路径覆盖}，区别是这些路径是否可以相交
+
+\subsubsection{最小不相交路径覆盖}
+建图方法:把原图的每个点u拆成两个点$u_{1}$,$u_{2}$，如果有一条有向边$(a,b)$,则连边$(a_{2},b_{1})$，容易发现这是一个二分图,那么用下面的定理就可以求出答案
+\\
+定理: 最小路径覆盖=原图节点数-新图最大匹配数
+\\
+证明：
+\par
+一开始每个点都是一条路径，每次找一条匹配边，代表合并两条路径\\
+由于路径不相交（即每个点的入度和出度至少有一个为$1$），所以二分图上的边也不相交（如果相交则说明某个点的入度或出度大于$1$），这正好是匹配的定义\\
+每条匹配边代表答案$-1$，所以\textbf{最小路径覆盖=原图节点数-新图最大匹配数}
+
+\subsubsection{最小可相交路径覆盖}
+对原图传递闭包,即若原图中$(u,v)$连通,则增加边$(u,v)$.这可以用$Floyd$算法$O(n^{3})$实现。然后对新图做最小不相交路径覆盖即可。因为在原图中相交的路径在传递闭包后可以拆分成另一条边,这样就不相交了
+
+\subsubsection{最多不相交路径} 
+这种问题变化比较多，但都能表示成以下形式：
+\textbf{已知一些路径，每个节点只能属于一条路径，求能选择多少条路径使它们不相交.}\par
+主要的方法是拆点，将一个点拆成两个，然后连边，容量表示该点最多经过次数
+
+
+\subsection{最小割}
+\subsubsection{最大权闭合子图}
+\textbf{定义:}有一个有向图，每一个点都有一个权值，选择一个权值和最大的子图，使得每个点的后继都在子图里面，这个子图就叫最大权闭合子图。\par
+\textbf{建图方法：}从源点s向每个正权点连一条容量为权值的边，每个负权点向汇点t连一条容量为权值的绝对值的边，有向图原来的边容量全部为无限大。\par
+\textbf{定理}:最大权闭合子图=所有正权点之和-最小割\par
+\textbf{关键性质}:如果$s$与$i$有边，表示$i$在子图中。如果$i$与$t$有边，表示$i$不在于子图中。即：割掉$s$与$i$表示不选$i$,割掉$i$与$t$表示选$i$。\par
+\textbf{性质$1$}:原图之间的边一定不会被割掉\par
+ 边权为无穷大，当然不会被选进最小割\par
+\textbf{性质$2$}：只有$s$到$t$不联通时，才得到最大权闭合子图\par
+ 反证法：若$s$到$t$连通，则一定存在节点$i$,$j$使$s$到$i$有边，$i$到j有边（引理$1$），$j$到$t$有边.而根据性质$1$:$i$在子图中，$j$不在子图中，这与最大权闭合子图的定义矛盾，证毕
+由引理$2$可得，图的一个割就是一个闭合子图\par
+由于一个割的边权和=不选的正权点+选的负权点绝对值=不选的正权点−选的负权点一个割的边权和=不选的正权点+选的负权点绝对值=不选的正权点−选的负权点.\par
+闭合子图=正权点+负权点=所有正权和−不选的正权点+选的负权点=所有正权和−割的边权和闭合子图=正权点+负权点=所有正权和−不选的正权点+选的负权点=所有正权和−割的边权和\par
+显然割的边权和最小的时候得到最大权闭合子图，证毕
+
+
+\subsection{最小割}
+\textbf{定理:} 二分图最大独立集=$n$-二分图最大匹配\par
+其实二分图独立集是\textbf{特殊的一种最大权闭合子图}。我们根据上文“收益”的思想，把选某个点的收益看为$1$，左部节点为正权点，右部节点为负权点.按照最大权闭合子图的方式建图，答案为正权和-最小割=$n$-最小割=$n$-最大流。我们发现把最大权闭合子图中$INF$的边换成$1$也不影响答案，因为图中其他边的容量都为$1$。这样图就变成了二分图匹配中的图，最大流=二分图最大匹配
+
+
+\subsection{最大密度子图}
+\textbf{定义}:图的密度是图上的边的数量除以点数。求密度最大的子图。\par
+\textbf{建图}:看到平均数想到01分数规划。二分答案$mid$,那么问题转化为判定是否存在一个子图,使得边数−$mid\cdot$点数$>$$$0$$边数−$mid \cdot$点数>$0$.那么可以把每条边的权看成$1$,每个点的权看成$−mid$,限制是选择一条边就必须选择边连接的两个点。于是把边看成左部点,点看成右部点,跑最大权闭合子图,若答案$>0$,则合法。
+
+
+\subsection{二元关系最小割模型}
+\textbf{定义}:有若干个变量,每个变量有2种取值,有若干个现在,每个限制形如"若变量$x=a,y=b$,就要付出$c$的代价"。最大化所有变量的值之和减去最小代价。\par
+\textbf{建图}:每个变量建一个点,$S$到$x$连边表示$x$的一种取值的代价,$x$到$T$连边表示$x$的另一种取值的代价。对于一个限制,在两个点之间连边。边权需要列方程解出。
+
+
+\subsection{二分图带权匹配}
+\textbf{定义}:每条边有边权,求匹配边权值之和最大的匹配\par
+\textbf{建图}:在边上加上权,跑费用流即可
+
+
+\subsection{最大权不相交路径}
+\textbf{定义}:每条路径有一个权值(一般是边权和),在**不相交路径数最多的情况下**,最大化费用\par
+\textbf{建图}:同最多不相交路径,在连接两个拆点的边上加上费用跑费用流即可
+
+
+\subsection{不等式差分模型(网络流解线性规划)}
+\textbf{定义}:对于一些不太好直接想到建图的问题，我们可以数学建模，列出方程然后用线性规划求解。这样的好处是思维量较小，只要做代数变换就可以建图，而不用考虑建图的实际意义。我们需要把式子做差,使得每个未知数仅在两个等式中出现。\par
+根据网络流中每个点流量平衡的思想，我们可以把$−xi$看成从点$i$流出$x_{i}$的流量，$+x_{i}$看成流入$x_{i}$的流量。等式为$0$就代表流量平衡。\par
+\textbf{建图}:每个等式为图中一个顶点，添加源点$S$和汇点$T$。\\
+如果一个等式右边为非负整数$c$，从源点S向该等式对应的顶点连接一条容量为$c$，权值为$0$的有向边；如果一个等式右边为负整数$c$，从该等式对应的顶点向汇点$T$连接一条容量为$c$，权值为$0$的有向边。\\
+如果一个变量$x_{i}$在第$j$个等式中出现为$x_{i}$，在第$k$个等式中出现为$-x_{i}$，且在目标函数里的系数为$c_{i}$,从顶点j向顶点k连接一条容量为$+\infty$，费用为$c_{i}$的有向边。\\
+- 如果一个变量$y_{i}$在第$j$个等式中出现为$y_{i}$，在第$k$个等式中出现为$-y_{i}$，且在目标函数里没有出现，从顶点j向顶点k连接一条容量为$+\infty$，权值为$0$的有向边。
+
+
+\subsection{有上下界的网络流}
+\subsubsection{无源汇有上下界可行流}
+\textbf{定义:} 无源汇网络指的是没有源点和汇点,每个点都有入边和出边且满足流量守恒的网络。在这个网络上求一个流量方案,使得每条边的流量必须在$[l_{i},r_{i}]$之间,且每个点流量守恒。\par
+有上下界的费用流的核心是"补偿"。我们先假设每条边的流量均为$l_{i}$,那么一定会有一些点流量不守恒。现在我们需要构造一个附加网络,使得把附加网络和原网络叠加(即对应边流量相加)之后的图满足流量守恒。\par
+因为Dinic只能求有源汇最大流,所以是不能直接求出附加网络的流量的。那么我们可以在附加网络上添加一些不在原网络上的边和点,来实现我们的限制.\par
+记$d_{i}$=点D的入流−点$i$的出流,然后建附加网络:\\
+1.新建源点$ss$和汇点$tt$\\
+2.对于原图中的每条边$e_{i}=(u,v)$,连边$(u,v,r_{i}-l_{i})$,也就是说附加网络包括原网络的边。\\
+3.新建边来满足流量守恒\par
+若$d_{i}=0$则该点流量平衡,不用处理\par
+若$d_{i}>0$则入流D$>$出流,那么附加网络中$i$的出边需要增加流量,我们连边$(ss,i,d_{i})$,这样求最大流的时候出边的流量会增加$d+{i}$,叠加后满足流量守恒\par
+若$d_[i]<0$则入流$<$出流,那么附加网络中$i$的入边需要增加流量,同理连边$(i,tt,-d_{i})$,这样求最大流的时候入边的流量会增加$-d_{i}$,叠加后满足流量守恒\\
+那么当且仅当步骤3中新建边满流时有解,总可行流为$maxfolw(ss,tt)+\sum{l_{i}}$。每条边在原图中流量=容量下界+附加流中它的流量
+
+\subsubsection{有源汇有上下界可行流}
+\textbf{定义}:在有源汇网络上求一个流量方案,使得每条边的流量必须在$[l_{i},r_{i}]$之间,且除源汇外每个点流量守恒。\par
+设原网络的源和汇分别为$s,t$我们在原网络上加一条边${(t,s,+\infty)}$,相当于把到汇点的所有流量都流回源点,这样每个点流量都守恒。
+然后套无源汇的方法即可。注意总流量=t到s的无穷边在原图中的流量
+
+
+\subsubsection{有源汇有上下界最大流和最小流}
+\textbf{定义}:在有源汇网络上求一个流量方案,使得每条边的流量必须在$[l_{i},r_{i}]$之间,且除源汇外每个点流量守恒。在这个条件下使得总流量最大/最小。\par
+先按上面的方法求出一个有源汇有上下界可行流.然后在附加网络上再跑一次$s$到$t$的最大流(注意不是$ss$,$tt$!)。最大流=可行流+第二次跑的$s$到$t$最大流。\par
+再跑一次最大流是因为附加网络上属于原图的边还有流量没被“榨干”。容易发现只要附加网络上不属于原图的边满流,属于原图的边怎么跑流量都是守恒的。因为第一次跑最大流已经保证所有点守恒,第二次跑最大流不会经过不属于原图的边,因此等价于对原图跑一次普通的最大流,除源汇外流量守恒。两次合起来总流量一定守恒,这就保证了正确性。\par
+同理求最小流就跑一次$t$到$s$的最大流。最小流=可行流-第二次跑的t到s最大流。这是因为Dinic过程中反向边的流量增加等价于正向边的的流量减少。
+
+\subsubsection{有源汇有上下界最小费用流}
+\textbf{定义}:在有源汇网络上求一个流量方案,使得每条边的流量必须在$[l_{i},r_{i}]$之间,且除源汇外每个点流量守恒。每条边单位流量的费用为$c_{i}$.在这个条件下使得总费用最小,费用定义同一般费用流。(不要求总流量最大)\par
+这是有上下界费用流常被误解的一点,即最小费用流求的是费用最小的可行流,而不是最大流。\\
+
+因此按有源汇可行流的方法建图,把原图中的边带上费用。总费用$=mincost(ss,tt)+\sum{l_{i}c_{i}}$
+
+
+
+
+
+
+
+
+
+\end{document}
